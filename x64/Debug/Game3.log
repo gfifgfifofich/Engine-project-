@@ -1,0 +1,129 @@
+﻿  Source.cpp
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Mathematics.h(7,32): warning C4305: инициализация: усечение из "double" в "float"
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Objects.h(2,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Objects.h(3,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Objects.h(4,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Objects.h(5,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Objects.h(6,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Objects.h(7,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Objects.h(8,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Objects.h(9,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Objects.h(12,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Objects.h(13,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\gfif\source\repos\Game3\engine\Libraries\include\freetype\config\ftheader.h(180,1): warning C4005: FT_FREETYPE_H: изменение макроопределения
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Text.h(4): message : см. предыдущее определение "FT_FREETYPE_H"
+C:\Users\gfif\source\repos\HEAT\engine\Components\Include\Objects.h(14,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+  The contents of <execution> are available only with C++17 or later.
+C:\Users\gfif\source\repos\HEAT\engine\Components\Engine.h(138,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\gfif\source\repos\HEAT\Source.cpp(52,35): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Laser.h(71,68): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Parts.h(393,19): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Parts.h(1018,56): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Entity.h(838,1): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Entity.h(868,1): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Entity.h(947,1): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Entity.h(968,1): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Entity.h(1238,21): warning C4305: инициализация: усечение из "double" в "float"
+C:\Users\gfif\source\repos\HEAT\Entity.h(1274,10): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Entity.h(1275,10): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Entity.h(1309,17): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Entity.h(1417,21): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Source.cpp(165,10): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Source.cpp(202,10): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+C:\Users\gfif\source\repos\HEAT\Source.cpp(239,10): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+LINK : warning LNK4098: библиотека по умолчанию "MSVCRT" конфликтует с использованием других библиотек; используйте /NODEFAULTLIB:library
+alhelpers.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alcCreateContext в функции InitAL.
+Source.obj : error LNK2001: неразрешенный внешний символ __imp_alcCreateContext.
+alhelpers.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alcMakeContextCurrent в функции CloseAL.
+Source.obj : error LNK2001: неразрешенный внешний символ __imp_alcMakeContextCurrent.
+alhelpers.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alcDestroyContext в функции CloseAL.
+Source.obj : error LNK2001: неразрешенный внешний символ __imp_alcDestroyContext.
+alhelpers.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alcGetCurrentContext в функции CloseAL.
+alhelpers.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alcGetContextsDevice в функции CloseAL.
+alhelpers.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alcOpenDevice в функции InitAL.
+Source.obj : error LNK2001: неразрешенный внешний символ __imp_alcOpenDevice.
+alhelpers.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alcCloseDevice в функции CloseAL.
+Source.obj : error LNK2001: неразрешенный внешний символ __imp_alcCloseDevice.
+alhelpers.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alcGetError в функции InitAL.
+alhelpers.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alcIsExtensionPresent в функции InitAL.
+alhelpers.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alcGetString в функции InitAL.
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "struct glm::vec<2,float,0> __cdecl Normalize(struct glm::vec<2,float,0>)" (?Normalize@@YA?AU?$vec@$01M$0A@@glm@@U12@@Z) в функции "public: void __cdecl BodyComponent::DamageSphereCollide(struct DamageSphere *)" (?DamageSphereCollide@BodyComponent@@QEAAXPEAUDamageSphere@@@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "float __cdecl length(struct glm::vec<2,float,0>)" (?length@@YAMU?$vec@$01M$0A@@glm@@@Z) в функции "public: void __cdecl Entity::AddConnection(int,float,float,float,float,float,int,int,int,int)" (?AddConnection@Entity@@QEAAXHMMMMMHHHH@Z).
+    Указание на символы, которые определены и могут подойти:
+      "public: static unsigned __int64 __cdecl std::_Narrow_char_traits<char,int>::length(char const * const)" (?length@?$_Narrow_char_traits@DH@std@@SA_KQEBD@Z)
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "float __cdecl sqrlength(struct glm::vec<2,float,0>)" (?sqrlength@@YAMU?$vec@$01M$0A@@glm@@@Z) в функции "public: void __cdecl BodyComponent::DamageSphereCollide(struct DamageSphere *)" (?DamageSphereCollide@BodyComponent@@QEAAXPEAUDamageSphere@@@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "float __cdecl DOT(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>)" (?DOT@@YAMU?$vec@$01M$0A@@glm@@0@Z) в функции "public: void __cdecl Entity::Process(float,int,bool,bool)" (?Process@Entity@@QEAAXMH_N0@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "float __cdecl get_angle_between_points(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>)" (?get_angle_between_points@@YAMU?$vec@$01M$0A@@glm@@0@Z) в функции "public: virtual void __cdecl Gun::Draw(int)" (?Draw@Gun@@UEAAXH@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "float __cdecl get_relative_angle_between_points(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>)" (?get_relative_angle_between_points@@YAMU?$vec@$01M$0A@@glm@@0@Z) в функции "public: virtual void __cdecl Gun::Process(float)" (?Process@Gun@@UEAAXM@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "struct glm::vec<2,float,0> __cdecl Rotate(struct glm::vec<2,float,0>,float)" (?Rotate@@YA?AU?$vec@$01M$0A@@glm@@U12@M@Z) в функции "public: virtual void __cdecl BodyComponent::DrawDataConnections(int,bool,bool,bool,int)" (?DrawDataConnections@BodyComponent@@UEAAXH_N00H@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl ball::Process(float)" (?Process@ball@@QEAAXM@Z) в функции "public: virtual void __cdecl BallBody::Process(float)" (?Process@BallBody@@UEAAXM@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl BtBCollision(class ball *,class ball *,float)" (?BtBCollision@@YAXPEAVball@@0M@Z) в функции "void __cdecl ProcessEntities(float,int)" (?ProcessEntities@@YAXMH@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "bool __cdecl BtBCollisionCheck(class ball,class ball)" (?BtBCollisionCheck@@YA_NVball@@0@Z) в функции "public: void __cdecl BodyComponent::DamageSphereCollide(struct DamageSphere *)" (?DamageSphereCollide@BodyComponent@@QEAAXPEAUDamageSphere@@@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "bool __cdecl BalltoPointCollisionCheck(class ball,struct glm::vec<2,float,0>)" (?BalltoPointCollisionCheck@@YA_NVball@@U?$vec@$01M$0A@@glm@@@Z) в функции "void __cdecl On_Update(void)" (?On_Update@@YAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl Ray::normalize(void)" (?normalize@Ray@@QEAAXXZ) в функции "public: __cdecl Laser::Laser(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>,float,int)" (??0Laser@@QEAA@U?$vec@$01M$0A@@glm@@0MH@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl Ray::Update(void)" (?Update@Ray@@QEAAXXZ) в функции "public: __cdecl Laser::Laser(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>,float,int)" (??0Laser@@QEAA@U?$vec@$01M$0A@@glm@@0MH@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl Ray::Ray(void)" (??0Ray@@QEAA@XZ) в функции "public: __cdecl Laser::Laser(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>,float,int)" (??0Laser@@QEAA@U?$vec@$01M$0A@@glm@@0MH@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl DrawText(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct glm::vec<2,float,0>,float,struct glm::vec<4,float,0>,bool)" (?DrawText@@YAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$vec@$01M$0A@@glm@@MU?$vec@$03M$0A@@4@_N@Z) в функции "public: virtual void __cdecl BodyComponent::DrawDataConnections(int,bool,bool,bool,int)" (?DrawDataConnections@BodyComponent@@UEAAXH_N00H@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl ParticleEmiter::Process(float)" (?Process@ParticleEmiter@@QEAAXM@Z) в функции "void __cdecl ProcessBullets(float)" (?ProcessBullets@@YAXM@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl ParticleEmiter::Spawn(struct glm::vec<2,float,0>,int)" (?Spawn@ParticleEmiter@@QEAAXU?$vec@$01M$0A@@glm@@H@Z) в функции "public: void __cdecl Bullet::Dead(void)" (?Dead@Bullet@@QEAAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl ParticleEmiter::Spawn(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>,int,float)" (?Spawn@ParticleEmiter@@QEAAXU?$vec@$01M$0A@@glm@@0HM@Z) в функции "public: virtual void __cdecl RocketEngine::Draw(int)" (?Draw@RocketEngine@@UEAAXH@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl ParticleEmiter::SpawnInCircle(struct glm::vec<2,float,0>,float,int)" (?SpawnInCircle@ParticleEmiter@@QEAAXU?$vec@$01M$0A@@glm@@MH@Z) в функции "public: virtual void __cdecl Radiator::Process(float)" (?Process@Radiator@@UEAAXM@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl ParticleEmiter::SpawnInCircle(struct glm::vec<2,float,0>,float,int,struct glm::vec<2,float,0>)" (?SpawnInCircle@ParticleEmiter@@QEAAXU?$vec@$01M$0A@@glm@@MH0@Z) в функции "public: void __cdecl Bullet::Process(float)" (?Process@Bullet@@QEAAXM@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl DrawLight(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>,struct glm::vec<4,float,0>,float,float,unsigned int)" (?DrawLight@@YAXU?$vec@$01M$0A@@glm@@0U?$vec@$03M$0A@@2@MMI@Z) в функции "public: void __cdecl Laser::Draw(void)" (?Draw@Laser@@QEAAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl DrawCircle(struct glm::vec<2,float,0>,float,struct glm::vec<4,float,0>,bool,unsigned int,int,bool)" (?DrawCircle@@YAXU?$vec@$01M$0A@@glm@@MU?$vec@$03M$0A@@2@_NIH2@Z) в функции "public: virtual void __cdecl BodyComponent::DrawDataConnections(int,bool,bool,bool,int)" (?DrawDataConnections@BodyComponent@@UEAAXH_N00H@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl DrawCircle(class ball,struct glm::vec<4,float,0>,bool,unsigned int,int,bool)" (?DrawCircle@@YAXVball@@U?$vec@$03M$0A@@glm@@_NIH2@Z) в функции "public: virtual void __cdecl BallBody::Draw(int)" (?Draw@BallBody@@UEAAXH@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl DrawCube(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>,float,struct glm::vec<4,float,0>,bool,unsigned int,int,bool)" (?DrawCube@@YAXU?$vec@$01M$0A@@glm@@0MU?$vec@$03M$0A@@2@_NIH2@Z) в функции "void __cdecl On_Update(void)" (?On_Update@@YAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl DrawLine(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>,float,struct glm::vec<4,float,0>,bool,unsigned int,int)" (?DrawLine@@YAXU?$vec@$01M$0A@@glm@@0MU?$vec@$03M$0A@@2@_NIH@Z) в функции "public: virtual void __cdecl CentralPart::Draw(int)" (?Draw@CentralPart@@UEAAXH@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl LoadTexture(char const *,unsigned int *,int)" (?LoadTexture@@YAXPEBDPEAIH@Z) в функции "void __cdecl On_Create(void)" (?On_Create@@YAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl GenNoizeTexture(unsigned int *,int,int,float,int)" (?GenNoizeTexture@@YAXPEAIHHMH@Z) в функции "void __cdecl On_Create(void)" (?On_Create@@YAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl DrawTexturedQuad(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>,unsigned int,float,struct glm::vec<4,float,0>,int,unsigned int,bool)" (?DrawTexturedQuad@@YAXU?$vec@$01M$0A@@glm@@0IMU?$vec@$03M$0A@@2@HI_N@Z) в функции "public: virtual void __cdecl Gun::Draw(int)" (?Draw@Gun@@UEAAXH@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl DrawTexturedLine(unsigned int,struct glm::vec<2,float,0>,struct glm::vec<2,float,0>,float,struct glm::vec<4,float,0>,unsigned int,int)" (?DrawTexturedLine@@YAXIU?$vec@$01M$0A@@glm@@0MU?$vec@$03M$0A@@2@IH@Z) в функции "public: void __cdecl Entity::Connection::Process(class Entity *,float,bool)" (?Process@Connection@Entity@@QEAAXPEAV2@M_N@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl BallToStaticQuadCollision(class ball *,struct cube)" (?BallToStaticQuadCollision@@YAXPEAVball@@Ucube@@@Z) в функции "void __cdecl ProcessEntities(float,int)" (?ProcessEntities@@YAXMH@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "bool __cdecl BtCCollisionCheck(class ball,struct cube)" (?BtCCollisionCheck@@YA_NVball@@Ucube@@@Z) в функции "public: void __cdecl Bullet::Process(float)" (?Process@Bullet@@QEAAXM@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "struct glm::vec<2,float,0> __cdecl CastRayToQuad(class Ray *,struct cube)" (?CastRayToQuad@@YA?AU?$vec@$01M$0A@@glm@@PEAVRay@@Ucube@@@Z) в функции "void __cdecl ProcessLasers(float)" (?ProcessLasers@@YAXM@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "struct glm::vec<2,float,0> __cdecl CastRayToBall(class Ray *,class ball)" (?CastRayToBall@@YA?AU?$vec@$01M$0A@@glm@@PEAVRay@@Vball@@@Z) в функции "void __cdecl ProcessLasers(float)" (?ProcessLasers@@YAXM@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl Rope(class ball *,class ball *,float)" (?Rope@@YAXPEAVball@@0M@Z) в функции "public: void __cdecl Entity::Connection::Process(class Entity *,float,bool)" (?Process@Connection@Entity@@QEAAXPEAV2@M_N@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl DecorativeRope::Process(float)" (?Process@DecorativeRope@@QEAAXM@Z) в функции "public: void __cdecl Entity::Connection::Process(class Entity *,float,bool)" (?Process@Connection@Entity@@QEAAXPEAV2@M_N@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl DecorativeRope::Draw(int)" (?Draw@DecorativeRope@@QEAAXH@Z) в функции "public: void __cdecl Entity::Connection::Process(class Entity *,float,bool)" (?Process@Connection@Entity@@QEAAXPEAV2@M_N@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl SpringBetweenBalls(class ball *,class ball *,float,float,float)" (?SpringBetweenBalls@@YAXPEAVball@@0MMM@Z) в функции "public: void __cdecl Entity::Connection::Process(class Entity *,float,bool)" (?Process@Connection@Entity@@QEAAXPEAV2@M_N@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl SpringBallToPoint(class ball *,struct point *,float,float,float)" (?SpringBallToPoint@@YAXPEAVball@@PEAUpoint@@MMM@Z) в функции "void __cdecl On_Update(void)" (?On_Update@@YAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl Strut(class ball *,class ball *,float,bool)" (?Strut@@YAXPEAVball@@0M_N@Z) в функции "public: virtual void __cdecl CentralPart::Process(float)" (?Process@CentralPart@@UEAAXM@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl Scene::LoadFrom(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?LoadFrom@Scene@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) в функции "void __cdecl On_Create(void)" (?On_Create@@YAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl Scene::Rescale(struct glm::vec<2,float,0>,int)" (?Rescale@Scene@@QEAAXU?$vec@$01M$0A@@glm@@H@Z) в функции "void __cdecl On_Create(void)" (?On_Create@@YAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl Scene::Draw(void)" (?Draw@Scene@@QEAAXXZ) в функции "void __cdecl On_Update(void)" (?On_Update@@YAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ "void __cdecl initEngine(char const *,unsigned int,unsigned int,bool)" (?initEngine@@YAXPEBDII_N@Z) в функции main.
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alListenerfv в функции "void __cdecl AL_init(void)" (?AL_init@@YAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alGenSources в функции "void __cdecl GenSource(unsigned int *)" (?GenSource@@YAXPEAI@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alDeleteSources в функции "void __cdecl AL_Destroy(void)" (?AL_Destroy@@YAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alSourcef в функции "void __cdecl GenSource(unsigned int *)" (?GenSource@@YAXPEAI@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alSource3f в функции "void __cdecl GenSource(unsigned int *)" (?GenSource@@YAXPEAI@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alSourcei в функции "void __cdecl GenSource(unsigned int *)" (?GenSource@@YAXPEAI@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alGetSourcei в функции "bool __cdecl SourcePlaying(unsigned int *)" (?SourcePlaying@@YA_NPEAI@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alSourcePlay в функции "void __cdecl PlaySource(unsigned int *)" (?PlaySource@@YAXPEAI@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alSourceStop в функции "void __cdecl AL_Destroy(void)" (?AL_Destroy@@YAXXZ).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alGenBuffers в функции "unsigned int __cdecl LoadSound(char const *)" (?LoadSound@@YAIPEBD@Z).
+Source.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_alBufferData в функции "unsigned int __cdecl LoadSound(char const *)" (?LoadSound@@YAIPEBD@Z).
+Source.obj : error LNK2001: неразрешенный внешний символ "struct glm::vec<2,float,0> CameraPosition" (?CameraPosition@@3U?$vec@$01M$0A@@glm@@A).
+Source.obj : error LNK2001: неразрешенный внешний символ "struct glm::vec<2,float,0> CameraScale" (?CameraScale@@3U?$vec@$01M$0A@@glm@@A).
+Source.obj : error LNK2001: неразрешенный внешний символ "unsigned int WIDTH" (?WIDTH@@3IA).
+Source.obj : error LNK2001: неразрешенный внешний символ "unsigned int HEIGHT" (?HEIGHT@@3IA).
+Source.obj : error LNK2001: неразрешенный внешний символ "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > TextFromKeyboard" (?TextFromKeyboard@@3V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@A).
+Source.obj : error LNK2001: неразрешенный внешний символ "bool TextEditMode" (?TextEditMode@@3_NA).
+Source.obj : error LNK2001: неразрешенный внешний символ "struct GLFWwindow * window" (?window@@3PEAUGLFWwindow@@EA).
+Source.obj : error LNK2001: неразрешенный внешний символ "struct glm::vec<4,float,0> BackgroundColor" (?BackgroundColor@@3U?$vec@$03M$0A@@glm@@A).
+Source.obj : error LNK2001: неразрешенный внешний символ "struct glm::vec<2,float,0> MousePosition" (?MousePosition@@3U?$vec@$01M$0A@@glm@@A).
+Source.obj : error LNK2001: неразрешенный внешний символ "bool * keys" (?keys@@3PA_NA).
+Source.obj : error LNK2001: неразрешенный внешний символ "bool * JustPressedkey" (?JustPressedkey@@3PA_NA).
+Source.obj : error LNK2001: неразрешенный внешний символ "bool * buttons" (?buttons@@3PA_NA).
+Source.obj : error LNK2001: неразрешенный внешний символ "bool * JustPressedbutton" (?JustPressedbutton@@3PA_NA).
+Source.obj : error LNK2001: неразрешенный внешний символ "bool * JustReleasedbutton" (?JustReleasedbutton@@3PA_NA).
+Source.obj : error LNK2001: неразрешенный внешний символ "int scrollmovement" (?scrollmovement@@3HA).
+Source.obj : error LNK2001: неразрешенный внешний символ "bool SettingsWindow" (?SettingsWindow@@3_NA).
+Source.obj : error LNK2001: неразрешенный внешний символ "int threadcount" (?threadcount@@3HA).
+Source.obj : error LNK2001: неразрешенный внешний символ "float delta" (?delta@@3MA).
+Source.obj : error LNK2001: неразрешенный внешний символ "float ChromaticStrength" (?ChromaticStrength@@3MA).
+Source.obj : error LNK2001: неразрешенный внешний символ "bool JustPressedLMB" (?JustPressedLMB@@3_NA).
+Source.obj : error LNK2001: неразрешенный внешний символ "unsigned int BallNormalMapTexture" (?BallNormalMapTexture@@3IA).
+Source.obj : error LNK2001: неразрешенный внешний символ "unsigned int CubeNormalMapTexture" (?CubeNormalMapTexture@@3IA).
+Source.obj : error LNK2001: неразрешенный внешний символ "unsigned int LightSphereTexture" (?LightSphereTexture@@3IA).
+C:\Users\gfif\source\repos\HEAT\x64\Debug\HEAT.exe : fatal error LNK1120: неразрешенных внешних элементов: 87
