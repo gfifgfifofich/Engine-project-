@@ -1,5 +1,8 @@
 # Engine-project-
-A game, created using Engine i've created. Mostly for testing its capabilities.
+Constructor sandbox game prototype. Inspired from games like Cosmoteer or Nimbatus
+
+Created using Engine i have created. Mostly for testing its capabilities.
+
 ## Screenshots
 Some test ships
 
