@@ -12,7 +12,6 @@ Linux version is highly untested.
 Constructor sandbox game prototype. Inspired from games like Cosmoteer or Nimbatus.
 Created mostly for testing capabilities of my engine.
 
-<video src='https://github.com/gfifgfifofich/Engine-project-/blob/main/Cmake/resources/demo.mp4' width=180/>
 ## Screenshots
 Some test ships
 
@@ -26,3 +25,6 @@ Building mode
 
 Fighting a dummy craft
 ![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/VS%20project/Textures/Screenshot_1.png)
+
+
+<video src='https://github.com/gfifgfifofich/Engine-project-/blob/main/Cmake/resources/demo.mp4' width=180/>
