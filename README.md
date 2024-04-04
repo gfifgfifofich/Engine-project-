@@ -9,6 +9,8 @@ cmake --build ./
 VS Project directory contains a project for VS, but it may not run on some PC's. Cmake is preferable 
 Linux version is highly untested.
 # Engine-project
+https://github.com/gfifgfifofich/Engine-project-/assets/73363091/fa4fd094-886d-4230-b87f-fffd42489c34
+
 Constructor sandbox game prototype. Inspired from games like Cosmoteer or Nimbatus.
 Created mostly for testing capabilities of my engine.
 
@@ -27,4 +29,5 @@ Fighting a dummy craft
 ![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/VS%20project/Textures/Screenshot_1.png)
 
 
-<video src='https://github.com/gfifgfifofich/Engine-project-/blob/main/Cmake/resources/demo.mp4' width=180/>
+
+
