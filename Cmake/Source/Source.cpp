@@ -1609,7 +1609,7 @@ int main()
 		}
 
 	f.close();
-	//initEngine("HEAT",1920,1080,true);
+	//initEngine("HEAT",1920,1050,false);
 	initEngine("HEAT", s_Resolution.x, s_Resolution.y, s_Fullscreen);
 
 	SaveSettings();
