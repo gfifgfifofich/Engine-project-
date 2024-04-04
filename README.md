@@ -8,11 +8,11 @@ cmake --build ./
 ```
 VS Project directory contains a project for VS, but it may not run on some PC's. Cmake is preferable 
 Linux version is highly untested.
-# Engine-project-
-Constructor sandbox game prototype. Inspired from games like Cosmoteer or Nimbatus
+# Engine-project
+Constructor sandbox game prototype. Inspired from games like Cosmoteer or Nimbatus.
+Created mostly for testing capabilities of my engine.
 
-Created using Engine i have created. Mostly for testing its capabilities.
-
+<video src='https://github.com/gfifgfifofich/Engine-project-/blob/main/Cmake/resources/demo.mp4' width=180/>
 ## Screenshots
 Some test ships
 
