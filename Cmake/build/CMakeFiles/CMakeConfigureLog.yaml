@@ -1,0 +1,1889 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:233 (message)"
+      - "CMakeLists.txt:18 (project)"
+    message: |
+      The system is: Linux - 6.8.1-arch1-1 - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:18 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /usr/bin/clang 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is Clang, found in:
+        /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/3.28.4/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:18 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /usr/bin/clang++ 
+      Build flags: -Wall;-Wextra
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is Clang, found in:
+        /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/3.28.4/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:18 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-HDQolB"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-HDQolB"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-HDQolB'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6a1f7/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_6a1f7.dir/build.make CMakeFiles/cmTC_6a1f7.dir/build
+        make[1]: Entering directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-HDQolB'
+        Building C object CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o
+        /usr/bin/clang   -v -MD -MT CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        clang version 17.0.6
+        Target: x86_64-pc-linux-gnu
+        Thread model: posix
+        InstalledDir: /usr/bin
+        Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/13.2.1
+        Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1
+        Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1
+        Candidate multilib: .;@m64
+        Candidate multilib: 32;@m32
+        Selected multilib: .;@m64
+         (in-process)
+         "/usr/bin/clang-17" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -v -fcoverage-compilation-dir=/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-HDQolB -resource-dir /usr/lib/clang/17 -dependency-file CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/lib/clang/17/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdebug-compilation-dir=/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-HDQolB -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -x c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        clang -cc1 version 17.0.6 based upon LLVM 17.0.6 default target x86_64-pc-linux-gnu
+        ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../x86_64-pc-linux-gnu/include"
+        ignoring nonexistent directory "/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/clang/17/include
+         /usr/local/include
+         /usr/include
+        End of search list.
+        Linking C executable cmTC_6a1f7
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6a1f7.dir/link.txt --verbose=1
+        /usr/bin/clang  -v -rdynamic CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -o cmTC_6a1f7 
+        clang version 17.0.6
+        Target: x86_64-pc-linux-gnu
+        Thread model: posix
+        InstalledDir: /usr/bin
+        Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/13.2.1
+        Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1
+        Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1
+        Candidate multilib: .;@m64
+        Candidate multilib: 32;@m32
+        Selected multilib: .;@m64
+         "/usr/bin/ld" -pie -export-dynamic --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_6a1f7 /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/lib -L/usr/lib CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crtn.o
+        make[1]: Leaving directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-HDQolB'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:18 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/clang/17/include]
+          add: [/usr/local/include]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/clang/17/include] ==> [/usr/lib/clang/17/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/lib/clang/17/include;/usr/local/include;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:18 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-HDQolB']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6a1f7/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_6a1f7.dir/build.make CMakeFiles/cmTC_6a1f7.dir/build]
+        ignore line: [make[1]: Entering directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-HDQolB']
+        ignore line: [Building C object CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/clang   -v -MD -MT CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang version 17.0.6]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /usr/bin]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Candidate multilib: 32]
+        ignore line: [@m32]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        ignore line: [ (in-process)]
+        ignore line: [ "/usr/bin/clang-17" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -v -fcoverage-compilation-dir=/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-HDQolB -resource-dir /usr/lib/clang/17 -dependency-file CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/lib/clang/17/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdebug-compilation-dir=/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-HDQolB -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -x c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang -cc1 version 17.0.6 based upon LLVM 17.0.6 default target x86_64-pc-linux-gnu]
+        ignore line: [ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../x86_64-pc-linux-gnu/include"]
+        ignore line: [ignoring nonexistent directory "/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/clang/17/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Linking C executable cmTC_6a1f7]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6a1f7.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/clang  -v -rdynamic CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -o cmTC_6a1f7 ]
+        ignore line: [clang version 17.0.6]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /usr/bin]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Candidate multilib: 32]
+        ignore line: [@m32]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        link line: [ "/usr/bin/ld" -pie -export-dynamic --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_6a1f7 /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/lib -L/usr/lib CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crtn.o]
+          arg [/usr/bin/ld] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-export-dynamic] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-export-dynamic] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_6a1f7] ==> ignore
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/Scrt1.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/Scrt1.o]
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crti.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crti.o]
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o]
+          arg [-L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1] ==> dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+          arg [-L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64] ==> dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [CMakeFiles/cmTC_6a1f7.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--no-as-needed] ==> ignore
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--no-as-needed] ==> ignore
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o]
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crtn.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crtn.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/Scrt1.o] ==> [/usr/lib64/Scrt1.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o] ==> [/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o] ==> [/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crtn.o] ==> [/usr/lib64/crtn.o]
+        collapse library dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1] ==> [/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+        collapse library dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+        implicit objs: [/usr/lib64/Scrt1.o;/usr/lib64/crti.o;/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o;/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o;/usr/lib64/crtn.o]
+        implicit dirs: [/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1;/usr/lib64;/lib64;/lib;/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:18 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-tWIh1w"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-tWIh1w"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_CXX_FLAGS: "-Wall -Wextra"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-tWIh1w'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_cf5ca/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_cf5ca.dir/build.make CMakeFiles/cmTC_cf5ca.dir/build
+        make[1]: Entering directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-tWIh1w'
+        Building CXX object CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/clang++   -Wall -Wextra    -v -MD -MT CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        clang version 17.0.6
+        Target: x86_64-pc-linux-gnu
+        Thread model: posix
+        InstalledDir: /usr/bin
+        Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/13.2.1
+        Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1
+        Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1
+        Candidate multilib: .;@m64
+        Candidate multilib: 32;@m32
+        Selected multilib: .;@m64
+         (in-process)
+         "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -v -fcoverage-compilation-dir=/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-tWIh1w -resource-dir /usr/lib/clang/17 -dependency-file CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/backward -internal-isystem /usr/lib/clang/17/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -Wall -Wextra -fdeprecated-macro -fdebug-compilation-dir=/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-tWIh1w -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        clang -cc1 version 17.0.6 based upon LLVM 17.0.6 default target x86_64-pc-linux-gnu
+        ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../x86_64-pc-linux-gnu/include"
+        ignoring nonexistent directory "/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1
+         /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/x86_64-pc-linux-gnu
+         /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/backward
+         /usr/lib/clang/17/include
+         /usr/local/include
+         /usr/include
+        End of search list.
+        Linking CXX executable cmTC_cf5ca
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cf5ca.dir/link.txt --verbose=1
+        /usr/bin/clang++ -Wall -Wextra   -v -rdynamic CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_cf5ca 
+        clang version 17.0.6
+        Target: x86_64-pc-linux-gnu
+        Thread model: posix
+        InstalledDir: /usr/bin
+        Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/13.2.1
+        Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1
+        Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1
+        Candidate multilib: .;@m64
+        Candidate multilib: 32;@m32
+        Selected multilib: .;@m64
+         "/usr/bin/ld" -pie -export-dynamic --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_cf5ca /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/lib -L/usr/lib CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crtn.o
+        make[1]: Leaving directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-tWIh1w'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:18 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1]
+          add: [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/x86_64-pc-linux-gnu]
+          add: [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/backward]
+          add: [/usr/lib/clang/17/include]
+          add: [/usr/local/include]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1] ==> [/usr/include/c++/13.2.1]
+        collapse include dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/x86_64-pc-linux-gnu] ==> [/usr/include/c++/13.2.1/x86_64-pc-linux-gnu]
+        collapse include dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/backward] ==> [/usr/include/c++/13.2.1/backward]
+        collapse include dir [/usr/lib/clang/17/include] ==> [/usr/lib/clang/17/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/include/c++/13.2.1;/usr/include/c++/13.2.1/x86_64-pc-linux-gnu;/usr/include/c++/13.2.1/backward;/usr/lib/clang/17/include;/usr/local/include;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:18 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-tWIh1w']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_cf5ca/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_cf5ca.dir/build.make CMakeFiles/cmTC_cf5ca.dir/build]
+        ignore line: [make[1]: Entering directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-tWIh1w']
+        ignore line: [Building CXX object CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/clang++   -Wall -Wextra    -v -MD -MT CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang version 17.0.6]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /usr/bin]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Candidate multilib: 32]
+        ignore line: [@m32]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        ignore line: [ (in-process)]
+        ignore line: [ "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -v -fcoverage-compilation-dir=/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-tWIh1w -resource-dir /usr/lib/clang/17 -dependency-file CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/backward -internal-isystem /usr/lib/clang/17/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -Wall -Wextra -fdeprecated-macro -fdebug-compilation-dir=/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-tWIh1w -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang -cc1 version 17.0.6 based upon LLVM 17.0.6 default target x86_64-pc-linux-gnu]
+        ignore line: [ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../x86_64-pc-linux-gnu/include"]
+        ignore line: [ignoring nonexistent directory "/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1]
+        ignore line: [ /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/x86_64-pc-linux-gnu]
+        ignore line: [ /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../include/c++/13.2.1/backward]
+        ignore line: [ /usr/lib/clang/17/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Linking CXX executable cmTC_cf5ca]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cf5ca.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/clang++ -Wall -Wextra   -v -rdynamic CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_cf5ca ]
+        ignore line: [clang version 17.0.6]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /usr/bin]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Candidate multilib: 32]
+        ignore line: [@m32]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        link line: [ "/usr/bin/ld" -pie -export-dynamic --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_cf5ca /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/lib -L/usr/lib CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crtn.o]
+          arg [/usr/bin/ld] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-export-dynamic] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-export-dynamic] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_cf5ca] ==> ignore
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/Scrt1.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/Scrt1.o]
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crti.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crti.o]
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o]
+          arg [-L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1] ==> dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+          arg [-L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64] ==> dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [CMakeFiles/cmTC_cf5ca.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o]
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crtn.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crtn.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/Scrt1.o] ==> [/usr/lib64/Scrt1.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o] ==> [/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o] ==> [/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64/crtn.o] ==> [/usr/lib64/crtn.o]
+        collapse library dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1] ==> [/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1]
+        collapse library dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/13.2.1/../../../../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/usr/lib64/Scrt1.o;/usr/lib64/crti.o;/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtbeginS.o;/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1/crtendS.o;/usr/lib64/crtn.o]
+        implicit dirs: [/usr/lib64/gcc/x86_64-pc-linux-gnu/13.2.1;/usr/lib64;/lib64;/lib;/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "/usr/share/cmake/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "dependencies/GLFW/CMakeLists.txt:61 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-k0tP7R"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-k0tP7R"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/GLFW/CMake/modules"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-k0tP7R'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_477ce/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_477ce.dir/build.make CMakeFiles/cmTC_477ce.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-k0tP7R»
+        Building C object CMakeFiles/cmTC_477ce.dir/src.c.o
+        /usr/bin/clang -DCMAKE_HAVE_LIBC_PTHREAD   -MD -MT CMakeFiles/cmTC_477ce.dir/src.c.o -MF CMakeFiles/cmTC_477ce.dir/src.c.o.d -o CMakeFiles/cmTC_477ce.dir/src.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-k0tP7R/src.c
+        Linking C executable cmTC_477ce
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_477ce.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_477ce.dir/src.c.o -o cmTC_477ce 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-k0tP7R»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:682 (check_library_exists)"
+      - "dependencies/GLFW/CMakeLists.txt:211 (find_package)"
+    checks:
+      - "Looking for XOpenDisplay in /usr/lib/libX11.so;/usr/lib/libXext.so"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-q3tP06"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-q3tP06"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/GLFW/CMake/modules"
+    buildResult:
+      variable: "X11_LIB_X11_SOLO"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-q3tP06'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_cbaa0/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_cbaa0.dir/build.make CMakeFiles/cmTC_cbaa0.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-q3tP06»
+        Building C object CMakeFiles/cmTC_cbaa0.dir/CheckFunctionExists.c.o
+        /usr/bin/clang   -DCHECK_FUNCTION_EXISTS=XOpenDisplay -MD -MT CMakeFiles/cmTC_cbaa0.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_cbaa0.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_cbaa0.dir/CheckFunctionExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-q3tP06/CheckFunctionExists.c
+        Linking C executable cmTC_cbaa0
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cbaa0.dir/link.txt --verbose=1
+        /usr/bin/clang  -DCHECK_FUNCTION_EXISTS=XOpenDisplay CMakeFiles/cmTC_cbaa0.dir/CheckFunctionExists.c.o -o cmTC_cbaa0  /usr/lib/libX11.so /usr/lib/libXext.so 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-q3tP06»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:697 (check_function_exists)"
+      - "dependencies/GLFW/CMakeLists.txt:211 (find_package)"
+    checks:
+      - "Looking for gethostbyname"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-RYpYHY"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-RYpYHY"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/GLFW/CMake/modules"
+    buildResult:
+      variable: "CMAKE_HAVE_GETHOSTBYNAME"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-RYpYHY'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d9581/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_d9581.dir/build.make CMakeFiles/cmTC_d9581.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-RYpYHY»
+        Building C object CMakeFiles/cmTC_d9581.dir/CheckFunctionExists.c.o
+        /usr/bin/clang   -DCHECK_FUNCTION_EXISTS=gethostbyname -MD -MT CMakeFiles/cmTC_d9581.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_d9581.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_d9581.dir/CheckFunctionExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-RYpYHY/CheckFunctionExists.c
+        Linking C executable cmTC_d9581
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d9581.dir/link.txt --verbose=1
+        /usr/bin/clang  -DCHECK_FUNCTION_EXISTS=gethostbyname CMakeFiles/cmTC_d9581.dir/CheckFunctionExists.c.o -o cmTC_d9581 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-RYpYHY»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:711 (check_function_exists)"
+      - "dependencies/GLFW/CMakeLists.txt:211 (find_package)"
+    checks:
+      - "Looking for connect"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-7EVxq4"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-7EVxq4"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/GLFW/CMake/modules"
+    buildResult:
+      variable: "CMAKE_HAVE_CONNECT"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-7EVxq4'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_96cfd/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_96cfd.dir/build.make CMakeFiles/cmTC_96cfd.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-7EVxq4»
+        Building C object CMakeFiles/cmTC_96cfd.dir/CheckFunctionExists.c.o
+        /usr/bin/clang   -DCHECK_FUNCTION_EXISTS=connect -MD -MT CMakeFiles/cmTC_96cfd.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_96cfd.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_96cfd.dir/CheckFunctionExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-7EVxq4/CheckFunctionExists.c
+        Linking C executable cmTC_96cfd
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_96cfd.dir/link.txt --verbose=1
+        /usr/bin/clang  -DCHECK_FUNCTION_EXISTS=connect CMakeFiles/cmTC_96cfd.dir/CheckFunctionExists.c.o -o cmTC_96cfd 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-7EVxq4»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:720 (check_function_exists)"
+      - "dependencies/GLFW/CMakeLists.txt:211 (find_package)"
+    checks:
+      - "Looking for remove"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9uMQMm"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9uMQMm"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/GLFW/CMake/modules"
+    buildResult:
+      variable: "CMAKE_HAVE_REMOVE"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9uMQMm'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ec0d9/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_ec0d9.dir/build.make CMakeFiles/cmTC_ec0d9.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9uMQMm»
+        Building C object CMakeFiles/cmTC_ec0d9.dir/CheckFunctionExists.c.o
+        /usr/bin/clang   -DCHECK_FUNCTION_EXISTS=remove -MD -MT CMakeFiles/cmTC_ec0d9.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_ec0d9.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_ec0d9.dir/CheckFunctionExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9uMQMm/CheckFunctionExists.c
+        Linking C executable cmTC_ec0d9
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ec0d9.dir/link.txt --verbose=1
+        /usr/bin/clang  -DCHECK_FUNCTION_EXISTS=remove CMakeFiles/cmTC_ec0d9.dir/CheckFunctionExists.c.o -o cmTC_ec0d9 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9uMQMm»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:729 (check_function_exists)"
+      - "dependencies/GLFW/CMakeLists.txt:211 (find_package)"
+    checks:
+      - "Looking for shmat"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-LVnqvn"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-LVnqvn"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/GLFW/CMake/modules"
+    buildResult:
+      variable: "CMAKE_HAVE_SHMAT"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-LVnqvn'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_11284/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_11284.dir/build.make CMakeFiles/cmTC_11284.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-LVnqvn»
+        Building C object CMakeFiles/cmTC_11284.dir/CheckFunctionExists.c.o
+        /usr/bin/clang   -DCHECK_FUNCTION_EXISTS=shmat -MD -MT CMakeFiles/cmTC_11284.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_11284.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_11284.dir/CheckFunctionExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-LVnqvn/CheckFunctionExists.c
+        Linking C executable cmTC_11284
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_11284.dir/link.txt --verbose=1
+        /usr/bin/clang  -DCHECK_FUNCTION_EXISTS=shmat CMakeFiles/cmTC_11284.dir/CheckFunctionExists.c.o -o cmTC_11284 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-LVnqvn»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:739 (check_library_exists)"
+      - "dependencies/GLFW/CMakeLists.txt:211 (find_package)"
+    checks:
+      - "Looking for IceConnectionNumber in ICE"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-kNcSC7"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-kNcSC7"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/GLFW/CMake/modules"
+    buildResult:
+      variable: "CMAKE_LIB_ICE_HAS_ICECONNECTIONNUMBER"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-kNcSC7'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_7cf4f/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_7cf4f.dir/build.make CMakeFiles/cmTC_7cf4f.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-kNcSC7»
+        Building C object CMakeFiles/cmTC_7cf4f.dir/CheckFunctionExists.c.o
+        /usr/bin/clang   -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -MD -MT CMakeFiles/cmTC_7cf4f.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_7cf4f.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_7cf4f.dir/CheckFunctionExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-kNcSC7/CheckFunctionExists.c
+        Linking C executable cmTC_7cf4f
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7cf4f.dir/link.txt --verbose=1
+        /usr/bin/clang  -DCHECK_FUNCTION_EXISTS=IceConnectionNumber CMakeFiles/cmTC_7cf4f.dir/CheckFunctionExists.c.o -o cmTC_7cf4f  -lICE 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-kNcSC7»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:140 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "/usr/share/cmake/Modules/FindBZip2.cmake:93 (CHECK_SYMBOL_EXISTS)"
+      - "dependencies/freetype/CMakeLists.txt:286 (find_package)"
+    checks:
+      - "Looking for BZ2_bzCompressInit"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ccIxUY"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ccIxUY"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/freetype/builds/cmake"
+    buildResult:
+      variable: "BZIP2_NEED_PREFIX"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ccIxUY'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_964f2/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_964f2.dir/build.make CMakeFiles/cmTC_964f2.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ccIxUY»
+        Building C object CMakeFiles/cmTC_964f2.dir/CheckSymbolExists.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_964f2.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_964f2.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_964f2.dir/CheckSymbolExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ccIxUY/CheckSymbolExists.c
+        Linking C executable cmTC_964f2
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_964f2.dir/link.txt --verbose=1
+        /usr/bin/clang -rdynamic CMakeFiles/cmTC_964f2.dir/CheckSymbolExists.c.o -o cmTC_964f2  /usr/lib/libbz2.so 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ccIxUY»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/freetype/CMakeLists.txt:301 (check_include_file)"
+    checks:
+      - "Looking for unistd.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VZTnlX"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VZTnlX"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/freetype/builds/cmake"
+    buildResult:
+      variable: "HAVE_UNISTD_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VZTnlX'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6a78f/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_6a78f.dir/build.make CMakeFiles/cmTC_6a78f.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VZTnlX»
+        Building C object CMakeFiles/cmTC_6a78f.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_6a78f.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_6a78f.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_6a78f.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VZTnlX/CheckIncludeFile.c
+        Linking C executable cmTC_6a78f
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6a78f.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_6a78f.dir/CheckIncludeFile.c.o -o cmTC_6a78f 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VZTnlX»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/freetype/CMakeLists.txt:302 (check_include_file)"
+    checks:
+      - "Looking for fcntl.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Pu01v1"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Pu01v1"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/freetype/builds/cmake"
+    buildResult:
+      variable: "HAVE_FCNTL_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Pu01v1'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8f244/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_8f244.dir/build.make CMakeFiles/cmTC_8f244.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Pu01v1»
+        Building C object CMakeFiles/cmTC_8f244.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_8f244.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_8f244.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_8f244.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Pu01v1/CheckIncludeFile.c
+        Linking C executable cmTC_8f244
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8f244.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_8f244.dir/CheckIncludeFile.c.o -o cmTC_8f244 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Pu01v1»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "dependencies/openal/CMakeLists.txt:194 (check_cxx_source_compiles)"
+    checks:
+      - "Performing Test HAVE_STDC_FORMAT_MACROS"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-WB2ZEh"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-WB2ZEh"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_CXX_FLAGS: "-Wall -Wextra"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_STDC_FORMAT_MACROS"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-WB2ZEh'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_daaa6/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_daaa6.dir/build.make CMakeFiles/cmTC_daaa6.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-WB2ZEh»
+        Building CXX object CMakeFiles/cmTC_daaa6.dir/src.cxx.o
+        /usr/bin/clang++ -DHAVE_STDC_FORMAT_MACROS  -Wall -Wextra  -std=gnu++20 -MD -MT CMakeFiles/cmTC_daaa6.dir/src.cxx.o -MF CMakeFiles/cmTC_daaa6.dir/src.cxx.o.d -o CMakeFiles/cmTC_daaa6.dir/src.cxx.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-WB2ZEh/src.cxx
+        Linking CXX executable cmTC_daaa6
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_daaa6.dir/link.txt --verbose=1
+        /usr/bin/clang++ -Wall -Wextra  CMakeFiles/cmTC_daaa6.dir/src.cxx.o -o cmTC_daaa6 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-WB2ZEh»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:140 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "dependencies/openal/CMakeLists.txt:208 (check_symbol_exists)"
+    checks:
+      - "Looking for posix_memalign"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aZTymu"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aZTymu"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_POSIX_MEMALIGN_DEFAULT"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aZTymu'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_62c8e/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_62c8e.dir/build.make CMakeFiles/cmTC_62c8e.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aZTymu»
+        Building C object CMakeFiles/cmTC_62c8e.dir/CheckSymbolExists.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_62c8e.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_62c8e.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_62c8e.dir/CheckSymbolExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aZTymu/CheckSymbolExists.c
+        Linking C executable cmTC_62c8e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62c8e.dir/link.txt --verbose=1
+        /usr/bin/clang -rdynamic CMakeFiles/cmTC_62c8e.dir/CheckSymbolExists.c.o -o cmTC_62c8e 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aZTymu»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "dependencies/openal/CMakeLists.txt:223 (check_cxx_source_compiles)"
+    checks:
+      - "Performing Test HAVE___RESTRICT"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-DazfdG"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-DazfdG"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_CXX_FLAGS: "-Wall -Wextra"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE___RESTRICT"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-DazfdG'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_01a8a/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_01a8a.dir/build.make CMakeFiles/cmTC_01a8a.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-DazfdG»
+        Building CXX object CMakeFiles/cmTC_01a8a.dir/src.cxx.o
+        /usr/bin/clang++ -DHAVE___RESTRICT  -Wall -Wextra  -std=gnu++20 -MD -MT CMakeFiles/cmTC_01a8a.dir/src.cxx.o -MF CMakeFiles/cmTC_01a8a.dir/src.cxx.o.d -o CMakeFiles/cmTC_01a8a.dir/src.cxx.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-DazfdG/src.cxx
+        Linking CXX executable cmTC_01a8a
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_01a8a.dir/link.txt --verbose=1
+        /usr/bin/clang++ -Wall -Wextra  CMakeFiles/cmTC_01a8a.dir/src.cxx.o -o cmTC_01a8a 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-DazfdG»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "dependencies/openal/CMakeLists.txt:234 (check_cxx_source_compiles)"
+    checks:
+      - "Performing Test HAVE_LIBATOMIC"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-KLlPZM"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-KLlPZM"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_CXX_FLAGS: "-Wall -Wextra"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_LIBATOMIC"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-KLlPZM'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_85597/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_85597.dir/build.make CMakeFiles/cmTC_85597.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-KLlPZM»
+        Building CXX object CMakeFiles/cmTC_85597.dir/src.cxx.o
+        /usr/bin/clang++ -DHAVE_LIBATOMIC  -Wall -Wextra  -std=gnu++20 -MD -MT CMakeFiles/cmTC_85597.dir/src.cxx.o -MF CMakeFiles/cmTC_85597.dir/src.cxx.o.d -o CMakeFiles/cmTC_85597.dir/src.cxx.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-KLlPZM/src.cxx
+        Linking CXX executable cmTC_85597
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_85597.dir/link.txt --verbose=1
+        /usr/bin/clang++ -Wall -Wextra  CMakeFiles/cmTC_85597.dir/src.cxx.o -o cmTC_85597  -latomic 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-KLlPZM»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:34 (cmake_check_compiler_flag)"
+      - "dependencies/openal/CMakeLists.txt:288 (check_cxx_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_WNO_CXX20_ATTR_EXT"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aNIr8k"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aNIr8k"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_CXX_FLAGS: "-Wall -Wextra"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_WNO_CXX20_ATTR_EXT"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aNIr8k'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_16b07/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_16b07.dir/build.make CMakeFiles/cmTC_16b07.dir/build
+        make[1]: Entering directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aNIr8k'
+        Building CXX object CMakeFiles/cmTC_16b07.dir/src.cxx.o
+        /usr/bin/clang++ -DHAVE_WNO_CXX20_ATTR_EXT  -Wall -Wextra  -std=gnu++20   -Wno-c++20-attribute-extensions -MD -MT CMakeFiles/cmTC_16b07.dir/src.cxx.o -MF CMakeFiles/cmTC_16b07.dir/src.cxx.o.d -o CMakeFiles/cmTC_16b07.dir/src.cxx.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aNIr8k/src.cxx
+        Linking CXX executable cmTC_16b07
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_16b07.dir/link.txt --verbose=1
+        /usr/bin/clang++ -Wall -Wextra  CMakeFiles/cmTC_16b07.dir/src.cxx.o -o cmTC_16b07  -latomic 
+        make[1]: Leaving directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-aNIr8k'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCCompilerFlag.cmake:51 (cmake_check_compiler_flag)"
+      - "dependencies/openal/CMakeLists.txt:310 (check_c_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_FNO_MATH_ERRNO"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-G5ew45"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-G5ew45"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_FNO_MATH_ERRNO"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-G5ew45'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1bf18/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_1bf18.dir/build.make CMakeFiles/cmTC_1bf18.dir/build
+        make[1]: Entering directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-G5ew45'
+        Building C object CMakeFiles/cmTC_1bf18.dir/src.c.o
+        /usr/bin/clang -DHAVE_FNO_MATH_ERRNO  -fno-math-errno -MD -MT CMakeFiles/cmTC_1bf18.dir/src.c.o -MF CMakeFiles/cmTC_1bf18.dir/src.c.o.d -o CMakeFiles/cmTC_1bf18.dir/src.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-G5ew45/src.c
+        Linking C executable cmTC_1bf18
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1bf18.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_1bf18.dir/src.c.o -o cmTC_1bf18  -latomic 
+        make[1]: Leaving directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-G5ew45'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "dependencies/openal/CMakeLists.txt:369 (check_c_source_compiles)"
+    checks:
+      - "Performing Test HAVE_GCC_PROTECTED_VISIBILITY"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VrKgAm"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VrKgAm"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_GCC_PROTECTED_VISIBILITY"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VrKgAm'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_2ef32/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_2ef32.dir/build.make CMakeFiles/cmTC_2ef32.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VrKgAm»
+        Building C object CMakeFiles/cmTC_2ef32.dir/src.c.o
+        /usr/bin/clang -DHAVE_GCC_PROTECTED_VISIBILITY  -Wattributes -Werror -MD -MT CMakeFiles/cmTC_2ef32.dir/src.c.o -MF CMakeFiles/cmTC_2ef32.dir/src.c.o.d -o CMakeFiles/cmTC_2ef32.dir/src.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VrKgAm/src.c
+        Linking C executable cmTC_2ef32
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2ef32.dir/link.txt --verbose=1
+        /usr/bin/clang   -Wattributes -Werror CMakeFiles/cmTC_2ef32.dir/src.c.o -o cmTC_2ef32  -latomic 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VrKgAm»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCCompilerFlag.cmake:51 (cmake_check_compiler_flag)"
+      - "dependencies/openal/CMakeLists.txt:396 (check_c_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_MSSE2_SWITCH"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ImOr5Q"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ImOr5Q"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_MSSE2_SWITCH"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ImOr5Q'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_3d5e8/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_3d5e8.dir/build.make CMakeFiles/cmTC_3d5e8.dir/build
+        make[1]: Entering directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ImOr5Q'
+        Building C object CMakeFiles/cmTC_3d5e8.dir/src.c.o
+        /usr/bin/clang -DHAVE_MSSE2_SWITCH  -Werror   -msse2 -MD -MT CMakeFiles/cmTC_3d5e8.dir/src.c.o -MF CMakeFiles/cmTC_3d5e8.dir/src.c.o.d -o CMakeFiles/cmTC_3d5e8.dir/src.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ImOr5Q/src.c
+        Linking C executable cmTC_3d5e8
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3d5e8.dir/link.txt --verbose=1
+        /usr/bin/clang   -Werror CMakeFiles/cmTC_3d5e8.dir/src.c.o -o cmTC_3d5e8  -latomic 
+        make[1]: Leaving directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-ImOr5Q'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:404 (check_include_file)"
+    checks:
+      - "Looking for xmmintrin.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vUJyK3"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vUJyK3"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_XMMINTRIN_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vUJyK3'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_0d7e5/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_0d7e5.dir/build.make CMakeFiles/cmTC_0d7e5.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vUJyK3»
+        Building C object CMakeFiles/cmTC_0d7e5.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_0d7e5.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_0d7e5.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_0d7e5.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vUJyK3/CheckIncludeFile.c
+        Linking C executable cmTC_0d7e5
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0d7e5.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_0d7e5.dir/CheckIncludeFile.c.o -o cmTC_0d7e5  -latomic 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vUJyK3»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:405 (check_include_file)"
+    checks:
+      - "Looking for emmintrin.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-5NghOg"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-5NghOg"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_EMMINTRIN_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-5NghOg'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_4dc97/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_4dc97.dir/build.make CMakeFiles/cmTC_4dc97.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-5NghOg»
+        Building C object CMakeFiles/cmTC_4dc97.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_4dc97.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_4dc97.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_4dc97.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-5NghOg/CheckIncludeFile.c
+        Linking C executable cmTC_4dc97
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4dc97.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_4dc97.dir/CheckIncludeFile.c.o -o cmTC_4dc97  -latomic 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-5NghOg»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:406 (check_include_file)"
+    checks:
+      - "Looking for pmmintrin.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-fhjVwi"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-fhjVwi"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_PMMINTRIN_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-fhjVwi'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_105a1/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_105a1.dir/build.make CMakeFiles/cmTC_105a1.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-fhjVwi»
+        Building C object CMakeFiles/cmTC_105a1.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_105a1.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_105a1.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_105a1.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-fhjVwi/CheckIncludeFile.c
+        Linking C executable cmTC_105a1
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_105a1.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_105a1.dir/CheckIncludeFile.c.o -o cmTC_105a1  -latomic 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-fhjVwi»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:407 (check_include_file)"
+    checks:
+      - "Looking for smmintrin.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-91T5v7"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-91T5v7"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_SMMINTRIN_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-91T5v7'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_62764/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_62764.dir/build.make CMakeFiles/cmTC_62764.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-91T5v7»
+        Building C object CMakeFiles/cmTC_62764.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_62764.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_62764.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_62764.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-91T5v7/CheckIncludeFile.c
+        Linking C executable cmTC_62764
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62764.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_62764.dir/CheckIncludeFile.c.o -o cmTC_62764  -latomic 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-91T5v7»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:408 (check_include_file)"
+    checks:
+      - "Looking for arm_neon.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VwQ7zx"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VwQ7zx"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_ARM_NEON_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VwQ7zx'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_0894c/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_0894c.dir/build.make CMakeFiles/cmTC_0894c.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VwQ7zx»
+        Building C object CMakeFiles/cmTC_0894c.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_0894c.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_0894c.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_0894c.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VwQ7zx/CheckIncludeFile.c
+        In file included from /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VwQ7zx/CheckIncludeFile.c:1:
+        /usr/lib/clang/17/include/arm_neon.h:28:2: error: "NEON intrinsics not available with the soft-float ABI. Please use -mfloat-abi=softfp or -mfloat-abi=hard"
+           28 | #error "NEON intrinsics not available with the soft-float ABI. Please use -mfloat-abi=softfp or -mfloat-abi=hard"
+              |  ^
+        1 error generated.
+        make[1]: *** [CMakeFiles/cmTC_0894c.dir/build.make:79: CMakeFiles/cmTC_0894c.dir/CheckIncludeFile.c.o] Ошибка 1
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-VwQ7zx»
+        make: *** [Makefile:127: cmTC_0894c/fast] Ошибка 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "dependencies/openal/CMakeLists.txt:508 (check_c_source_compiles)"
+    checks:
+      - "Performing Test HAVE_SSE_INTRINSICS"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-2ELVGr"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-2ELVGr"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_SSE_INTRINSICS"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-2ELVGr'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_56f34/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_56f34.dir/build.make CMakeFiles/cmTC_56f34.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-2ELVGr»
+        Building C object CMakeFiles/cmTC_56f34.dir/src.c.o
+        /usr/bin/clang -DHAVE_SSE_INTRINSICS   -MD -MT CMakeFiles/cmTC_56f34.dir/src.c.o -MF CMakeFiles/cmTC_56f34.dir/src.c.o.d -o CMakeFiles/cmTC_56f34.dir/src.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-2ELVGr/src.c
+        Linking C executable cmTC_56f34
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_56f34.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_56f34.dir/src.c.o -o cmTC_56f34  -latomic 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-2ELVGr»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:515 (check_include_file)"
+    checks:
+      - "Looking for malloc.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-rSyodX"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-rSyodX"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_MALLOC_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-rSyodX'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_31942/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_31942.dir/build.make CMakeFiles/cmTC_31942.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-rSyodX»
+        Building C object CMakeFiles/cmTC_31942.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_31942.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_31942.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_31942.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-rSyodX/CheckIncludeFile.c
+        Linking C executable cmTC_31942
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_31942.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_31942.dir/CheckIncludeFile.c.o -o cmTC_31942  -latomic 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-rSyodX»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:516 (check_include_file)"
+    checks:
+      - "Looking for cpuid.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-pPd4oj"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-pPd4oj"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_CPUID_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-pPd4oj'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_fd8a3/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_fd8a3.dir/build.make CMakeFiles/cmTC_fd8a3.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-pPd4oj»
+        Building C object CMakeFiles/cmTC_fd8a3.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_fd8a3.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_fd8a3.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_fd8a3.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-pPd4oj/CheckIncludeFile.c
+        Linking C executable cmTC_fd8a3
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fd8a3.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_fd8a3.dir/CheckIncludeFile.c.o -o cmTC_fd8a3  -latomic 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-pPd4oj»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:517 (check_include_file)"
+    checks:
+      - "Looking for intrin.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-CrCvb6"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-CrCvb6"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_INTRIN_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-CrCvb6'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_f77d2/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_f77d2.dir/build.make CMakeFiles/cmTC_f77d2.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-CrCvb6»
+        Building C object CMakeFiles/cmTC_f77d2.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_f77d2.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_f77d2.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_f77d2.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-CrCvb6/CheckIncludeFile.c
+        In file included from /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-CrCvb6/CheckIncludeFile.c:1:
+        /usr/lib/clang/17/include/intrin.h:12:15: fatal error: 'intrin.h' file not found
+           12 | #include_next <intrin.h>
+              |               ^~~~~~~~~~
+        1 error generated.
+        make[1]: *** [CMakeFiles/cmTC_f77d2.dir/build.make:79: CMakeFiles/cmTC_f77d2.dir/CheckIncludeFile.c.o] Ошибка 1
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-CrCvb6»
+        make: *** [Makefile:127: cmTC_f77d2/fast] Ошибка 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:518 (check_include_file)"
+    checks:
+      - "Looking for guiddef.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-w0D3Oi"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-w0D3Oi"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_GUIDDEF_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-w0D3Oi'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6267f/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_6267f.dir/build.make CMakeFiles/cmTC_6267f.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-w0D3Oi»
+        Building C object CMakeFiles/cmTC_6267f.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_6267f.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_6267f.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_6267f.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-w0D3Oi/CheckIncludeFile.c
+        /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-w0D3Oi/CheckIncludeFile.c:1:10: fatal error: 'guiddef.h' file not found
+            1 | #include <guiddef.h>
+              |          ^~~~~~~~~~~
+        1 error generated.
+        make[1]: *** [CMakeFiles/cmTC_6267f.dir/build.make:79: CMakeFiles/cmTC_6267f.dir/CheckIncludeFile.c.o] Ошибка 1
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-w0D3Oi»
+        make: *** [Makefile:127: cmTC_6267f/fast] Ошибка 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:520 (check_include_file)"
+    checks:
+      - "Looking for initguid.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-bllVBW"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-bllVBW"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_INITGUID_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-bllVBW'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_5c378/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_5c378.dir/build.make CMakeFiles/cmTC_5c378.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-bllVBW»
+        Building C object CMakeFiles/cmTC_5c378.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_5c378.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_5c378.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_5c378.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-bllVBW/CheckIncludeFile.c
+        /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-bllVBW/CheckIncludeFile.c:1:10: fatal error: 'initguid.h' file not found
+            1 | #include <initguid.h>
+              |          ^~~~~~~~~~~~
+        1 error generated.
+        make[1]: *** [CMakeFiles/cmTC_5c378.dir/build.make:79: CMakeFiles/cmTC_5c378.dir/CheckIncludeFile.c.o] Ошибка 1
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-bllVBW»
+        make: *** [Makefile:127: cmTC_5c378/fast] Ошибка 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:525 (check_library_exists)"
+    checks:
+      - "Looking for pow in m"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-PIRddL"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-PIRddL"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_LIBM"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-PIRddL'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_dc917/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_dc917.dir/build.make CMakeFiles/cmTC_dc917.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-PIRddL»
+        Building C object CMakeFiles/cmTC_dc917.dir/CheckFunctionExists.c.o
+        /usr/bin/clang   -DCHECK_FUNCTION_EXISTS=pow -MD -MT CMakeFiles/cmTC_dc917.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_dc917.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_dc917.dir/CheckFunctionExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-PIRddL/CheckFunctionExists.c
+        /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-PIRddL/CheckFunctionExists.c:7:3: warning: incompatible redeclaration of library function 'pow' [-Wincompatible-library-redeclaration]
+            7 |   CHECK_FUNCTION_EXISTS(void);
+              |   ^
+        <command line>:1:31: note: expanded from macro 'CHECK_FUNCTION_EXISTS'
+            1 | #define CHECK_FUNCTION_EXISTS pow
+              |                               ^
+        /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-PIRddL/CheckFunctionExists.c:7:3: note: 'pow' is a builtin with type 'double (double, double)'
+        <command line>:1:31: note: expanded from macro 'CHECK_FUNCTION_EXISTS'
+            1 | #define CHECK_FUNCTION_EXISTS pow
+              |                               ^
+        1 warning generated.
+        Linking C executable cmTC_dc917
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dc917.dir/link.txt --verbose=1
+        /usr/bin/clang  -DCHECK_FUNCTION_EXISTS=pow CMakeFiles/cmTC_dc917.dir/CheckFunctionExists.c.o -o cmTC_dc917  -lm -latomic 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-PIRddL»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:534 (check_library_exists)"
+    checks:
+      - "Looking for clock_gettime in rt"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-62ci9A"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-62ci9A"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_LIBRT"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-62ci9A'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d520a/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_d520a.dir/build.make CMakeFiles/cmTC_d520a.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-62ci9A»
+        Building C object CMakeFiles/cmTC_d520a.dir/CheckFunctionExists.c.o
+        /usr/bin/clang   -DCHECK_FUNCTION_EXISTS=clock_gettime -MD -MT CMakeFiles/cmTC_d520a.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_d520a.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_d520a.dir/CheckFunctionExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-62ci9A/CheckFunctionExists.c
+        Linking C executable cmTC_d520a
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d520a.dir/link.txt --verbose=1
+        /usr/bin/clang  -DCHECK_FUNCTION_EXISTS=clock_gettime CMakeFiles/cmTC_d520a.dir/CheckFunctionExists.c.o -o cmTC_d520a  -lrt -latomic -lm 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-62ci9A»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:541 (check_include_file)"
+    checks:
+      - "Looking for dlfcn.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-v7OWim"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-v7OWim"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_DLFCN_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-v7OWim'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_69f52/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_69f52.dir/build.make CMakeFiles/cmTC_69f52.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-v7OWim»
+        Building C object CMakeFiles/cmTC_69f52.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_69f52.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_69f52.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_69f52.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-v7OWim/CheckIncludeFile.c
+        Linking C executable cmTC_69f52
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_69f52.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_69f52.dir/CheckIncludeFile.c.o -o cmTC_69f52  -latomic -lm 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-v7OWim»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:542 (check_library_exists)"
+    checks:
+      - "Looking for dlopen in dl"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1xjNcw"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1xjNcw"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_LIBDL"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1xjNcw'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6c7c0/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_6c7c0.dir/build.make CMakeFiles/cmTC_6c7c0.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1xjNcw»
+        Building C object CMakeFiles/cmTC_6c7c0.dir/CheckFunctionExists.c.o
+        /usr/bin/clang   -DCHECK_FUNCTION_EXISTS=dlopen -MD -MT CMakeFiles/cmTC_6c7c0.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_6c7c0.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_6c7c0.dir/CheckFunctionExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1xjNcw/CheckFunctionExists.c
+        Linking C executable cmTC_6c7c0
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6c7c0.dir/link.txt --verbose=1
+        /usr/bin/clang  -DCHECK_FUNCTION_EXISTS=dlopen CMakeFiles/cmTC_6c7c0.dir/CheckFunctionExists.c.o -o cmTC_6c7c0  -ldl -latomic -lm 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1xjNcw»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "dependencies/openal/CMakeLists.txt:551 (check_c_source_compiles)"
+    checks:
+      - "Performing Test HAVE_GCC_GET_CPUID"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-SjTgYo"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-SjTgYo"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_GCC_GET_CPUID"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-SjTgYo'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_deb6a/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_deb6a.dir/build.make CMakeFiles/cmTC_deb6a.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-SjTgYo»
+        Building C object CMakeFiles/cmTC_deb6a.dir/src.c.o
+        /usr/bin/clang -DHAVE_GCC_GET_CPUID   -MD -MT CMakeFiles/cmTC_deb6a.dir/src.c.o -MF CMakeFiles/cmTC_deb6a.dir/src.c.o.d -o CMakeFiles/cmTC_deb6a.dir/src.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-SjTgYo/src.c
+        Linking C executable cmTC_deb6a
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_deb6a.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_deb6a.dir/src.c.o -o cmTC_deb6a  -latomic -lm -ldl 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-SjTgYo»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:140 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "dependencies/openal/CMakeLists.txt:568 (check_symbol_exists)"
+    checks:
+      - "Looking for proc_pidpath"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vogYBW"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vogYBW"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_PROC_PIDPATH"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vogYBW'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_45eb5/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_45eb5.dir/build.make CMakeFiles/cmTC_45eb5.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vogYBW»
+        Building C object CMakeFiles/cmTC_45eb5.dir/CheckSymbolExists.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_45eb5.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_45eb5.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_45eb5.dir/CheckSymbolExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vogYBW/CheckSymbolExists.c
+        /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vogYBW/CheckSymbolExists.c:2:10: fatal error: 'libproc.h' file not found
+            2 | #include <libproc.h>
+              |          ^~~~~~~~~~~
+        1 error generated.
+        make[1]: *** [CMakeFiles/cmTC_45eb5.dir/build.make:79: CMakeFiles/cmTC_45eb5.dir/CheckSymbolExists.c.o] Ошибка 1
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-vogYBW»
+        make: *** [Makefile:127: cmTC_45eb5/fast] Ошибка 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:573 (check_include_file)"
+    checks:
+      - "Looking for pthread.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-C2i8px"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-C2i8px"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_PTHREAD_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-C2i8px'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_7374a/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_7374a.dir/build.make CMakeFiles/cmTC_7374a.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-C2i8px»
+        Building C object CMakeFiles/cmTC_7374a.dir/CheckIncludeFile.c.o
+        /usr/bin/clang    -MD -MT CMakeFiles/cmTC_7374a.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_7374a.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_7374a.dir/CheckIncludeFile.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-C2i8px/CheckIncludeFile.c
+        Linking C executable cmTC_7374a
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7374a.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_7374a.dir/CheckIncludeFile.c.o -o cmTC_7374a  -latomic -lm -ldl 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-C2i8px»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCCompilerFlag.cmake:51 (cmake_check_compiler_flag)"
+      - "dependencies/openal/CMakeLists.txt:578 (check_c_compiler_flag)"
+    checks:
+      - "Performing Test HAVE_PTHREAD"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-JYySPz"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-JYySPz"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-JYySPz'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_2f75e/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_2f75e.dir/build.make CMakeFiles/cmTC_2f75e.dir/build
+        make[1]: Entering directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-JYySPz'
+        Building C object CMakeFiles/cmTC_2f75e.dir/src.c.o
+        /usr/bin/clang -DHAVE_PTHREAD  -pthread -MD -MT CMakeFiles/cmTC_2f75e.dir/src.c.o -MF CMakeFiles/cmTC_2f75e.dir/src.c.o.d -o CMakeFiles/cmTC_2f75e.dir/src.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-JYySPz/src.c
+        Linking C executable cmTC_2f75e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2f75e.dir/link.txt --verbose=1
+        /usr/bin/clang CMakeFiles/cmTC_2f75e.dir/src.c.o -o cmTC_2f75e  -latomic -lm -ldl 
+        make[1]: Leaving directory '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-JYySPz'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:140 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "dependencies/openal/CMakeLists.txt:585 (check_symbol_exists)"
+    checks:
+      - "Looking for pthread_setschedparam"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1jBMBY"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1jBMBY"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_PTHREAD_SETSCHEDPARAM"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1jBMBY'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_2a05e/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_2a05e.dir/build.make CMakeFiles/cmTC_2a05e.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1jBMBY»
+        Building C object CMakeFiles/cmTC_2a05e.dir/CheckSymbolExists.c.o
+        /usr/bin/clang   -pthread -MD -MT CMakeFiles/cmTC_2a05e.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_2a05e.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_2a05e.dir/CheckSymbolExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1jBMBY/CheckSymbolExists.c
+        Linking C executable cmTC_2a05e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2a05e.dir/link.txt --verbose=1
+        /usr/bin/clang   -pthread -rdynamic CMakeFiles/cmTC_2a05e.dir/CheckSymbolExists.c.o -o cmTC_2a05e  -latomic -lm -ldl 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-1jBMBY»
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckIncludeFiles.cmake:132 (try_compile)"
+      - "dependencies/openal/CMakeLists.txt:588 (check_include_files)"
+    checks:
+      - "Looking for include files pthread.h, pthread_np.h"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Xbuq3X"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Xbuq3X"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_PTHREAD_NP_H"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Xbuq3X'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_bd675/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_bd675.dir/build.make CMakeFiles/cmTC_bd675.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Xbuq3X»
+        Building C object CMakeFiles/cmTC_bd675.dir/HAVE_PTHREAD_NP_H.c.o
+        /usr/bin/clang   -pthread -MD -MT CMakeFiles/cmTC_bd675.dir/HAVE_PTHREAD_NP_H.c.o -MF CMakeFiles/cmTC_bd675.dir/HAVE_PTHREAD_NP_H.c.o.d -o CMakeFiles/cmTC_bd675.dir/HAVE_PTHREAD_NP_H.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Xbuq3X/HAVE_PTHREAD_NP_H.c
+        /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Xbuq3X/HAVE_PTHREAD_NP_H.c:3:10: fatal error: 'pthread_np.h' file not found
+            3 | #include <pthread_np.h>
+              |          ^~~~~~~~~~~~~~
+        1 error generated.
+        make[1]: *** [CMakeFiles/cmTC_bd675.dir/build.make:79: CMakeFiles/cmTC_bd675.dir/HAVE_PTHREAD_NP_H.c.o] Ошибка 1
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-Xbuq3X»
+        make: *** [Makefile:127: cmTC_bd675/fast] Ошибка 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:140 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "dependencies/openal/CMakeLists.txt:595 (check_symbol_exists)"
+    checks:
+      - "Looking for pthread_setname_np"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-MrLKns"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-MrLKns"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_PTHREAD_SETNAME_NP"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-MrLKns'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_e6edc/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_e6edc.dir/build.make CMakeFiles/cmTC_e6edc.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-MrLKns»
+        Building C object CMakeFiles/cmTC_e6edc.dir/CheckSymbolExists.c.o
+        /usr/bin/clang   -pthread -MD -MT CMakeFiles/cmTC_e6edc.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_e6edc.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_e6edc.dir/CheckSymbolExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-MrLKns/CheckSymbolExists.c
+        /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-MrLKns/CheckSymbolExists.c:8:19: error: use of undeclared identifier 'pthread_setname_np'
+            8 |   return ((int*)(&pthread_setname_np))[argc];
+              |                   ^
+        1 error generated.
+        make[1]: *** [CMakeFiles/cmTC_e6edc.dir/build.make:79: CMakeFiles/cmTC_e6edc.dir/CheckSymbolExists.c.o] Ошибка 1
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-MrLKns»
+        make: *** [Makefile:127: cmTC_e6edc/fast] Ошибка 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:140 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "dependencies/openal/CMakeLists.txt:597 (check_symbol_exists)"
+    checks:
+      - "Looking for pthread_set_name_np"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9BTp2Q"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9BTp2Q"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_PTHREAD_SET_NAME_NP"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9BTp2Q'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1cd45/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_1cd45.dir/build.make CMakeFiles/cmTC_1cd45.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9BTp2Q»
+        Building C object CMakeFiles/cmTC_1cd45.dir/CheckSymbolExists.c.o
+        /usr/bin/clang   -pthread -MD -MT CMakeFiles/cmTC_1cd45.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_1cd45.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_1cd45.dir/CheckSymbolExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9BTp2Q/CheckSymbolExists.c
+        /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9BTp2Q/CheckSymbolExists.c:8:19: error: use of undeclared identifier 'pthread_set_name_np'
+            8 |   return ((int*)(&pthread_set_name_np))[argc];
+              |                   ^
+        1 error generated.
+        make[1]: *** [CMakeFiles/cmTC_1cd45.dir/build.make:79: CMakeFiles/cmTC_1cd45.dir/CheckSymbolExists.c.o] Ошибка 1
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-9BTp2Q»
+        make: *** [Makefile:127: cmTC_1cd45/fast] Ошибка 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:140 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "dependencies/openal/CMakeLists.txt:602 (check_symbol_exists)"
+    checks:
+      - "Looking for getopt"
+    directories:
+      source: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-A9BFcv"
+      binary: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-A9BFcv"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/dependencies/openal/cmake"
+    buildResult:
+      variable: "HAVE_GETOPT"
+      cached: true
+      stdout: |
+        Change Dir: '/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-A9BFcv'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_716b6/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_716b6.dir/build.make CMakeFiles/cmTC_716b6.dir/build
+        make[1]: вход в каталог «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-A9BFcv»
+        Building C object CMakeFiles/cmTC_716b6.dir/CheckSymbolExists.c.o
+        /usr/bin/clang   -pthread -MD -MT CMakeFiles/cmTC_716b6.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_716b6.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_716b6.dir/CheckSymbolExists.c.o -c /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-A9BFcv/CheckSymbolExists.c
+        Linking C executable cmTC_716b6
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_716b6.dir/link.txt --verbose=1
+        /usr/bin/clang   -pthread -rdynamic CMakeFiles/cmTC_716b6.dir/CheckSymbolExists.c.o -o cmTC_716b6  -latomic -lm -ldl 
+        make[1]: выход из каталога «/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/CMakeFiles/CMakeScratch/TryCompile-A9BFcv»
+        
+      exitCode: 0
+...
