@@ -1,6 +1,7 @@
 #pragma once
 
 
+
 //Draws in screen coords
 void UI_NormalMapDraw(glm::vec2 position, glm::vec2 scale, unsigned int NormalMap = BallNormalMapTexture, float rotation = 0.0f, int Z_Index = 0, unsigned int Texture = NULL, bool Additive = false);
 
@@ -38,23 +39,11 @@ glm::vec2 UI_buttonOnlyON(bool* param, const char* text, glm::vec2 scrPosition, 
 glm::vec2 UI_button(bool* param, const char* text, glm::vec2 scrPosition, glm::vec2 scale = glm::vec2(150.0f, 35.0f), float textScale = 0.35f, glm::vec4 TextColorAdder = glm::vec4(0.5f), glm::vec4 ColorON = glm::vec4(0.8f), glm::vec4 ColorOFF = glm::vec4(0.5f), int Z_Index = 0, bool Additive = false);
 
 
-#ifndef UI_Implementation
-extern
-#endif
-int
-iDragBuff;
+inline int iDragBuff;
 
-#ifndef UI_Implementation
-extern
-#endif
-float
-fDragBuff;
+inline float fDragBuff;
 
-#ifndef UI_Implementation
-extern
-#endif
-bool
-Dragging;
+inline bool Dragging;
 
 	
 

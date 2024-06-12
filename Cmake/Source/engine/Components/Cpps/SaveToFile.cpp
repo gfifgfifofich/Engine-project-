@@ -41,7 +41,10 @@ std::vector<std::string> DataStorage::GetProperties(std::string ObjectName)
 
 std::string DataStorage::GetProperty(std::string ObjectName, std::string Property) 
 {
-	return data[ObjectName][Property];
+	std::string prop = data[ObjectName][Property];
+	while(prop.size()>0 && prop[prop.size()-1] == ' ')
+		prop.pop_back();
+	return prop;
 }
 
 int DataStorage::GetPropertyAsInt(std::string ObjectName, std::string Property)

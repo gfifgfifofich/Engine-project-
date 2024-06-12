@@ -18,15 +18,15 @@ UI
 */
 
 
-
-#include "engine/Components/Engine.h"
+#include "engine/Components/Redactor.h"
 #include "engine/Components/Include/sounds.h"
+
 
 
 #define PARTSIZE 0.5f
 
-int SceneWindowID = -1;
 int BackgroundWindowID = -1;
+int ForeWindowID = -1;
 int MenuWindowID = -1;
 
 float TextSize = 1.0f;
@@ -181,9 +181,6 @@ glm::ivec2 StandartResolutions[] =
 };
 
 
-glm::vec2 s_Resolution = { 800,600 };
-bool s_Fullscreen = false;
-
 std::string RX = std::to_string(s_Resolution.x);
 std::string RY = std::to_string(s_Resolution.y);
 
@@ -238,24 +235,6 @@ int balllbuffersize;
 ball* ballbuffer[200];
 float Exposure = 0.0f;
 
-void ProcessCamera(float dt)
-{
-	if (Exposure < 0.85f)
-		Exposure += dt;
-	else
-        Exposure = 0.85f;
-	SceneExposure = Exposure * Exposure * brightness;
-	CameraPosition = camerapos + glm::vec2(((rand()%100) * ScreenShake - ScreenShake *50.0f )* s_ScreenShake, ((rand() %100) * ScreenShake - ScreenShake * 50.0f )* s_ScreenShake);
-	ScreenShake -= ScreenShakeFallOff * dt;
-	ChromaticAbberation -= ChromaticAbberationFallOff * dt;
-	if (ScreenShake < 0.0f) ScreenShake = 0.0f;
-	if (ChromaticAbberation < 0.0f) ChromaticAbberation = 0.0f;
-
-	if (ScreenShake > 1.0f) ScreenShake = 1.0f;
-	if (ChromaticAbberation > 0.3f) ChromaticAbberation = 0.3f;
-	ChromaticStrength = ChromaticAbberation * s_ChromaticAbberation;
-	UpdateListenerPosition();
-}
 
 struct LightEffect
 {
@@ -311,7 +290,6 @@ float CentralLightHeight = 0.001f;
 
 ParticleEmiter Sparks;
 unsigned int noize = NULL;
-Scene Map;
 Scene Background;
 #include "DamageSphere.h"
 #include "Explodion.h"
@@ -360,7 +338,6 @@ bool createdFreezeDS = false;
 bool align = false;
 bool snapToGrid = false;
 
-glm::vec2 AqueredCameraScale = { 20.0f ,20.0f };
 
 std::vector<ball*>balls;
 
@@ -393,9 +370,29 @@ int lastsound = 0;
 int lastsound2 = 0;
 unsigned int lastplayedsound = 1;
 
+void ProcessCamera(float dt)
+{
+	if (Exposure < 0.85f)
+		Exposure += dt;
+	else
+        Exposure = 0.85f;
+	SceneExposure = Exposure * Exposure * brightness;
+	CameraPosition = camerapos + glm::vec2(((rand()%100) * ScreenShake - ScreenShake *50.0f )* s_ScreenShake, ((rand() %100) * ScreenShake - ScreenShake * 50.0f )* s_ScreenShake);
+	ScreenShake -= ScreenShakeFallOff * dt;
+	ChromaticAbberation -= ChromaticAbberationFallOff * dt;
+	if (ScreenShake < 0.0f) ScreenShake = 0.0f;
+	if (ChromaticAbberation < 0.0f) ChromaticAbberation = 0.0f;
+
+	if (ScreenShake > 1.0f) ScreenShake = 1.0f;
+	if (ChromaticAbberation > 0.3f) ChromaticAbberation = 0.3f;
+	ChromaticStrength = ChromaticAbberation * s_ChromaticAbberation;
+
+	UpdateListenerPosition();
+}
 
 
-std::vector <miscPoint> PartSpawnPoints;
+
+std::vector <Node> PartSpawnPoints;
 
 void Delete()
 {
@@ -406,38 +403,30 @@ void Delete()
 void ChangeMap(std::string FilePath, bool scaleDown = true)
 {
 	
-	Map.LoadFrom(FilePath);
+	GameScene->LoadFrom(FilePath);
 	if (scaleDown)
 	{
 		CameraScale = { 20,20 };
-		Map.Rescale(glm::vec2(0.085f), 10);
-		for (int i = 0; i < Map.ParticleEmiters.size(); i++)
-		{
-			Map.ParticleEmiters[i].InitialVelocity *= 0.025f;
-			Map.ParticleEmiters[i].VelocityRandomness *= 0.025f;
-			Map.ParticleEmiters[i].StartSize.x *= 0.025f;
-			Map.ParticleEmiters[i].EndSize.x *= 0.025f;
-		}
 	}
 	else
 		CameraScale = { 1.0f,1.0f };
 
 	PartSpawnPoints.clear();
 	int currentobject = 0;
-	for (int i = 0; i < Map.points.size(); i++)
+	for (int i = 0; i < GameScene->Nodes.size(); i++)
 	{
-		if (Map.points[i].id == 1 && currentobject <= SpawnablePartAmount)
+		if (GameScene->Nodes[i]->id == 1 && currentobject <= SpawnablePartAmount)
 		{
-			miscPoint mp;
+			Node mp;
 			mp.id = currentobject;
-			mp.position = Map.points[i].position;
+			mp.position = GameScene->Nodes[i]->position;
 			PartSpawnPoints.push_back(mp);
 			currentobject++;
 		}
 	}
 
 
-	
+
 	for(int i=0;i<Entities.size();i++)
 		Entities[i]->Destroy();
 	Entities.clear();
@@ -452,7 +441,7 @@ void ChangeMap(std::string FilePath, bool scaleDown = true)
 	AL_Reload();
 
 	lastEntityID = 0;
-	std::string menustr = "Maps/MenuScene.sav";
+	std::string menustr = "Scenes/Sun.sav";
 
 	if (menustr == FilePath)
 	{
@@ -967,17 +956,18 @@ void ProcessMainMenu()
 {
 
 	// -900;280
-	glm::vec2 Corner = { WIDTH * -0.45f,HEIGHT *0.35f };
-	float step = 10.0f;
-	glm::vec4 textColor = { 5.0f,5.0f,5.0f,1.5f };
-	glm::vec4 textColorOff = { 1.0f,1.0f,1.0f,1.5f };
-	int textZ = 2000;
 
-	Window* sw = GetWindow(SceneWindowID);
+	Window* sw = GetWindow(ForeWindowID);
 	Window* bw = GetWindow(BackgroundWindowID);
 	Window* mw = GetWindow(MenuWindowID);
 	
-	
+	mw->Use();
+	glm::vec2 Corner = { WIDTH * -0.45f,HEIGHT *0.35f };
+	float step = 10.0f;
+	glm::vec4 textColor = { 2.0f,2.0f,2.0f,1.0f };
+	glm::vec4 textColorOff = { 1.0f,1.0f,1.0f,1.0f };
+	int textZ = 2000;
+	DrawCircle(MousePosition,10.0f);
 	if (OpenMenu || SettingsWindow)
 	{
 		UI_DrawCube({ 0.0,0.0f }, { WIDTH * 1.0f,HEIGHT * 1.0f }, 0.0f, { 0.0f, 0.0f, 0.0f, 0.8f }, false, NULL, textZ - 100);
@@ -985,7 +975,6 @@ void ProcessMainMenu()
 
 	bool b = false;
 
-	mw->Use();
 	Corner.y += UI_DrawText("HEAT", Corner, TextSize*2.0f, textColor, textZ).y * -1.0f -step;
 	
 	Corner.y += UI_CheckBox(&b,"Start", Corner, UISize, TextSize, textColor, textColorOff, textZ).y * -1.0f - step;
@@ -1000,7 +989,7 @@ void ProcessMainMenu()
 		sw->Use();
 
 		
-		ChangeMap("Maps/base.sav", true);
+		ChangeMap("Scenes/base.sav", true);
 
 		SpawnPlayer();
 		switchScene = false;
@@ -1171,7 +1160,7 @@ void WaveProcess(float dt)
 }
 
 
-void On_Create()
+void Ready()
 {
 
 	LoadTextures();
@@ -1179,8 +1168,7 @@ void On_Create()
 	noize = NULL;
 	GenNoizeTexture(&noize, 100, 2, 1.0f, 2);
 
-
-	LoadFont("engine/fonts/LiberationSansR.ttf", 128);
+	//LoadFont("engine/fonts/LiberationSansR.ttf", 128);
 
 
 	float maxsize = fmaxf(WIDTH, HEIGHT);
@@ -1197,7 +1185,6 @@ void On_Create()
 	if (RY[3] == '.')
 		RY.pop_back();
 
-	AL_init();
 	for (int i = 0; i < StarsAmount; i++)
 	{
 		Stars[i].x = rand() % 1000 * 0.001f * StarsSpread - StarsSpread * 0.5f + camerapos.x;
@@ -1248,7 +1235,7 @@ void On_Create()
 	addShipToWave("Save0.sav", 1);
 	addShipToWave("Spinner.sav", 3);
 	WaveValue = 1;
-	ChangeMap("Maps/MenuScene.sav", false);
+	ChangeMap("Scenes/Sun.sav", false);
 
 	//SpawnPlayer();
 
@@ -1261,11 +1248,11 @@ void On_Create()
 	AmbientLight = 0.4f;
 
 
-	SceneWindowID = CreateWindow();
+	ForeWindowID = CreateWindow();
 	BackgroundWindowID = CreateWindow();
 	MenuWindowID = CreateWindow();
 
-	Window* sw = GetWindow(SceneWindowID);
+	Window* sw = GetWindow(ForeWindowID);
 	Window* bw = GetWindow(BackgroundWindowID);
 	Window* mw = GetWindow(MenuWindowID);
 
@@ -1276,9 +1263,9 @@ void On_Create()
 
 	sw->hdr = true;
 
-	sw->Init({ WIDTH,HEIGHT });
-	bw->Init({ WIDTH,HEIGHT });
-	mw->Init({ WIDTH,HEIGHT });
+	sw->Init(GetWindow(SceneWindowID)->ViewportSize);
+	bw->Init(GetWindow(SceneWindowID)->ViewportSize);
+	mw->Init(GetWindow(SceneWindowID)->ViewportSize);
 
 
     sw->backgroundColor = { 0.0f,0.0f,0.0f,0.0f };
@@ -1289,12 +1276,8 @@ void On_Create()
 	bw->w_AmbientLight = 0.1f;
 	sw->w_DirectionalLight = 2.0f;
 
-	Background.LoadFrom("Maps/Background.sav");
+	//Background.LoadFrom("Scenes/Sun.sav");
 
-	for (int i = 0; i < Background.LightSources.size(); i++)
-	{
-		Background.LightSources[i].volume *= 0.1f;
-	}
 	PartsData.Load("PartsProperties.ds");
 	InitParts();
 	PartsData.Save("PartsProperties.ds");
@@ -1302,10 +1285,9 @@ void On_Create()
 }
 
 
-void On_Update()
+void Process(float dt)
 {
 
-	
 	if (clock() < 100)
 		Speed = 0.0f;
 	else if (clock() >= 100 && clock() < 1200)
@@ -1320,15 +1302,15 @@ void On_Update()
 	if (in_UI < 0)
 		in_UI = 0;
 
-	Window* sw = GetWindow(SceneWindowID);
+	Window* sw = GetWindow(ForeWindowID);
 	Window* bw = GetWindow(BackgroundWindowID);
 	Window* mw = GetWindow(MenuWindowID);
 
 	sw->w_AmbientLight = AmbientLight;
 	bw->Use();
 	
-	if(!MainMenu)
-		Background.Draw(delta);
+	//if(!MainMenu)
+		//Background.Draw(delta);
 
 	bw->End();
 	sw->active = true;
@@ -1397,8 +1379,6 @@ void On_Update()
 	BulletHitLightHeight *= 0.1f;
 	CentralLightHeight *= 0.1f;
 
-	for (int i = 0; i < Map.LightSources.size(); i++)
-		Map.LightSources[i].position.z = CentralLightHeight;
 	if (ImGui::Button("VSync"))
 	{
 		if (VSync)
@@ -1531,9 +1511,7 @@ void On_Update()
 	if (Wave)
 		WaveProcess(delta);
 
-	ProcessCamera(delta);
 
-	ProcessAL();
 
 	ProcessPE(delta);
 
@@ -1542,10 +1520,11 @@ void On_Update()
 
 	ProcessLightEffects(delta);
 
-	//DrawCircle(MousePosition,10.0f);
+	DrawCircle(MousePosition,10.0f);
 
 	if (!OpenMenu && !MainMenu)
 	{
+		
 		ProcessPlayerControls();
 
 
@@ -1553,8 +1532,9 @@ void On_Update()
 
 
 	}
+	ProcessCamera(delta);
 	//Map.ParticleEmiters.clear();
-	Map.Draw(delta);
+    GameScene->Draw();
 	sw->End();
 
 	if (OpenMenu || MainMenu)
@@ -1563,7 +1543,7 @@ void On_Update()
 	bw->w_CameraPosition = sw->w_CameraPosition*0.1f;
 
     bw->End();
-    UseWindow(0);
+    UseWindow(SceneWindowID);
 
     bw->Draw(0);
 
@@ -1575,8 +1555,31 @@ void On_Update()
 }
 
 
-int main()
+class CustomNode : public Object
 {
+public:
+    
+    CustomNode()
+    {
+	    type = 8;
+	    Name = "Abobus";
+	    ObjectPreconstructor();
+
+    }
+
+    virtual void OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp) override
+    {
+        Scale -= prevdif;
+        Scale += mp-prevmp;
+    }
+    
+
+};
+
+
+void PreReady()
+{
+    // Remake with DataStorage
 	std::ifstream f("Settings.sav");
 	if (f.is_open())
 		while (!f.eof())
@@ -1609,11 +1612,17 @@ int main()
 		}
 
 	f.close();
-	//initEngine("HEAT",1920,1050,false);
-	initEngine("HEAT", s_Resolution.x, s_Resolution.y, s_Fullscreen);
+}
 
+
+void Rescale(int newWindth,int newHeight)
+{
+
+}
+
+void Destroy()
+{
 	SaveSettings();
 	AL_Destroy();
 	Delete();
-	return 0;
 }

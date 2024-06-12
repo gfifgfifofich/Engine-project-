@@ -45,14 +45,14 @@ public:
 				DrawLight(glm::vec3(body.body.position.x, body.body.position.y, BulletHitLightHeight), glm::vec2(1000 * (1.0f-stage))*0.025f, glm::vec4(2.5f, 1.0f, 0.5f, 0.5f));
 		}
 
-		for (int a = 0; a < Map.cubes.size(); a++)
+		for (int a = 0; a < GameScene->Collision_cubes.size(); a++)
 			if (!body.dead)
-				if (Map.cubes[a].id==-1 && BtCCollisionCheck(body.body, Map.cubes[a]))
+				if (GameScene->Collision_cubes[a]->id==-1 && BtCCollisionCheck(body.body, *GameScene->Collision_cubes[a]))
 					Dead();
 
-		for (int a = 0; a < Map.balls.size(); a++)
+		for (int a = 0; a < GameScene->Collision_balls.size(); a++)
 			if (!body.dead)
-				if (Map.cubes[a].id == -1 && BtBCollisionCheck(body.body, Map.balls[a]))
+				if (GameScene->Collision_balls[a]->id == -1 && BtBCollisionCheck(body.body, *GameScene->Collision_balls[a]))
 					Dead();
 
 	}

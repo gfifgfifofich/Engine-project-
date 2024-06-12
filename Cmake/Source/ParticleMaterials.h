@@ -299,6 +299,7 @@ void SetupPEs()
 	for (int i = 0; i < emiters.size(); i++)
 	{
 		emiters[i]->influenced = true;
+		emiters[i]->ShowWindow = false;
 	}
 }
 
@@ -313,6 +314,7 @@ void ProcessPE(float dt)
 	EngineSmoke.lifetime = 0.2f;
 	for (int i = 0; i < emiters.size(); i++)
 	{
+		emiters[i]->ShowWindow = false;
 		emiters[i]->Process(dt);
 		emiters[i]->SpheresOfInfluence.clear();
 	}

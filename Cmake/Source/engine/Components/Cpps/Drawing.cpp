@@ -237,7 +237,7 @@ void  Window::Clear(glm::vec4 Color)
 
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 	glClearColor(Color.r, Color.g, Color.b, Color.a);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	
 	
@@ -985,7 +985,7 @@ void Window::_Draw()
 
 
 		}
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBlendFunc(GL_ONE, GL_ZERO);
 		DetachShader();
 
 
@@ -1386,7 +1386,7 @@ void DrawBall(ball b, glm::vec4 Color1 , glm::vec4 Color2 , bool Lighted, unsign
 
 void LoadTexture(const char* filename, unsigned int* texture, int chanelsAmount)
 {
-	if (*texture != NULL)
+	if (*texture != NULL && glIsTexture(*texture))
 	{
 		glDeleteTextures(1, texture);
 		*texture = NULL;
@@ -1398,34 +1398,34 @@ void LoadTexture(const char* filename, unsigned int* texture, int chanelsAmount)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-
 	int ImageW, ImageH, nrChannels;
-	unsigned char* Texture = stbi_load(filename, &ImageW, &ImageH, &nrChannels, chanelsAmount);
-
-	if (Texture)
+	unsigned char* TextureData = stbi_load(filename, &ImageW, &ImageH, &nrChannels, chanelsAmount);
+	if (TextureData)
 	{
 		if (chanelsAmount == 1)
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_R, ImageW, ImageH, 0, GL_R, GL_UNSIGNED_BYTE, Texture);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_R, ImageW, ImageH, 0, GL_R, GL_UNSIGNED_BYTE, TextureData);
 
 		if (chanelsAmount == 2)
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RG, ImageW, ImageH, 0, GL_RG, GL_UNSIGNED_BYTE, Texture);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RG, ImageW, ImageH, 0, GL_RG, GL_UNSIGNED_BYTE, TextureData);
 
 		if (chanelsAmount == 3)
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ImageW, ImageH, 0, GL_RGB, GL_UNSIGNED_BYTE, Texture);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ImageW, ImageH, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureData);
 
 		if (chanelsAmount == 4)
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ImageW, ImageH, 0, GL_RGBA, GL_UNSIGNED_BYTE, Texture);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ImageW, ImageH, 0, GL_RGBA, GL_UNSIGNED_BYTE, TextureData);
 
 
 		glGenerateMipmap(GL_TEXTURE_2D);
+		
 	}
 	else
 	{
+		std::cout << "Failed to load texture: "<< filename << std::endl;
 		glDeleteTextures(1, texture);
 		*texture = NULL;
-		std::cout << "Failed to load texture" << std::endl;
 	}
-	stbi_image_free(Texture);
+
+	free(TextureData);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 }
@@ -1517,7 +1517,7 @@ void fLoadTextureFromData(unsigned int* texture, int width, int height, float* D
 void GenNoizeTexture(unsigned int* texture1, int Size, int Layers , float freq , int shape )
 {
 	//std::cout << "ImputTexture ID  " << *texture1;
-	if (*texture1 != NULL)
+	if (*texture1 != NULL && glIsTexture(*texture1))
 	{
 		//std::cout << "DELETED " << *texture1 << "\n";
 		glDeleteTextures(1, texture1);
@@ -1550,8 +1550,13 @@ void GenNoizeTexture(unsigned int* texture1, int Size, int Layers , float freq ,
 
 	bool even = false;
 	glDisable(GL_DEPTH_TEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glViewport(0, 0, Size, Size);
 
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer[1]);
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer[0]);
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
 
 	for (int i = 0; i < Layers; i++)
 	{
@@ -1587,10 +1592,10 @@ void GenNoizeTexture(unsigned int* texture1, int Size, int Layers , float freq ,
 
 	}
 	//unsigned int tmp = *texture1;
-	*texture1 = textures[0];
-	//texture2 = tmp;
 	glDeleteFramebuffers(2, framebuffer);
 	glDeleteTextures(1, &textures[1]);
+	*texture1 = textures[0];
+	//texture2 = tmp;
 	//std::cout << "	ExitTexture ID  " << *texture1 << "\n\n";
 
 	glViewport(0, 0, WIDTH, HEIGHT);
@@ -1601,8 +1606,12 @@ void GenNoizeTexture(unsigned int* texture1, int Size, int Layers , float freq ,
 }
 void GenPrimitiveTexture(unsigned int* texture1, int Size, int shape,bool filter )
 {
-
-	glDeleteTextures(1, texture1);
+	if (*texture1 != NULL && glIsTexture(*texture1))
+	{
+		//std::cout << "DELETED " << *texture1 << "\n";
+		glDeleteTextures(1, texture1);
+		*texture1 = NULL;
+	}
 	unsigned int framebuffer, texture2;
 
 	glGenFramebuffers(1, &framebuffer);
@@ -1627,12 +1636,13 @@ void GenPrimitiveTexture(unsigned int* texture1, int Size, int shape,bool filter
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture2, 0);
 
 
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_DEPTH_TEST);
 	glViewport(0, 0, Size, Size);
-
 	UseShader(GenPrimitiveTextureShader);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
 
 	int i = 0;
 	if (shape == ROUND)
@@ -1674,12 +1684,14 @@ void GenNormalMapTexture(unsigned int* texture1, int Size, int shape )
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture2, 0);
 
 
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_DEPTH_TEST);
 	glViewport(0, 0, Size, Size);
 
 	UseShader(GenNormalMapShader);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
 
 	glUniform1i(glGetUniformLocation(GenNormalMapShader, "Type"), shape);
 
@@ -1698,29 +1710,35 @@ void GenNormalMapTexture(unsigned int* texture1, int Size, int shape )
 }
 void GenLightSphereTexture(unsigned int* texture1, int Size)
 {
-
-	glDeleteTextures(1, texture1);
-	unsigned int framebuffer, texture2;
+	if (*texture1 != NULL && glIsTexture(*texture1))
+	{
+		//std::cout << "DELETED " << *texture1 << "\n";
+		glDeleteTextures(1, texture1);
+		*texture1 = NULL;
+	}
+	unsigned int framebuffer;
 
 	glGenFramebuffers(1, &framebuffer);
-	glGenTextures(1, &texture2);
+	glGenTextures(1, texture1);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-	glBindTexture(GL_TEXTURE_2D, texture2);
+	glBindTexture(GL_TEXTURE_2D, *texture1);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Size, Size, 0, GL_RGBA, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture2, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *texture1, 0);
 
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_DEPTH_TEST);
 	glViewport(0, 0, Size, Size);
 
 	UseShader(GenLightSphereShader);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
 
 	glBindVertexArray(ScreenVAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -1728,36 +1746,41 @@ void GenLightSphereTexture(unsigned int* texture1, int Size)
 
 	glDeleteFramebuffers(1, &framebuffer);
 
-	*texture1 = texture2;
-
-	glViewport(0, 0, WIDTH, HEIGHT);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, CurrentWindow->framebuffer);
+	glViewport(0, 0, WIDTH, HEIGHT);
 }
 void GenGradientTexture(unsigned int* texture1, glm::vec4 Color1 , glm::vec4 Color2 , int Size )
 {
-	glDeleteTextures(1, texture1);
-	unsigned int framebuffer, texture2;
+	if (*texture1 != NULL && glIsTexture(*texture1))
+	{
+		//std::cout << "DELETED " << *texture1 << "\n";
+		glDeleteTextures(1, texture1);
+		*texture1 = NULL;
+	}
+	unsigned int framebuffer;
 
 	glGenFramebuffers(1, &framebuffer);
-	glGenTextures(1, &texture2);
+	glGenTextures(1, texture1);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-	glBindTexture(GL_TEXTURE_2D, texture2);
+	glBindTexture(GL_TEXTURE_2D, *texture1);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Size, Size, 0, GL_RGBA, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture2, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *texture1, 0);
 
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_DEPTH_TEST);
 	glViewport(0, 0, Size, Size);
 
 	UseShader(GradientGenShader);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
 
 	glUniform4f(glGetUniformLocation(GradientGenShader, "Color1"), Color1.x, Color1.y, Color1.z, Color1.w);
 	glUniform4f(glGetUniformLocation(GradientGenShader, "Color2"), Color2.x, Color2.y, Color2.z, Color2.w);
@@ -1768,16 +1791,15 @@ void GenGradientTexture(unsigned int* texture1, glm::vec4 Color1 , glm::vec4 Col
 
 	glDeleteFramebuffers(1, &framebuffer);
 
-	*texture1 = texture2;
 
-	glViewport(0, 0, WIDTH, HEIGHT);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, CurrentWindow->framebuffer);
+	glViewport(0, 0, WIDTH, HEIGHT);
 }
 
 void Texture::Load()
 {
-	if (texture != NULL)
+	if (texture != NULL && glIsTexture(texture))
 		Delete();
 	if (Type == 0)
 		LoadTexture(FileName.c_str(), &texture);
@@ -1795,12 +1817,18 @@ void Texture::Load()
 		GenPrimitiveTexture(&texture, Size,ROUND,filter);
 	else if (Type == 7)
 		GenPrimitiveTexture(&texture, Size, SQUERE, filter);
+	else if (Type == 8)
+		texture = BallNormalMapTexture;
+	else if (Type == 9)
+		texture = CubeNormalMapTexture;
 	if (texture == NULL)
 		std::cout << "Failed to load texture:  " << FileName.c_str() << std::endl;
 }
 void Texture::Delete()
 {
-	glDeleteTextures(1, &texture);
+	if(texture!=NULL && glIsTexture(texture) && texture != BallNormalMapTexture&& texture != CubeNormalMapTexture)
+		glDeleteTextures(1, &texture);
+		
 	texture = NULL;
 }
 
@@ -2021,6 +2049,14 @@ void DrawTexturedLine(unsigned int Texture, glm::vec2 p1, glm::vec2 p2, float wi
 	glm::vec2 dif = p1 - p2;
 	float length = sqrt(dif.x * dif.x + dif.y * dif.y) * 0.5f;
 	DrawTexturedQuad(midpos, glm::vec2(width, length), Texture, rotation, color, Z_Index, NormalMap, flipX, flipY);
+}
+void DrawLineWithMaterial(Material mater, glm::vec2 p1, glm::vec2 p2, float width, glm::vec4 color,int Z_Index, bool Additive)
+{
+	glm::vec2 midpos = (p2 + p1) / 2.0f;
+	float rotation = get_angle_between_points(p1, p2);
+	glm::vec2 dif = p1 - p2;
+	float length = sqrt(dif.x * dif.x + dif.y * dif.y) * 0.5f;
+	DrawQuadWithMaterial(midpos, glm::vec2(width, length),mater,rotation,color, Z_Index, NormalMap);
 }
 
 void DrawTriangle(glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, glm::vec4 color)

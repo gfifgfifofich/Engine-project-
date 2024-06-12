@@ -711,6 +711,9 @@ OPENGL_GLES2_INCLUDE_DIR:PATH=/usr/include
 OPENGL_GLES3_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a file.
+OPENGL_GLU_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a file.
 OPENGL_GLX_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a file.
@@ -822,10 +825,10 @@ SNDFILE_INCLUDE_DIR:PATH=/usr/include
 SNDFILE_LIBRARY:FILEPATH=/usr/lib/libsndfile.so
 
 //The SoundIO include directory
-SOUNDIO_INCLUDE_DIR:PATH=SOUNDIO_INCLUDE_DIR-NOTFOUND
+SOUNDIO_INCLUDE_DIR:PATH=/usr/include
 
 //The SoundIO library
-SOUNDIO_LIBRARY:FILEPATH=SOUNDIO_LIBRARY-NOTFOUND
+SOUNDIO_LIBRARY:FILEPATH=/usr/lib/libsndio.so
 
 //Value Computed by CMake
 STB_IMAGE_BINARY_DIR:STATIC=/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cmake/build/dependencies/stb_image
@@ -931,6 +934,9 @@ X11_Xdamage_INCLUDE_PATH:PATH=/usr/include
 
 //Path to a library.
 X11_Xdamage_LIB:FILEPATH=/usr/lib/libXdamage.so
+
+//Path to a file.
+X11_Xdbe_INCLUDE_PATH:PATH=/usr/include
 
 //Path to a file.
 X11_Xdmcp_INCLUDE_PATH:PATH=/usr/include
@@ -1089,10 +1095,10 @@ X11_xcb_dri3_INCLUDE_PATH:PATH=/usr/include
 X11_xcb_dri3_LIB:FILEPATH=/usr/lib/libxcb-dri3.so
 
 //Path to a file.
-X11_xcb_errors_INCLUDE_PATH:PATH=X11_xcb_errors_INCLUDE_PATH-NOTFOUND
+X11_xcb_errors_INCLUDE_PATH:PATH=/usr/include
 
 //Path to a library.
-X11_xcb_errors_LIB:FILEPATH=X11_xcb_errors_LIB-NOTFOUND
+X11_xcb_errors_LIB:FILEPATH=/usr/lib/libxcb-errors.so
 
 //Path to a file.
 X11_xcb_ewmh_INCLUDE_PATH:PATH=/usr/include
@@ -1416,9 +1422,9 @@ CMAKE_CACHEFILE_DIR:INTERNAL=/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Cm
 //Major version of cmake used to create the current loaded cache
 CMAKE_CACHE_MAJOR_VERSION:INTERNAL=3
 //Minor version of cmake used to create the current loaded cache
-CMAKE_CACHE_MINOR_VERSION:INTERNAL=28
+CMAKE_CACHE_MINOR_VERSION:INTERNAL=29
 //Patch version of cmake used to create the current loaded cache
-CMAKE_CACHE_PATCH_VERSION:INTERNAL=4
+CMAKE_CACHE_PATCH_VERSION:INTERNAL=5
 //ADVANCED property for variable: CMAKE_COLOR_MAKEFILE
 CMAKE_COLOR_MAKEFILE-ADVANCED:INTERNAL=1
 //Path to CMake executable.
@@ -1631,9 +1637,9 @@ FIND_PACKAGE_MESSAGE_DETAILS_BrotliDec:INTERNAL=[/usr/include][/usr/lib/libbrotl
 //Details about finding FFmpeg
 FIND_PACKAGE_MESSAGE_DETAILS_FFmpeg:INTERNAL=[/usr/lib/libavformat.so;/usr/lib/libavcodec.so;/usr/lib/libavutil.so;/usr/lib/libswscale.so;/usr/lib/libswresample.so;/usr/lib/libz.so][/usr/include][/usr/lib/libavformat.so][/usr/include][/usr/lib/libavcodec.so][/usr/include][/usr/lib/libavutil.so][/usr/include][/usr/lib/libswscale.so][/usr/include][/usr/lib/libswresample.so][/usr/include][v()]
 //Details about finding Git
-FIND_PACKAGE_MESSAGE_DETAILS_Git:INTERNAL=[/usr/bin/git][v2.44.0()]
+FIND_PACKAGE_MESSAGE_DETAILS_Git:INTERNAL=[/usr/bin/git][v2.45.2()]
 //Details about finding HarfBuzz
-FIND_PACKAGE_MESSAGE_DETAILS_HarfBuzz:INTERNAL=[/usr/include/harfbuzz][/usr/lib/libharfbuzz.so][ON][v8.3.1(2.0.0)]
+FIND_PACKAGE_MESSAGE_DETAILS_HarfBuzz:INTERNAL=[/usr/include/harfbuzz][/usr/lib/libharfbuzz.so][ON][v8.5.0(2.0.0)]
 //Details about finding JACK
 FIND_PACKAGE_MESSAGE_DETAILS_JACK:INTERNAL=[/usr/lib/libjack.so][/usr/include][v()]
 //Details about finding MySOFA
@@ -1652,6 +1658,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_PortAudio:INTERNAL=[/usr/lib/libportaudio.so][/usr/
 FIND_PACKAGE_MESSAGE_DETAILS_PulseAudio:INTERNAL=[/usr/lib/libpulse.so][/usr/include][v17.0.0()]
 //Details about finding SndFile
 FIND_PACKAGE_MESSAGE_DETAILS_SndFile:INTERNAL=[/usr/lib/libsndfile.so][/usr/include][v()]
+//Details about finding SoundIO
+FIND_PACKAGE_MESSAGE_DETAILS_SoundIO:INTERNAL=[/usr/lib/libsndio.so][/usr/include][v()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //Details about finding X11
@@ -1760,6 +1768,8 @@ OPENGL_EGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
 OPENGL_GLES2_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_GLES3_INCLUDE_DIR
 OPENGL_GLES3_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_GLU_INCLUDE_DIR
+OPENGL_GLU_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_GLX_INCLUDE_DIR
 OPENGL_GLX_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_INCLUDE_DIR
@@ -2063,7 +2073,7 @@ PC_HARFBUZZ_STATIC_LIBS:INTERNAL=
 PC_HARFBUZZ_STATIC_LIBS_L:INTERNAL=
 PC_HARFBUZZ_STATIC_LIBS_OTHER:INTERNAL=
 PC_HARFBUZZ_STATIC_LIBS_PATHS:INTERNAL=
-PC_HARFBUZZ_VERSION:INTERNAL=8.3.1
+PC_HARFBUZZ_VERSION:INTERNAL=8.5.0
 PC_HARFBUZZ_harfbuzz_INCLUDEDIR:INTERNAL=
 PC_HARFBUZZ_harfbuzz_LIBDIR:INTERNAL=
 PC_HARFBUZZ_harfbuzz_PREFIX:INTERNAL=
@@ -2203,7 +2213,7 @@ PIPEWIRE_STATIC_LIBS:INTERNAL=
 PIPEWIRE_STATIC_LIBS_L:INTERNAL=
 PIPEWIRE_STATIC_LIBS_OTHER:INTERNAL=
 PIPEWIRE_STATIC_LIBS_PATHS:INTERNAL=
-PIPEWIRE_VERSION:INTERNAL=1.0.4
+PIPEWIRE_VERSION:INTERNAL=1.0.7
 PIPEWIRE_libpipewire-0.3_INCLUDEDIR:INTERNAL=
 PIPEWIRE_libpipewire-0.3_LIBDIR:INTERNAL=
 PIPEWIRE_libpipewire-0.3_PREFIX:INTERNAL=
@@ -2341,6 +2351,8 @@ X11_Xcursor_LIB-ADVANCED:INTERNAL=1
 X11_Xdamage_INCLUDE_PATH-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: X11_Xdamage_LIB
 X11_Xdamage_LIB-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: X11_Xdbe_INCLUDE_PATH
+X11_Xdbe_INCLUDE_PATH-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: X11_Xdmcp_INCLUDE_PATH
 X11_Xdmcp_INCLUDE_PATH-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: X11_Xdmcp_LIB

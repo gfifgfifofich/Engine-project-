@@ -11,14 +11,21 @@ inline bool ParticleMultithreading;
 
 class ParticleEmiter
 {
+private:
+
+
+
 public:
 	void _Process(int thr);
+
 
 
 	struct Particle
 	{
 		glm::vec2 position = glm::vec2(0.0f);
 		glm::vec2 velocity = glm::vec2(0.0f);
+		glm::vec2 Size = glm::vec2(0.0f);
+		glm::vec4 color = glm::vec4(0.0f);
 		float Rotation = 0.0f;
 		float RotationVelocity = 0.0f;
 		float time = 0.0f;
@@ -125,6 +132,8 @@ public:
 	int TQA = -1;
 	
 	bool influenced = false;
+	std::vector<influenceSphere> CaptureSpheres; // different function for attraction, from SpheresOfInfluence
+
 	std::vector<influenceSphere> SpheresOfInfluence;
 	std::vector<influenceCube> CubesOfInfluence;
 
@@ -148,6 +157,7 @@ public:
 
 	int start = 0;
 	int Normastart = 0;
+	int threadcount = std::thread::hardware_concurrency();
 	float delta = 0.017f;
 
 	int SceneLayerIndex = -1;

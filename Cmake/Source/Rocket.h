@@ -123,16 +123,16 @@ public:
 		DS.body.position = body[1].position;
 		DS.body.r = body[1].r * 2.0f;
 
-		for (int a = 0; a < Map.cubes.size(); a++)
+		for (int a = 0; a < GameScene->Collision_cubes.size(); a++)
 			if (!DS.dead)
-				if (Map.cubes[a].id == -1 && BtCCollisionCheck(DS.body, Map.cubes[a]))
+				if (GameScene->Collision_cubes[a]->id == -1 && BtCCollisionCheck(DS.body, *GameScene->Collision_cubes[a]))
 				{
 					Explode();
 					DeleteSrc();
 				}
-		for (int a = 0; a < Map.balls.size(); a++)
+		for (int a = 0; a < GameScene->Collision_balls.size(); a++)
 			if (!DS.dead)
-				if (Map.cubes[a].id == -1 && BtBCollisionCheck(DS.body, Map.balls[a]))
+				if (GameScene->Collision_balls[a]->id == -1 && BtBCollisionCheck(DS.body, *GameScene->Collision_balls[a]))
 				{
 					Explode();
 					DeleteSrc();

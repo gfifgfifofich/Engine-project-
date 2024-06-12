@@ -21,47 +21,6 @@ void _pthead_Process(int thr);
 void _Startpthread(int t);
 void _Startpthreads();
 void _Deletepthreads();
-// Contains and Process data for particles. Pushback ptr to ParticleEmiters array, or Process() somewhere else
-
-// ParticleEmiter::ParticleEmiter()
-// {
-// 	Mutexes = new std::mutex[threadcount];
-// 	ConVars = new std::condition_variable[threadcount];
-// 	threads = new std::thread[threadcount];
-
-
-// 	for(int i=0;i<threadcount;i++)
-// 	{
-// 		threads[i] = std::thread(_Startpthread,this,i);
-// 		threadsStates.push_back(1);
-// 	}
-
-// }
-
-// ParticleEmiter::~ParticleEmiter()
-// {
-// 	stop = true;
-	
-// 	Particles.clear();
-// 	for(int thr = 0;thr<threadcount;thr++)
-// 	{
-// 		std::unique_lock<std::mutex> lm(Mutexes[thr]);
-// 		ConVars[thr].notify_one();
-// 	}
-// 	int sum = 0;
-// 	while(sum!=-threadcount)
-// 	{
-// 		stop = true;//just in case
-
-// 		sum=0;
-// 		for(int thr = 0;thr<threadcount;thr++)
-// 			sum += threadsStates[thr];
-		
-// 	}
-
-// 	for(int thr = 0;thr<threadcount;thr++)
-// 		threads[thr].join();
-// }
 
 void _pthead_Process(int thr)
 {
@@ -70,15 +29,14 @@ void _pthead_Process(int thr)
 	_pthreadsStates[thr] = 0;
 	if(_ptheadstarget!=NULL)
 		_ptheadstarget->_Process(thr);
+	_pthreadsStates[thr]=1;
 }
-
 
 void _Startpthread(int t)
 {
 	while(!_pthreads_stop)
 	{
 		_pthead_Process(t);
-		_pthreadsStates[t]=1;
 	}
 	_pthreadsStates[t]=-1;
 }
@@ -326,8 +284,10 @@ void ParticleEmiter::Process(float dt)
 			for (int a = 0; a < EmitionCircles[i].amount; a++)
 			{
 				glm::vec2 pos = EmitionCircles[i].position;
-
-				float Radius = ((rand() * 100) % ((int)EmitionCircles[i].r * 100))*0.01f * 0.7f;
+				float Radius = 1.0f;
+				if((int)EmitionCircles[i].r * 100 !=0)
+					Radius = ((rand() * 100) % ((int)EmitionCircles[i].r * 100))*0.01f * 0.7f;
+				
 				float angle = rand()*0.001f;
 				pos += glm::vec2((cos(angle) - sin(angle)) * Radius, (cos(angle) + sin(angle)) * Radius);
 
@@ -337,11 +297,20 @@ void ParticleEmiter::Process(float dt)
 		}
 	}
 
+	std::vector <int> iter;
+	iter.resize(threadcount);
+
+	for (int i = 0; i < threadcount; i++)
+		iter[i] = i;
+
+
 
 	int SLI = FindSceneLayer(Z_Index, Additive);
 	SceneLayerIndex = SLI;
 
 	//std::cout << "Particle SLI = " << SLI << " Z_Index = " << SceneLayers[SLI].Z_Index<<" Name = "<<Name<<"\n";
+
+	unsigned int NormalMap = material.NormalMap;
 
 	if (Type == "CIRCLE")
 	{
@@ -351,15 +320,9 @@ void ParticleEmiter::Process(float dt)
 		SceneLayers[SceneLayerIndex].CircleRotations.resize(SceneLayers[SceneLayerIndex].CircleRotations.size() + Particles.size());
 		if (DrawToNormalMap)
 		{
-			Normastart = SceneLayers[SceneLayerIndex].NormalMapCirclePosScale.size();
-			SceneLayers[SceneLayerIndex].NormalMapCirclePosScale.resize(SceneLayers[SceneLayerIndex].NormalMapCirclePosScale.size() + Particles.size());
-			SceneLayers[SceneLayerIndex].NormalMapCircleRotations.resize(SceneLayers[SceneLayerIndex].NormalMapCircleRotations.size() + Particles.size());
-		}
-		if (DrawToNormalMap)
-		{
 			if (NormalMap != CubeNormalMapTexture && NormalMap != BallNormalMapTexture)
 			{
-				int TQA = -1;
+				TQA = -1;
 
 				for (int i = 0; i < SceneLayers[SceneLayerIndex].NormalMaps.size(); i++)
 					if (SceneLayers[SceneLayerIndex].NormalMaps[i].material.Texture == NormalMap)
@@ -402,15 +365,9 @@ void ParticleEmiter::Process(float dt)
 		SceneLayers[SceneLayerIndex].QuadRotations.resize(SceneLayers[SceneLayerIndex].QuadRotations.size() + Particles.size());
 		if (DrawToNormalMap)
 		{
-			Normastart = SceneLayers[SceneLayerIndex].NormalMapCubePosScale.size();
-			SceneLayers[SceneLayerIndex].NormalMapCubePosScale.resize(SceneLayers[SceneLayerIndex].NormalMapCubePosScale.size() + Particles.size());
-			SceneLayers[SceneLayerIndex].NormalMapCubeRotations.resize(SceneLayers[SceneLayerIndex].NormalMapCubeRotations.size() + Particles.size());
-		}
-		if (DrawToNormalMap)
-		{
 			if (NormalMap != CubeNormalMapTexture && NormalMap != BallNormalMapTexture)
 			{
-				int TQA = -1;
+				TQA = -1;
 
 				for (int i = 0; i < SceneLayers[SceneLayerIndex].NormalMaps.size(); i++)
 					if (SceneLayers[SceneLayerIndex].NormalMaps[i].material.Texture == NormalMap)
@@ -473,37 +430,48 @@ void ParticleEmiter::Process(float dt)
 	}
 
 	_ptheadstarget = this;
-	if(ParticleMultithreading ) // Multithreading worked on windows and sometimes on Linux
+	if(ParticleMultithreading) // Multithreaded drawing is not working stable, only particle processing is MT, Pushing to draw arrays is singlethread
 	{
-		for(int thr = 0;thr<threadcount;thr++)
+		if (Particles.size() > 1000)
 		{
-			std::unique_lock<std::mutex> lm(_pMutexes[thr]);
-			_pConVars[thr].notify_one();
-		}
+			for(auto thr : iter)
+			{
+				std::unique_lock<std::mutex> lm(_pMutexes[thr]);
+				_pConVars[thr].notify_one();
+			}
 
-		int sum = 0;
-		bool err = false;
-		while(sum!=threadcount)
-		{
-			sum=0;
-			for(int thr = 0;thr<threadcount;thr++)
-				{
-					sum += _pthreadsStates[thr];
-					if(_pthreadsStates[thr] ==-1)
-						{
-							err = true;
-							break;
-						}
-				}
+			bool wait = true;
+			bool err = false;
+			while(wait)
+			{
+				wait = false;
+				for(int thr = 0;thr<threadcount;thr++)
+					{
+						if(_pthreadsStates[thr] == 0)
+							wait = true;
+						if(_pthreadsStates[thr] ==-1)
+							{
+								err = true;
+								break;
+							}
+					}
+				if(err)
+					break;
+			}
 			if(err)
-				break;
+				std::cout<<"   Missing threads in particles   ";
 		}
-		if(err)
-			std::cout<<"   Missing threads in particles   ";
+		else
+		{
+			int buf = threadcount;
+			threadcount=1;
+			_Process(0);
+			threadcount = buf;
+
+		}
 	}
 	else
 	{
-
 		if (Particles.size() > 1000)
 			for(int thr = 0;thr<threadcount;thr++)
 				_Process(thr);
@@ -517,23 +485,163 @@ void ParticleEmiter::Process(float dt)
 		}
 	}
 	
-	
+	for(int i=0;i<Particles.size();i++)
+	{
+		if (Type == "CIRCLE") {
 
-	
-		int p = 0;
-		while (p<Particles.size())
-		{
-			if (Particles[p].time <= 0.0f)
+			float aspx = ScreenDivisorX * CameraScale.x;
+			float aspy = ScreenDivisorY * CameraScale.y;
+
+			glm::vec2 position = Particles[i].position - CameraPosition;
+			position *= glm::vec2(aspx, aspy);
+
+
+			SceneLayers[SceneLayerIndex].CirclePosScale[start + i] = glm::vec4(position, Particles[i].Size * glm::vec2(aspx, aspy));
+			SceneLayers[SceneLayerIndex].Circlecolors[start + i] = Particles[i].color;
+			if (DrawToNormalMap)
 			{
-				Particles[p] = Particles[Particles.size() - 1];
-				Particles.pop_back();
+				if (material.NormalMap != CubeNormalMapTexture && material.NormalMap != BallNormalMapTexture)
+				{
+					SceneLayers[SceneLayerIndex].NormalMaps[NormalMapIndex].QuadPosScale[Normastart + i] = glm::vec4(position, Particles[i].Size * glm::vec2(aspx, aspy));
+					SceneLayers[SceneLayerIndex].NormalMaps[NormalMapIndex].QuadRotations[Normastart + i] = Particles[i].Rotation;
+				}
+				else if (material.NormalMap == CubeNormalMapTexture)
+				{
+					SceneLayers[SceneLayerIndex].NormalMapCubePosScale[Normastart + i] = glm::vec4(position, Particles[i].Size * glm::vec2(aspx, aspy));
+					SceneLayers[SceneLayerIndex].NormalMapCubeRotations[Normastart + i] = Particles[i].Rotation;
+				}
+				else
+				{
+					SceneLayers[SceneLayerIndex].NormalMapCirclePosScale[Normastart + i] = glm::vec4(position, Particles[i].Size * glm::vec2(aspx, aspy));
+					SceneLayers[SceneLayerIndex].NormalMapCircleRotations[Normastart + i] = Particles[i].Rotation;
+				}
 			}
-			else
-				p++;
 		}
+		else if (Type == "QUAD")
+		{
+			float aspx = ScreenDivisorX * CameraScale.x;
+			float aspy = ScreenDivisorY * CameraScale.y;
+
+			glm::vec2 position = Particles[i].position - CameraPosition;
+			position *= glm::vec2(aspx, aspy);
+
+
+
+			SceneLayers[SceneLayerIndex].QuadPosScale[start + i] = glm::vec4(position, Particles[i].Size * glm::vec2(aspx, aspy));
+			SceneLayers[SceneLayerIndex].QuadRotations[start + i] = Particles[i].Rotation;
+			SceneLayers[SceneLayerIndex].Quadcolors[start + i] = Particles[i].color;
+			if (DrawToNormalMap)
+			{
+				if (material.NormalMap != CubeNormalMapTexture && material.NormalMap != BallNormalMapTexture)
+				{
+					SceneLayers[SceneLayerIndex].NormalMaps[NormalMapIndex].QuadPosScale[Normastart + i] = glm::vec4(position, Particles[i].Size * glm::vec2(aspx, aspy));
+					SceneLayers[SceneLayerIndex].NormalMaps[NormalMapIndex].QuadRotations[Normastart + i] = Particles[i].Rotation;
+				}
+				else if (material.NormalMap == CubeNormalMapTexture)
+				{
+					SceneLayers[SceneLayerIndex].NormalMapCubePosScale[Normastart + i] = glm::vec4(position, Particles[i].Size * glm::vec2(aspx, aspy));
+					SceneLayers[SceneLayerIndex].NormalMapCubeRotations[Normastart + i] = Particles[i].Rotation;
+				}
+				else
+				{
+					SceneLayers[SceneLayerIndex].NormalMapCirclePosScale[Normastart + i] = glm::vec4(position, Particles[i].Size * glm::vec2(aspx, aspy));
+					SceneLayers[SceneLayerIndex].NormalMapCircleRotations[Normastart + i] = Particles[i].Rotation;
+				}
+			}
+
+		}
+		else if (Type == "LINE")
+		{
+
+			glm::vec2 p1 = Particles[i].position;
+			glm::vec2 p2 = Particles[i].position + Particles[i].velocity * Particles[i].Size.y * 0.017f;
+			glm::vec2 midpos = (p2 + p1) / 2.0f;
+			float rotation = get_angle_between_points(p1, p2);
+			glm::vec2 dif = p1 - p2;
+			float length = sqrt(dif.x * dif.x + dif.y * dif.y) * 0.5f;
+
+			float aspx = ScreenDivisorX * CameraScale.x;
+			float aspy = ScreenDivisorY * CameraScale.y;
+
+			glm::vec2 position = midpos - CameraPosition;
+			position *= glm::vec2(aspx, aspy);
+
+
+			//DrawCube(midpos, glm::vec2(length * 5.125f * 25, width), glm::vec3(0.0f, 0.0f, rotation), color);
+
+			SceneLayers[SceneLayerIndex].QuadPosScale[start + i] = glm::vec4(position, glm::vec2(Particles[i].Size.x, Particles[i].Size.y * length) * glm::vec2(aspx, aspy));
+			SceneLayers[SceneLayerIndex].QuadRotations[start + i] = rotation;
+			SceneLayers[SceneLayerIndex].Quadcolors[start + i] = Particles[i].color;
+
+			if (DrawToNormalMap)
+			{
+				if (material.NormalMap != CubeNormalMapTexture && material.NormalMap != BallNormalMapTexture)
+				{
+					SceneLayers[SceneLayerIndex].NormalMaps[NormalMapIndex].QuadPosScale[Normastart + i] = glm::vec4(position, glm::vec2(Particles[i].Size.x, Particles[i].Size.y * length) * glm::vec2(aspx, aspy));
+					SceneLayers[SceneLayerIndex].NormalMaps[NormalMapIndex].QuadRotations[Normastart + i] = rotation;
+				}
+				else if (material.NormalMap == CubeNormalMapTexture)
+				{
+					SceneLayers[SceneLayerIndex].NormalMapCubePosScale[Normastart + i] = glm::vec4(position, glm::vec2(Particles[i].Size.x,Particles[i].Size.y * length) * glm::vec2(aspx, aspy));
+					SceneLayers[SceneLayerIndex].NormalMapCubeRotations[Normastart + i] = rotation;
+				}
+				else
+				{
+					SceneLayers[SceneLayerIndex].NormalMapCirclePosScale[Normastart + i] = glm::vec4(position, glm::vec2(Particles[i].Size.x, Particles[i].Size.y * length) * glm::vec2(aspx, aspy));
+					SceneLayers[SceneLayerIndex].NormalMapCircleRotations[Normastart + i] = rotation;
+				}
+			}
+		}
+		else if (Type == "TEXTURED" && material.Texture > 0)
+		{
+			float aspx = ScreenDivisorX * CameraScale.x;
+			float aspy = ScreenDivisorY * CameraScale.y;
+
+			glm::vec2 position = Particles[i].position - CameraPosition;
+			position *= glm::vec2(aspx, aspy);
+
+			SceneLayers[SceneLayerIndex].TexturedQuads[TQA].Quadcolors[start + i] = Particles[i].color;
+			SceneLayers[SceneLayerIndex].TexturedQuads[TQA].QuadPosScale[start + i] = glm::vec4(position, Particles[i].Size * glm::vec2(aspx, aspy));
+			SceneLayers[SceneLayerIndex].TexturedQuads[TQA].QuadRotations[start + i] = Particles[i].Rotation;
+
+		}
+		else if (Type == "TEXTUREDLINE" && material.Texture > 0)
+		{
+
+			glm::vec2 p1 = Particles[i].position;
+			glm::vec2 p2 = Particles[i].position + Particles[i].velocity * Particles[i].Size.y * 0.017f;
+			glm::vec2 midpos = (p2 + p1) / 2.0f;
+			float rotation = get_angle_between_points(p1, p2);
+			glm::vec2 dif = p1 - p2;
+			float length = sqrt(dif.x * dif.x + dif.y * dif.y) * 0.5f;
+
+
+			float aspx = ScreenDivisorX * CameraScale.x;
+			float aspy = ScreenDivisorY * CameraScale.y;
+			glm::vec2 position = midpos - CameraPosition;
+			position *= glm::vec2(aspx, aspy);
+			//DrawCube(midpos, glm::vec2(length * 5.125f * 25, width), glm::vec3(0.0f, 0.0f, rotation), color);
+
+
+			SceneLayers[SceneLayerIndex].TexturedQuads[TQA].Quadcolors[start + i] = Particles[i].color;
+			SceneLayers[SceneLayerIndex].TexturedQuads[TQA].QuadPosScale[start + i] = glm::vec4(position, glm::vec2(Particles[i].Size.x, Particles[i].Size.y * length) * glm::vec2(aspx, aspy));
+			SceneLayers[SceneLayerIndex].TexturedQuads[TQA].QuadRotations[start + i] = rotation;
+
+
+		}
+	}
 	
-	
-	
+	int p = 0;
+	while (p<Particles.size())
+	{
+		if (Particles[p].time <= 0.0f)
+		{
+			Particles[p] = Particles[Particles.size() - 1];
+			Particles.pop_back();
+		}
+		else
+			p++;
+	}
 }
 
 
@@ -541,7 +649,16 @@ void ParticleEmiter::_Process(int thr)
 {
 	
 	int step = Particles.size() / threadcount;
-	for (int i = thr * step; i < (thr + 1) * step; i++)
+	int begin = thr * step;
+	int end = (thr + 1) * step;
+	if (thr == 0)
+		begin =0;
+
+	if (thr == threadcount)
+		end =Particles.size() ;
+
+	for (int i = begin; i < end; i++)
+		if (i < Particles.size())
 		{
 			Particles[i].time -= delta;
 			if (Particles[i].time > 0.0f)
@@ -564,6 +681,24 @@ void ParticleEmiter::_Process(int thr)
 				Particles[i].RotationVelocity -= Particles[i].RotationVelocity * RotationDamper * delta;
 				if (influenced)
 				{
+					for (int s = 0; s < CaptureSpheres.size(); s++)
+					{
+						float dist = sqrlength(Particles[i].position - CaptureSpheres[s].position);
+						if (dist < CaptureSpheres[s].r * CaptureSpheres[s].r)
+						{
+							Particles[i].velocity += CaptureSpheres[s].velocity * delta;
+							if (CaptureSpheres[s].attractive)
+							{
+								glm::vec2 dir = (CaptureSpheres[s].position - Particles[i].position);
+								if (sqrlength(dir) <= 1.0f)
+									Particles[i].velocity += (dir)*CaptureSpheres[s].attractionStrength * abs(CaptureSpheres[s].attractionStrength) * delta;
+								else
+								{
+									Particles[i].velocity += (dir) * CaptureSpheres[s].attractionStrength * abs(CaptureSpheres[s].attractionStrength) * delta;
+								}
+							}
+						}
+					}
 					for (int s = 0; s < SpheresOfInfluence.size(); s++)
 					{
 						float dist = sqrlength(Particles[i].position - SpheresOfInfluence[s].position);
@@ -641,8 +776,10 @@ void ParticleEmiter::_Process(int thr)
 						}
 					}
 				}
+				Particles[i].color = color;
+				Particles[i].Size = Size;
 
-
+			/*
 				if (Type == "CIRCLE") {
 
 					float aspx = ScreenDivisorX * CameraScale.x;
@@ -680,7 +817,6 @@ void ParticleEmiter::_Process(int thr)
 
 					glm::vec2 position = Particles[i].position - CameraPosition;
 					position *= glm::vec2(aspx, aspy);
-
 
 
 
@@ -729,14 +865,15 @@ void ParticleEmiter::_Process(int thr)
 					SceneLayers[SceneLayerIndex].QuadPosScale[start + i] = glm::vec4(position, glm::vec2(Size.x, Size.y * length) * glm::vec2(aspx, aspy));
 					SceneLayers[SceneLayerIndex].QuadRotations[start + i] = rotation;
 					SceneLayers[SceneLayerIndex].Quadcolors[start + i] = color;
+				
 					if (DrawToNormalMap)
 					{
-						if (NormalMap != CubeNormalMapTexture && NormalMap != BallNormalMapTexture)
+						if (material.NormalMap != CubeNormalMapTexture && material.NormalMap != BallNormalMapTexture)
 						{
 							SceneLayers[SceneLayerIndex].NormalMaps[NormalMapIndex].QuadPosScale[Normastart + i] = glm::vec4(position, glm::vec2(Size.x, Size.y * length) * glm::vec2(aspx, aspy));
 							SceneLayers[SceneLayerIndex].NormalMaps[NormalMapIndex].QuadRotations[Normastart + i] = rotation;
 						}
-						else if (NormalMap == CubeNormalMapTexture)
+						else if (material.NormalMap == CubeNormalMapTexture)
 						{
 							SceneLayers[SceneLayerIndex].NormalMapCubePosScale[Normastart + i] = glm::vec4(position, glm::vec2(Size.x, Size.y * length) * glm::vec2(aspx, aspy));
 							SceneLayers[SceneLayerIndex].NormalMapCubeRotations[Normastart + i] = rotation;
@@ -755,24 +892,6 @@ void ParticleEmiter::_Process(int thr)
 
 					glm::vec2 position = Particles[i].position - CameraPosition;
 					position *= glm::vec2(aspx, aspy);
-
-
-
-					int SLI = -1;
-
-					for (int i = 0; i < SceneLayers.size(); i++)
-						if (SceneLayers[i].Z_Index == Z_Index)
-							SLI = i;
-					if (SLI == -1)
-					{
-						SceneLayer sl;
-						sl.Z_Index = Z_Index;
-						SceneLayers.push_back(sl);
-						SortSceneLayers();
-						for (int i = 0; i < SceneLayers.size(); i++)
-							if (SceneLayers[i].Z_Index == Z_Index)
-								SLI = i;
-					}
 
 					SceneLayers[SceneLayerIndex].TexturedQuads[TQA].Quadcolors[start + i] = color;
 					SceneLayers[SceneLayerIndex].TexturedQuads[TQA].QuadPosScale[start + i] = glm::vec4(position, Size * glm::vec2(aspx, aspy));
@@ -803,10 +922,10 @@ void ParticleEmiter::_Process(int thr)
 
 
 				}
+			*/
+			
 			}
-			/*if (Type == "QUAD")DrawCube(Particles[i].position, Sizes[i], glm::vec3(0.0f, 0.0f, Particles[i].Rotation), colors[i]);
-			if (Type == "LINE")DrawLine(Particles[i].position, Particles[i].position - Particles[i].velocity * Sizes[i].x * delta, Sizes[i].y, colors[i]);
-			if (Type == "CIRCLE")DrawCircle(Particles[i].position, Sizes[i].x, colors[i]);*/
+			
 		}
 
 }
@@ -826,10 +945,10 @@ void ParticleEmiter::Spawn(glm::vec2 position, int amount)
 			p.OrbitalVelocity = InitialOrbitalVelocity;
 
 			p.time += (lifetime * (rand() % int(1000) / 1000.0f) - lifetime * 1.0f) * lifetimeRandomness;
-			if (int(RotationRandomness) != 0.0f) p.Rotation += rand() % int(RotationRandomness) - RotationRandomness * 0.5f;
-			if (int(OrbitalVelocityRandomness * 1000) != 0.0f) p.OrbitalVelocity += rand() % int(OrbitalVelocityRandomness * 1000) / 1000.0f - OrbitalVelocityRandomness * 0.5f;
-			if (VelocityRandomness.y - VelocityRandomness.x != 0.0f)p.velocity.x += rand() %  abs(int((VelocityRandomness.y - VelocityRandomness.x) + VelocityRandomness.x));
-			if (VelocityRandomness.w - VelocityRandomness.z != 0.0f)p.velocity.y += rand() %  abs(int((VelocityRandomness.w - VelocityRandomness.z) + VelocityRandomness.z));
+			if (int(RotationRandomness) != 0) p.Rotation += rand() % int(RotationRandomness) - RotationRandomness * 0.5f;
+			if (int(OrbitalVelocityRandomness * 1000) != 0) p.OrbitalVelocity += rand() % int(OrbitalVelocityRandomness * 1000) / 1000.0f - OrbitalVelocityRandomness * 0.5f;
+			if (int(VelocityRandomness.y) != 0)p.velocity.x += rand() %  int(VelocityRandomness.y) - VelocityRandomness.x * 0.5f ;
+			if (int(VelocityRandomness.w) != 0)p.velocity.y += rand() %  int(VelocityRandomness.w) - VelocityRandomness.z * 0.5f;
 			p.id = rand() % 100000;
 			Particles.push_back(p);
 		}
@@ -850,11 +969,11 @@ void ParticleEmiter::Spawn(glm::vec2 position, glm::vec2 velocity, int amount, f
 				p.time = LifeTime;
 			p.OrbitalVelocity = InitialOrbitalVelocity;
 
-			p.time += (lifetime * ((rand() % int(1000)) / 1000.0f) - lifetime) * lifetimeRandomness;
-			if (int(RotationRandomness) != 0.0f) p.Rotation += rand() % int(RotationRandomness) - RotationRandomness * 0.5f;
-			if (int(OrbitalVelocityRandomness * 1000) != 0.0f) p.OrbitalVelocity += rand() % int(OrbitalVelocityRandomness * 1000) / 1000.0f - OrbitalVelocityRandomness * 0.5f;
-			if (VelocityRandomness.y - VelocityRandomness.x != 0.0f)p.velocity.x += (rand() %  int(VelocityRandomness.y - VelocityRandomness.x)) + VelocityRandomness.x;
-			if (VelocityRandomness.w - VelocityRandomness.z != 0.0f)p.velocity.y +=  (rand() %  int(VelocityRandomness.w - VelocityRandomness.z)) + VelocityRandomness.z;
+			p.time += (lifetime * (rand() % int(1000) / 1000.0f) - lifetime * 1.0f) * lifetimeRandomness;
+			if (int(RotationRandomness) != 0) p.Rotation += rand() % int(RotationRandomness) - RotationRandomness * 0.5f;
+			if (int(OrbitalVelocityRandomness * 1000) != 0) p.OrbitalVelocity += rand() % int(OrbitalVelocityRandomness * 1000) / 1000.0f - OrbitalVelocityRandomness * 0.5f;
+			if (int(VelocityRandomness.y) != 0)p.velocity.x += rand() %  int(VelocityRandomness.y) - VelocityRandomness.x * 0.5f ;
+			if (int(VelocityRandomness.w) != 0)p.velocity.y += rand() %  int(VelocityRandomness.w) - VelocityRandomness.z * 0.5f;
 			p.id = rand() % 100000;
 			Particles.push_back(p);
 		}

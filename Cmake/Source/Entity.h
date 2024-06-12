@@ -74,20 +74,20 @@ public:
 						Parts[i]->Draw();
 				}
 
-				for (int a = 0; a < Map.cubes.size(); a++)
-					if (Map.cubes[a].id == 1)
+				for (int a = 0; a < GameScene->Collision_cubes.size(); a++)
+					if (GameScene->Collision_cubes[a]->id == 1)
 						for (int bp = 0; bp < Parts[i]->bodysize; bp++)
 						{
-							if (BtCCollisionCheck(Parts[i]->body[bp], Map.cubes[a]))
+							if (BtCCollisionCheck(Parts[i]->body[bp], *GameScene->Collision_cubes[a]))
 							{
 								Parts[i]->Health = -1.0f;
 							}
 						}
-				for (int a = 0; a < Map.balls.size(); a++)
-					if (Map.balls[a].id == 1)
+				for (int a = 0; a < GameScene->Collision_balls.size(); a++)
+					if (GameScene->Collision_balls[a]->id == 1)
 						for (int bp = 0; bp < Parts[i]->bodysize; bp++)
 						{
-							if (BtBCollisionCheck(Parts[i]->body[bp], Map.balls[a]))
+							if (BtBCollisionCheck(Parts[i]->body[bp], *GameScene->Collision_balls[a]))
 							{
 								Parts[i]->Health = -1.0f;
 							}
@@ -1358,16 +1358,16 @@ void ProcessEntities(float dt,int substeps)
 			balls[i]->roughness = 0.8f;
 
 			glm::vec2 pVel = balls[i]->velocity;
-			for (int a = 0; a < Map.balls.size(); a++)
+			for (int a = 0; a < GameScene->Collision_balls.size(); a++)
 			{
-				BtBCollision(balls[i], &Map.balls[a]);
-				Map.balls[a].velocity *= 0.0f;
+				BtBCollision(balls[i], GameScene->Collision_balls[a]);
+				GameScene->Collision_balls[a]->velocity *= 0.0f;
 
 			}
 
-			for (int a = 0; a < Map.cubes.size(); a++)
-				if (Map.cubes[a].id == -1)
-					BallToStaticQuadCollision(balls[i], Map.cubes[a]);
+			for (int a = 0; a < GameScene->Collision_cubes.size(); a++)
+				if (GameScene->Collision_cubes[a]->id == -1)
+					BallToStaticQuadCollision(balls[i], *GameScene->Collision_cubes[a]);
 			glm::vec2 aVel = balls[i]->velocity;
 
 			if ((!snapToGrid || !BuildingMode))

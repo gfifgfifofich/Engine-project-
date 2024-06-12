@@ -162,7 +162,9 @@ public:
 			NormalMap == m.NormalMap &&
 			ZMap == m.ZMap &&
 			Specular == m.Specular &&
-			Reflective == m.Reflective;
+			Reflective == m.Reflective && 
+			flipX == m.flipX &&
+			flipY == m.flipY;
 	}
 };
 struct TexturedQuadArray
@@ -352,16 +354,9 @@ public:
 };
 
 
-#ifndef DRAWINGIMPLEMENTATION
-extern
-#endif
-Window* CurrentWindow;
+inline Window* CurrentWindow;
 
-#ifndef DRAWINGIMPLEMENTATION
-extern
-#endif
-
-std::vector<Window> Windows;
+inline std::vector<Window> Windows;
 
 void SortSceneLayers();
 int FindSceneLayer(int Z_Index, bool Additive);
@@ -411,6 +406,7 @@ void DrawSmoothQuad(glm::vec2 position, glm::vec2 scale, float rotation = 0.0f, 
 void DrawTexturedQuad(glm::vec2 position, glm::vec2 scale, unsigned int texture, float rotation = 0.0f, glm::vec4 color = glm::vec4(1.0f), int Z_Index = 0, unsigned int NormalMap = NULL, bool Additive = false, bool flipX = false, bool flipY=false);
 void DrawTexturedQuad(cube c, unsigned int texture, glm::vec4 color = glm::vec4(1.0f), float rotation = 0.0f, int Z_Index = 0, unsigned int NormalMap = NULL, bool Additive = false, bool flipX = false, bool flipY = false);
 void DrawTexturedLine(unsigned int Texture, glm::vec2 p1, glm::vec2 p2, float width =1.0f, glm::vec4 color=glm::vec4(1.0f), unsigned int NormalMap = NULL, int Z_Index = 0, bool Additive = false, bool flipX = false, bool flipY = false);
+void DrawLineWithMaterial(Material mater, glm::vec2 p1, glm::vec2 p2, float width = 1.0f, glm::vec4 color = {1.0f,1.0f,1.0f,1.0f},int Z_Index = 0, bool Additive = false);
 void DrawTriangle(glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, glm::vec4 color = glm::vec4(1.0f));
 
 void DrawTexturedTriangle(

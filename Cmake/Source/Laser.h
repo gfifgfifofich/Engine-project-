@@ -102,9 +102,14 @@ void ProcessLasers(float dt, bool draw, bool updateRaycasts = false)
 
 	for (int i = 0; i < LaserPtrs.size(); i++)
 	{
-		for (int c = 0; c < Map.cubes.size(); c++)
-			if (Map.cubes[c].id == -1)
-				CastRayToQuad(&LaserPtrs[i]->RayCast, Map.cubes[c]);
+		for (int c = 0; c < GameScene->Collision_cubes.size(); c++)
+			if (GameScene->Collision_cubes[c]->id == -1)
+				CastRayToQuad(&LaserPtrs[i]->RayCast, *GameScene->Collision_cubes[c]);
+
+		for (int a = 0; a < GameScene->Collision_balls.size(); a++)
+			if (GameScene->Collision_balls[a]->id == -1)
+				CastRayToBall(&LaserPtrs[i]->RayCast, *GameScene->Collision_balls[a]);
+
 
 		for (int c = 0; c < balls.size(); c++)
 			if (LaserPtrs[i]->fraction != balls[c]->id)
@@ -123,9 +128,13 @@ void ProcessLasers(float dt, bool draw, bool updateRaycasts = false)
 		if (!Lasers[i].body.dead)
 		{
 
-			for (int c = 0; c < Map.cubes.size(); c++)
-				if (Map.cubes[c].id == -1)
-					CastRayToQuad(&Lasers[i].RayCast, Map.cubes[c]);
+			for (int c = 0; c < GameScene->Collision_cubes.size(); c++)
+				if (GameScene->Collision_cubes[c]->id == -1)
+					CastRayToQuad(&LaserPtrs[i]->RayCast, *GameScene->Collision_cubes[c]);
+
+			for (int a = 0; a < GameScene->Collision_balls.size(); a++)
+				if (GameScene->Collision_balls[a]->id == -1)
+					CastRayToBall(&LaserPtrs[i]->RayCast, *GameScene->Collision_balls[a]);
 
 			for (int c = 0; c < balls.size(); c++)
 				if (Lasers[i].fraction != balls[c]->id)
@@ -141,9 +150,13 @@ void ProcessLasers(float dt, bool draw, bool updateRaycasts = false)
 			Lasers.pop_back();
 			if (Lasers.size() != 0)
 			{
-				for (int c = 0; c < Map.cubes.size(); c++)
-					if (Map.cubes[c].id == -1)
-						CastRayToQuad(&Lasers[i].RayCast, Map.cubes[c]);
+				for (int c = 0; c < GameScene->Collision_cubes.size(); c++)
+					if (GameScene->Collision_cubes[c]->id == -1)
+						CastRayToQuad(&LaserPtrs[i]->RayCast, *GameScene->Collision_cubes[c]);
+
+				for (int a = 0; a < GameScene->Collision_balls.size(); a++)
+					if (GameScene->Collision_balls[a]->id == -1)
+						CastRayToBall(&LaserPtrs[i]->RayCast, *GameScene->Collision_balls[a]);
 
 				for (int c = 0; c < balls.size(); c++)
 					CastRayToBall(&Lasers[i].RayCast, *balls[c]);
