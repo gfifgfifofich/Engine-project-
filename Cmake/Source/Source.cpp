@@ -19,9 +19,10 @@ UI
 
 /*
 
-nodes[100] -> parts*[80]
-
-centralpart{ parts**[20] }
+CentralPart == Entity;
+{
+	Connections[]
+}
 
 
 */
@@ -35,6 +36,7 @@ centralpart{ parts**[20] }
 
 int BackgroundWindowID = -1;
 int ForeWindowID = -1;
+glm::vec2 foregroundMousePosition = {0.0f,0.0f};
 int MenuWindowID = -1;
 
 float TextSize = 1.0f;
@@ -467,9 +469,9 @@ void SpawnPlayer()
 
 	glm::vec2 position = glm::vec2(-10, 0.0f);
 	glm::vec2 Scale = glm::vec2(0.5f, 0.5f);
-	Entities.push_back(new Entity);
-	Entities[0]->Ready(glm::vec2(0.0f, 0.0f) * Scale + position, { 0.0f,1.0f }, PARTSIZE);
-	camerapos = Entities[0]->CP.body[0].position;
+	Entities.push_back(new CentralPart);
+	Entities[0]->Create(glm::vec2(0.0f, 0.0f) * Scale + position, { 0.0f,1.0f }, PARTSIZE);
+	camerapos = Entities[0]->body[0].position;
 }
 
 void ProcessPlayerControls()
@@ -534,10 +536,10 @@ void ProcessPlayerControls()
 	}
 
 
-	camerapos = Entities[0]->CP.mid;
-	Entities[0]->CP.player = true;
+	camerapos = Entities[0]->mid;
+	Entities[0]->player = true;
 	Entities[0]->autocontrol = false;
-	listenerVel = { Entities[0]->CP.midvel.x ,Entities[0]->CP.midvel.y ,1.0f };
+	listenerVel = { Entities[0]->midvel.x ,Entities[0]->midvel.y ,1.0f };
 
 	if (BuildingMode || bLogicMode || fLogicMode || vLogicMode)
 	{
@@ -852,6 +854,7 @@ void ProcessPlayerControls()
 		UI_buttonOnlyON(&load, "Load", { -0.46f * WIDTH ,0.34f * HEIGHT }, UISize, TextSize, glm::vec4(0.9f), glm::vec4(0.5f), 1200);
 		if (load)
 			Entities[0]->LoadFrom(saveFileName);
+			
 	}
 
 
@@ -929,7 +932,7 @@ void ProcessPlayerControls()
 
 	for (int i = 0; i < PartSpawnPoints.size(); i++)
 	{
-		glm::vec2 offset = Entities[0]->CP.mid + glm::vec2(-150, -150);
+		glm::vec2 offset = Entities[0]->mid + glm::vec2(-150, -150);
 		glm::ivec2 pos = { roundf(PartSpawnPoints[i].position.x - offset.x),roundf(PartSpawnPoints[i].position.y - offset.y) };
 
 		bool inrange = false;
@@ -970,12 +973,17 @@ void ProcessMainMenu()
 	Window* mw = GetWindow(MenuWindowID);
 	
 	mw->Use();
+	
+	glm::vec2 WindowMousePosition = (GetWindow(SceneWindowID)->WindowMousePosition);
+	MousePosition.x = WindowMousePosition.x / CameraScale.x + CameraPosition.x;
+	MousePosition.y = WindowMousePosition.y / CameraScale.y + CameraPosition.y;
+	ScreenMousePosition = WindowMousePosition;
+
 	glm::vec2 Corner = { WIDTH * -0.45f,HEIGHT *0.35f };
 	float step = 10.0f;
 	glm::vec4 textColor = { 2.0f,2.0f,2.0f,1.0f };
 	glm::vec4 textColorOff = { 1.0f,1.0f,1.0f,1.0f };
 	int textZ = 2000;
-	DrawCircle(MousePosition,10.0f);
 	if (OpenMenu || SettingsWindow)
 	{
 		UI_DrawCube({ 0.0,0.0f }, { WIDTH * 1.0f,HEIGHT * 1.0f }, 0.0f, { 0.0f, 0.0f, 0.0f, 0.8f }, false, NULL, textZ - 100);
@@ -1005,6 +1013,11 @@ void ProcessMainMenu()
 		SaveSettings();
 		sw->End();
 		mw->Use();
+		
+		glm::vec2 WindowMousePosition = (GetWindow(SceneWindowID)->WindowMousePosition);
+		MousePosition.x = WindowMousePosition.x / CameraScale.x + CameraPosition.x;
+		MousePosition.y = WindowMousePosition.y / CameraScale.y + CameraPosition.y;
+		ScreenMousePosition = WindowMousePosition;
 	}
 
 	Corner.y += UI_CheckBox(&Settings, "Settings", Corner, UISize, TextSize, textColor, textColorOff, textZ).y * -1.0f - step;
@@ -1124,8 +1137,8 @@ float WaveTimer = 0;
 
 void SpawnAiShip(glm::vec2 pos, std::string name)
 {
-	Entities.push_back(new Entity);
-	Entities[Entities.size() - 1]->Ready(pos, { 0.0f,1.0f }, PARTSIZE);
+	Entities.push_back(new CentralPart);
+	Entities[Entities.size() - 1]->Create(pos, { 0.0f,1.0f }, PARTSIZE);
 	Entities[Entities.size() - 1]->LoadFrom(name);
 	Entities[Entities.size() - 1]->autocontrol = true;
 	Entities[Entities.size() - 1]->trgPos = pos;
@@ -1288,7 +1301,10 @@ void Ready()
 
 	
 }
+void SubSteppedProcess(float dt, int SubStep)
+{
 
+}
 
 void Process(float dt)
 {
@@ -1321,6 +1337,11 @@ void Process(float dt)
 	sw->active = true;
 
 	sw->Use();
+	glm::vec2 WindowMousePosition = (GetWindow(SceneWindowID)->WindowMousePosition);
+	MousePosition.x = WindowMousePosition.x / CameraScale.x + CameraPosition.x;
+	MousePosition.y = WindowMousePosition.y / CameraScale.y + CameraPosition.y;
+	ScreenMousePosition = WindowMousePosition;
+	foregroundMousePosition =MousePosition; 
 	
 
 	if (JustReleasedkey[GLFW_KEY_ESCAPE])
@@ -1465,6 +1486,11 @@ void Process(float dt)
 		}
 		bw->End();
 		sw->Use();
+		glm::vec2 WindowMousePosition = (GetWindow(SceneWindowID)->WindowMousePosition);
+		MousePosition.x = WindowMousePosition.x / CameraScale.x + CameraPosition.x;
+		MousePosition.y = WindowMousePosition.y / CameraScale.y + CameraPosition.y;
+		ScreenMousePosition = WindowMousePosition;
+		foregroundMousePosition =MousePosition; 
 	}
 	
 	if (!Settings) {
@@ -1485,8 +1511,8 @@ void Process(float dt)
 		}
 		if (JustPressedkey[GLFW_KEY_2])
 		{
-			Entities.push_back(new Entity);
-			Entities[Entities.size() - 1]->Ready(MousePosition, { 0.0f,1.0f }, PARTSIZE);
+			Entities.push_back(new CentralPart);
+			Entities[Entities.size() - 1]->Create(MousePosition, { 0.0f,1.0f }, PARTSIZE);
 			Entities[Entities.size() - 1]->LoadFrom("Save0.sav");
 			Entities[Entities.size() - 1]->autocontrol = true;
 			Entities[Entities.size() - 1]->trgPos = MousePosition;
@@ -1497,8 +1523,8 @@ void Process(float dt)
 		}
 		if (JustPressedkey[GLFW_KEY_3])
 		{
-			Entities.push_back(new Entity);
-			Entities[Entities.size() - 1]->Ready(MousePosition, { 0.0f,1.0f }, PARTSIZE);
+			Entities.push_back(new CentralPart);
+			Entities[Entities.size() - 1]->Create(MousePosition, { 0.0f,1.0f }, PARTSIZE);
 			Entities[Entities.size() - 1]->LoadFrom("Bigboy.sav");
 			Entities[Entities.size() - 1]->autocontrol = true;
 			Entities[Entities.size() - 1]->trgPos = MousePosition;
@@ -1517,15 +1543,13 @@ void Process(float dt)
 		WaveProcess(delta);
 
 
-
 	ProcessPE(delta);
 
 	ProcessEntities(delta, 10);
 
-
 	ProcessLightEffects(delta);
 
-	DrawCircle(MousePosition,10.0f);
+	//DrawCircle(MousePosition,10.0f);
 
 	if (!OpenMenu && !MainMenu)
 	{
@@ -1538,8 +1562,11 @@ void Process(float dt)
 
 	}
 	ProcessCamera(delta);
+	
 	//Map.ParticleEmiters.clear();
+
     GameScene->Draw();
+	
 	sw->End();
 
 	if (OpenMenu || MainMenu)
@@ -1549,7 +1576,7 @@ void Process(float dt)
 
     bw->End();
     UseWindow(SceneWindowID);
-
+	
     bw->Draw(0);
 
     sw->Draw(1);

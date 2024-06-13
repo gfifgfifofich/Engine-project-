@@ -216,11 +216,3 @@ void ProcessRockets(float dt)
 	}
 	Rockets.clear();
 }
-void DrawRockets()
-{
-	for (int i = 0; i < RocketArray.size(); i++)
-		RocketArray[i].Draw();
-
-		for (int i = 0; i < Rockets.size(); i++)
-		Rockets[i]->Draw();
-}
