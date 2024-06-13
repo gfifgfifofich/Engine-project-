@@ -31,23 +31,23 @@ enum TYPE
 
 enum PART
 {
-	BALLBODY ,
-	ROCKETENGINE ,
-	GUN,
-	LASERGUN,
-	RADIATOR,
-	ROTOR,
-	ROCKETLAUNCHER,
-	MINIGUN,
-	RAILGUN,
-
-	STATICPOINT ,
-	CENTRALPART 
+	BALLBODY = 0,
+	ROCKETENGINE =1,
+	GUN =2,
+	LASERGUN =3,
+	RADIATOR =4,
+	ROTOR =5,
+	ROCKETLAUNCHER =6,
+	MINIGUN =7,
+	RAILGUN =8,
+	STATICPOINT  =9,
+	CENTRALPART  =10,
+	LASTPART
 };
 
 #define SpawnablePartAmount 9-1
 DataStorage PartsData;
-class BodyComponent
+class BodyComponent : public Node
 {
 public:
 	struct BoolDataPoint
@@ -90,8 +90,7 @@ public:
 	int bodysize = 1;
 	float freq = 1.0f;
 	unsigned int source = 0.0f;
-	int type = TYPE::STRUCTUREPART;
-
+	int parttype = TYPE::STRUCTUREPART;
 	int partid = -1;
 	int id = 0;
 	bool player=false;
@@ -137,7 +136,11 @@ public:
 
 	CostMaterial Cost;
 	CostMaterial Contains;
-
+	void OnPartCreate()
+	{
+		framesUntillDeletion = 1;
+		GameScene->Nodes.push_back(this);
+	}
 
 	void ProcessBody(float dt)
 	{
@@ -187,12 +190,14 @@ public:
 		}
 	}
 
-	virtual void Ready(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) {}
-	virtual void Process(float dt) {}
+	virtual void Create(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) {}
 	virtual void GenSoundSource(){}
-	virtual void Delete(){}
-	virtual	void Draw(int Z_Index = 0){}
+	virtual void DeletePart(){}
 
+	virtual ~BodyComponent() override
+	{
+		DeletePart();
+	}
 
 	virtual	void DrawDataConnections(int partid, bool b, bool f, bool v,int Z_Index = 0)
 	{
@@ -466,26 +471,26 @@ public:
 
 	glm::vec2 prevtrgpos = { 0.0f,0.0f };
 
-	void Ready(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+	Gun()
 	{
 		partid = PART::GUN;
-		type = TYPE::WEAPON;
+		parttype = TYPE::WEAPON;
+		type = parttype + NodeType::LASTNODE;
+		Name = "Gun";
+
 		CreateBody(3,1,0,1);
 		body[0].position = position;
-		body[1].position = position + direction * 3.0f;
-		body[2].position = position + direction * 3.0f;
-		body[0].r = size;
-		body[1].r = size*0.75;
-		body[2].r = size;
+		body[1].position = position + glm::vec2(0.0f,1.0f) * 3.0f;
+		body[2].position = position + glm::vec2(0.0f,1.0f) * 3.0f;
+		body[0].r = PARTSIZE;
+		body[1].r = PARTSIZE*0.75;
+		body[2].r = PARTSIZE;
 		deactivated = true;
 
-		body[0].mass = mass;
-		body[1].mass = mass*0.2f;
-		body[2].mass = mass;
+		body[0].mass = 1.0f;
+		body[1].mass = 1.0f*0.2f;
+		body[2].mass = 1.0f;
 
-		Cost.Steel = 5;
-		Cost.Cu = 2;
-		Cost.Al = 2;
 
 		Health = PartsData.GetPropertyAsFloat("Gun", "Health");
 
@@ -499,6 +504,36 @@ public:
 		BodyIdsWithCollision.push_back(0);
 		BodyIdsWithCollision.push_back(2);
 		shutdownTemp = 15.0f;
+		OnPartCreate();
+	}
+
+	void Create(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+	{
+		body[0].position = position;
+		body[1].position = position + direction * 3.0f;
+		body[2].position = position + direction * 3.0f;
+		body[0].r = size;
+		body[1].r = size*0.75;
+		body[2].r = size;
+		deactivated = true;
+
+		body[0].mass = mass;
+		body[1].mass = mass*0.2f;
+		body[2].mass = mass;
+		Health = PartsData.GetPropertyAsFloat("Gun", "Health");
+
+		HeatPerShot = PartsData.GetPropertyAsFloat("Gun", "HeatPerShot");
+		dmg = PartsData.GetPropertyAsFloat("Gun", "Damage");
+		BulletHeat = PartsData.GetPropertyAsFloat("Gun", "BulletHeat");
+		bulletSpeed = PartsData.GetPropertyAsFloat("Gun", "BulletSpeed");
+		shootspeed = PartsData.GetPropertyAsFloat("Gun", "FireRate");
+		recoil = PartsData.GetPropertyAsFloat("Gun", "Recoil");
+		bulletSize = PartsData.GetPropertyAsFloat("Gun", "BulletSize");
+		shutdownTemp = 15.0f;
+		Cost.Steel = 5;
+		Cost.Cu = 2;
+		Cost.Al = 2;
+		
 		ProcessConnections();
 	}
 	void ProcessConnections()
@@ -510,7 +545,7 @@ public:
 		vDataConnections[0].source = false;
 		bDataConnections[0].source = false;
 	}
-	void Process(float dt) override
+	void MTProcess(float dt) override
 	{
 		ProcessConnections();
 		ProcessBody(dt);
@@ -519,22 +554,13 @@ public:
 		body[2].color = color;
 
 		glm::vec2 mid = (body[0].position + body[2].position) * 0.5f;
-
 		if (body[1].temperature >= shutdownTemp)
 			overheated = true;
 		if (body[1].temperature <= 0.25f)
 			overheated = false;
-
-		if (source != 0) {
-			SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
-			SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
-		}
 		shot = bDataConnections[0].data && bDataConnections[0].connected;
 		if (!debris && !overheated)
 		{
-			t -= dt;
-			if (shot && t <= 0)
-				Shoot();
 			targetrotpoint = vDataConnections[0].data;
 
 
@@ -597,6 +623,21 @@ public:
 		body[2].temperature -= change*0.5f;
 		body[1].temperature += change;
 	}
+	void Process(float dt) override
+	{
+
+
+		if (source != 0) {
+			SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
+			SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
+		}
+		if (!debris && !overheated)
+		{
+			t -= dt;
+			if (shot && t <= 0)
+				Shoot();
+		}
+	}
 
 	void Shoot()
 	{
@@ -631,7 +672,7 @@ public:
 		}
 	}
 
-	void Draw(int Z_Index = 0) override
+	void Draw() override
 	{
 		//DrawLine(body[0].position, body[1].position, body[1].r, Base.color, true, CubeNormalMapTexture, Z_Index+1);
 		
@@ -644,8 +685,9 @@ public:
 
 	}
 
-	void Delete() override
+	void DeletePart() override
 	{
+		Delete = true;
 		DeleteBody();
 	}
 
@@ -677,11 +719,74 @@ public:
 	float t = 0.0f;
 
 	Laser* lsr;
-	void Ready(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+	LaserGun()
 	{
+		
 		partid = PART::LASERGUN;
-		type = TYPE::WEAPON;
+		parttype = TYPE::WEAPON;
+		type = parttype + NodeType::LASTNODE;
+		Name = "LaserGun";
 		CreateBody(5, 1, 0, 1);
+		float ang = 0.25f * pi;
+		body[0].position = position + Rotate({0.0f,1.0f}, ang);
+		body[0].r = PARTSIZE;
+		body[0].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[2].position = position + Rotate({0.0f,1.0f}, ang);
+		body[2].r = PARTSIZE;
+		body[2].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[3].position = position + Rotate({0.0f,1.0f}, ang);
+		body[3].r = PARTSIZE;
+		body[3].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[4].position = position + Rotate({0.0f,1.0f}, ang);
+		body[4].r = PARTSIZE;
+		body[4].mass = 1.0f;
+
+		body[1].position = position + glm::vec2(0.0f,1.0f) * 3.0f;
+		body[1].r =  PARTSIZE * 0.75f;
+		body[1].mass = 0.75f;
+
+		diaglength = sqrt(body[0].r * 2.0f * body[0].r * 2.0f + body[0].r * 2.0f * body[0].r * 2.0f);
+
+		deactivated = true;
+		lsr = new Laser(body[1].position, body[1].position - body[0].position,150,175);
+		lsr->inf = true;
+
+		lsr->time = 0;
+		lsr->maxtime = 1;
+		lsr->width = PARTSIZE * 0.75f;
+		lsr->body.Damage = 0;
+		lsr->body.Heat = 0;
+		lsr->body.recoil = 0;
+		lsr->body.singleHit = false;
+		lsr->fraction = body[0].id;
+
+
+		Health = PartsData.GetPropertyAsFloat("LaserGun", "Health");
+		HeatPerShot = PartsData.GetPropertyAsFloat("LaserGun", "HeatPerShot");
+		dmg = PartsData.GetPropertyAsFloat("LaserGun", "Damage");
+		BulletHeat = PartsData.GetPropertyAsFloat("LaserGun", "LaserHeat");
+		recoil = PartsData.GetPropertyAsFloat("LaserGun", "Recoil");
+		bulletSize = PartsData.GetPropertyAsFloat("LaserGun", "BulletSize");
+
+
+
+		BodyIdsWithCollision.clear();
+		BodyIdsWithCollision.push_back(0);
+		BodyIdsWithCollision.push_back(2);
+		BodyIdsWithCollision.push_back(3);
+		BodyIdsWithCollision.push_back(4);
+
+		ProcessConnections();
+		OnPartCreate();
+	}
+	void Create(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+	{
 		float ang = 0.25f*pi;
 		body[0].position = position + Rotate(direction, ang);
 		body[0].r = size;
@@ -749,9 +854,8 @@ public:
 		bDataConnections[0].source = false;
 
 	}
-	void Process(float dt) override
+	void MTProcess(float dt) override
 	{
-
 
 		ProcessConnections();
 		ProcessBody(dt);
@@ -760,57 +864,9 @@ public:
 		body[2].color = color;
 		body[3].color = color;
 		body[4].color = color;
-
+		
 		if (!debris)
 		{
-
-			shot = bDataConnections[0].data && bDataConnections[0].connected;
-			targetrotpoint = vDataConnections[0].data;
-
-			lsr->fraction = body[0].id;
-
-
-			lsr->body.id = id;
-
-
-			Time -= dt;
-			if (Time < 0.0f) Time = 0.0f;
-
-
-
-
-			if (shot && body[1].temperature < shutdownTemp)
-				t += dt;
-			else
-				t -= dt;
-
-
-			if (t > 1.0f)
-				t = 1.0f;
-			if (t < 0.0f)
-				t = 0.0f;
-
-			if (t > 0.0f && source ==0)
-			{
-				GenSource(&source);
-				SetSourceSound(&source, &LaserGunSound);
-				SetSourceLooping(&source, true);
-				PlaySource(&source);
-			}
-			else if (t <= 0.0f && SourcePlaying(&source))
-			{
-				StopSource(&source);
-				DeleteSource(&source);
-			}
-			if (source != 0) {
-				SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
-				SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
-				SetSourcePitch(&source, t * freq);
-				SetSourceGain(&source, t * (freq <= 0.0001f ? 0.0f : 1.0f));
-			}
-			body[1].temperature += t * HeatPerShot * dt;
-
-			ScreenShake += body[1].r * recoil * 0.000021f * t;
 
 			lsr->time = t;
 			lsr->maxtime = 1.0f;
@@ -830,8 +886,6 @@ public:
 
 
 
-			if (t > 0.0f)
-				LaserPtrs.push_back(lsr);
 
 			if (!deactivated)
 			{
@@ -912,10 +966,77 @@ public:
 		body[3].temperature -= change * 0.25f;
 		body[4].temperature -= change * 0.25f;
 		body[1].temperature += change;
+
+	}
+	void Process(float dt) override
+	{
+
+
+		if (!debris)
+		{
+
+			shot = bDataConnections[0].data && bDataConnections[0].connected;
+			targetrotpoint = vDataConnections[0].data;
+
+			lsr->fraction = body[0].id;
+
+
+			lsr->body.id = id;
+
+
+			Time -= dt;
+			if (Time < 0.0f) Time = 0.0f;
+
+
+
+
+			if (shot && body[1].temperature < shutdownTemp)
+				t += dt;
+			else
+				t -= dt;
+
+
+			if (t > 1.0f)
+				t = 1.0f;
+			if (t < 0.0f)
+				t = 0.0f;
+
+			if (t > 0.0f && source ==0)
+			{
+				GenSource(&source);
+				SetSourceSound(&source, &LaserGunSound);
+				SetSourceLooping(&source, true);
+				PlaySource(&source);
+			}
+			else if (t <= 0.0f && SourcePlaying(&source))
+			{
+				StopSource(&source);
+				DeleteSource(&source);
+			}
+			if (source != 0) {
+				SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
+				SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
+				SetSourcePitch(&source, t * freq);
+				SetSourceGain(&source, t * (freq <= 0.0001f ? 0.0f : 1.0f));
+			}
+			body[1].temperature += t * HeatPerShot * dt;
+
+			ScreenShake += body[1].r * recoil * 0.000021f * t;
+
+
+
+
+			if (t > 0.0f)
+				LaserPtrs.push_back(lsr);
+
+			
+
+		}
+	
 	}
 
 
-	void Draw(int Z_Index = 0) override
+	void Draw() override
 	{
 
 
@@ -924,8 +1045,9 @@ public:
 		DrawTexturedQuad(mid, glm::vec2(body[0].r*2.0f), GunBaseTexture, get_angle_between_points(body[0].position,mid) - pi*0.25f, color, Z_Index + 1, GunBaseNormalMap);
 	}
 
-	void Delete() override
+	void DeletePart() override
 	{
+		Delete = true;
 		DeleteBody();
 		StopSource(&source);
 		DeleteSource(&source);
@@ -956,7 +1078,54 @@ public:
 	float shootspeed = 2.0f;
 	std::vector<Rocket*> FiredRockets;
 	Rocket HoldingRocket;
-	void Ready(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+	RocketLauncher()
+	{
+		
+		partid = PART::ROCKETLAUNCHER;
+		parttype = TYPE::STRUCTUREPART;
+		type = parttype + NodeType::LASTNODE;
+		Name = "RocketLauncher";
+		
+		Health = PartsData.GetPropertyAsFloat("RocketLauncher", "Health");
+		//HeatPerShot = PartsData.GetPropertyAsFloat("RocketLauncher", "HeatPerShot");
+		dmg = PartsData.GetPropertyAsFloat("RocketLauncher", "Damage");
+		ExplodionForce = PartsData.GetPropertyAsFloat("RocketLauncher", "ExlodionForce");
+		//BulletHeat = PartsData.GetPropertyAsFloat("RocketLauncher", "RocketHeat");
+		bulletSpeed = PartsData.GetPropertyAsFloat("RocketLauncher", "BulletSpeed");
+		shootspeed = PartsData.GetPropertyAsFloat("RocketLauncher", "FireRate");
+		recoil = PartsData.GetPropertyAsFloat("RocketLauncher", "Recoil");
+		bulletSize = PartsData.GetPropertyAsFloat("RocketLauncher", "BulletSize");
+
+		CreateBody(2, 1, 0, 1);
+		body[0].position = position;
+		body[1].position = position + glm::vec2(0.0f,1.0f) * 3.0f;
+		body[0].r = PARTSIZE;
+		body[1].r = PARTSIZE;
+		deactivated = true;
+
+		body[0].mass = 1.0f;
+		body[1].mass = 1.0f;
+		ProcessConnections();
+
+
+		HoldingRocket.DS.Damage = dmg;
+		HoldingRocket.DS.singleHit = true;
+
+		HoldingRocket.body[0].position = body[1].position;
+		HoldingRocket.body[1].position = body[1].position + dir * 3.0f * PARTSIZE * 0.5f;
+		HoldingRocket.body[0].r = PARTSIZE * 0.4f;
+		HoldingRocket.body[1].r = PARTSIZE * 0.4f;
+		HoldingRocket.fired = false;
+		HoldingRocket.dir = dir;
+		HoldingRocket.timeLeft = 10.0f;
+		HoldingRocket.ExplodionForce = ExplodionForce;
+		HoldingRocket.lifet = 10.0f;
+		BodyIdsWithCollision.push_back(0);
+		BodyIdsWithCollision.push_back(1);
+		OnPartCreate();
+	}
+
+	void Create(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
 	{
 
 		Health = PartsData.GetPropertyAsFloat("RocketLauncher", "Health");
@@ -970,9 +1139,6 @@ public:
 		bulletSize = PartsData.GetPropertyAsFloat("RocketLauncher", "BulletSize");
 
 
-		partid = PART::ROCKETLAUNCHER;
-		type = TYPE::STRUCTUREPART;
-		CreateBody(2, 1, 0, 1);
 		body[0].position = position;
 		body[1].position = position + direction * 3.0f;
 		body[0].r = size;
@@ -1002,8 +1168,6 @@ public:
 		HoldingRocket.timeLeft = 10.0f;
 		HoldingRocket.ExplodionForce = ExplodionForce;
 		HoldingRocket.lifet = 10.0f;
-		BodyIdsWithCollision.push_back(0);
-		BodyIdsWithCollision.push_back(1);
 
 
 	}
@@ -1016,17 +1180,13 @@ public:
 		vDataConnections[0].source = false;
 		bDataConnections[0].source = false;
 	}
-	void Process(float dt) override
+	
+	void MTProcess (float dt) override
 	{
 		ProcessConnections();
 		ProcessBody(dt);
 		body[0].color = color;
 		body[1].color = color;
-		if (source != 0)
-		{
-			SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
-			SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
-		}
 		dir = Normalize(body[1].position - body[0].position);
 
 		
@@ -1059,6 +1219,28 @@ public:
 				else
 					iter++;
 			}
+		}
+		Strut(&body[0], &body[1], body[0].r * 2.0f);
+		body[0].Process(dt);
+		body[1].Process(dt);
+		body[1].Force = { 0.0f,0.0f };
+		body[0].Force = { 0.0f,0.0f };
+		float change = (body[0].temperature - body[1].temperature);
+
+		body[0].temperature -= change;
+		body[1].temperature += change;
+	}
+	void Process(float dt) override
+	{
+		if (source != 0)
+		{
+			SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
+			SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
+		}
+		if (!debris)
+		{
+		
+			
 			for (int i = 0; i < FiredRockets.size(); i++)
 			{
 				FiredRockets[i]->target = targetrotpoint;
@@ -1086,15 +1268,6 @@ public:
 			FiredRockets.clear();
 		}
 
-		Strut(&body[0], &body[1], body[0].r * 2.0f);
-		body[0].Process(dt);
-		body[1].Process(dt);
-		body[1].Force = { 0.0f,0.0f };
-		body[0].Force = { 0.0f,0.0f };
-		float change = (body[0].temperature - body[1].temperature);
-
-		body[0].temperature -= change;
-		body[1].temperature += change;
 	}
 	void Shoot()
 	{
@@ -1134,7 +1307,7 @@ public:
 
 	}
 
-	void Draw(int Z_Index = 0) override
+	void Draw() override
 	{
 		//DrawLine(body[0].position, body[1].position, body[1].r, Base.color, true, CubeNormalMapTexture, Z_Index+1);
 
@@ -1148,8 +1321,9 @@ public:
 			HoldingRocket.Draw();
 	}
 
-	void Delete() override
+	void DeletePart() override
 	{
+		Delete = true;
 		for (int i = 0; i < FiredRockets.size(); i++)
 		{
 			FiredRockets[i]->Explode();
@@ -1188,8 +1362,65 @@ public:
 
 	float RotationSpeed = 0.0f;
 	float BarrelRotation = 0.0f;
+	MiniGun()
+	{
+		
+		partid = PART::MINIGUN;
+		parttype = TYPE::WEAPON;
+		
+		type = parttype + NodeType::LASTNODE;
+		Name = "MiniGun";
+		
+		Health = PartsData.GetPropertyAsFloat("MiniGun", "Health");
+		HeatPerShot = PartsData.GetPropertyAsFloat("MiniGun", "HeatPerShot");
+		dmg = PartsData.GetPropertyAsFloat("MiniGun", "Damage");
+		BulletHeat = PartsData.GetPropertyAsFloat("MiniGun", "BulletHeat");
+		bulletSpeed = PartsData.GetPropertyAsFloat("MiniGun", "BulletSpeed");
+		shootspeed = PartsData.GetPropertyAsFloat("MiniGun", "FireRate");
+		recoil = PartsData.GetPropertyAsFloat("MiniGun", "Recoil");
+		bulletSize = PartsData.GetPropertyAsFloat("MiniGun", "BulletSize");
 
-	void Ready(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+		CreateBody(5, 1, 0, 1);
+		float ang = 0.25f * pi;
+		body[0].position = position + Rotate({0.0f,1.0f}, ang);
+		body[0].r = PARTSIZE;
+		body[0].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[2].position = position + Rotate({0.0f,1.0f}, ang);
+		body[2].r = PARTSIZE;
+		body[2].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[3].position = position + Rotate({0.0f,1.0f}, ang);
+		body[3].r = PARTSIZE;
+		body[3].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[4].position = position + Rotate({0.0f,1.0f}, ang);
+		body[4].r = PARTSIZE;
+		body[4].mass = 1.0f;
+
+		body[1].position = position + glm::vec2(0.0f,1.0f) * 3.0f;
+		body[1].r =  PARTSIZE * 0.75f;
+		body[1].mass = 0.75f;
+
+		deactivated = true;
+
+		diaglength = sqrt(body[0].r * 2.0f * body[0].r * 2.0f + body[0].r * 2.0f * body[0].r * 2.0f);
+
+		Cost.Steel = 25;
+		Cost.Cu = 20;
+		Cost.Al = 20;
+		shutdownTemp = 15.0f;
+		ProcessConnections();
+		BodyIdsWithCollision.push_back(0);
+		BodyIdsWithCollision.push_back(2);
+		BodyIdsWithCollision.push_back(3);
+		BodyIdsWithCollision.push_back(4);
+		OnPartCreate();
+	}
+	void Create(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
 	{
 
 		Health = PartsData.GetPropertyAsFloat("MiniGun", "Health");
@@ -1201,8 +1432,6 @@ public:
 		recoil = PartsData.GetPropertyAsFloat("MiniGun", "Recoil");
 		bulletSize = PartsData.GetPropertyAsFloat("MiniGun", "BulletSize");
 
-		partid = PART::MINIGUN;
-		type = TYPE::WEAPON; CreateBody(5, 1, 0, 1);
 		float ang = 0.25f * pi;
 		body[0].position = position + Rotate(direction, ang);
 		body[0].r = size;
@@ -1236,10 +1465,6 @@ public:
 		Cost.Al = 20;
 		shutdownTemp = 15.0f;
 		ProcessConnections();
-		BodyIdsWithCollision.push_back(0);
-		BodyIdsWithCollision.push_back(2);
-		BodyIdsWithCollision.push_back(3);
-		BodyIdsWithCollision.push_back(4);
 
 
 		GenSoundSource();
@@ -1262,7 +1487,8 @@ public:
 		vDataConnections[0].source = false;
 		bDataConnections[0].source = false;
 	}
-	void Process(float dt) override
+	
+	void MTProcess(float dt) override
 	{
 		ProcessConnections();
 		ProcessBody(dt);
@@ -1271,10 +1497,6 @@ public:
 		body[2].color = color;
 		body[3].color = color;
 		body[4].color = color;
-		if (source != 0) {
-			SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
-			SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
-		}
 		shot = bDataConnections[0].data && bDataConnections[0].connected;
 
 		if (body[1].temperature >= shutdownTemp)
@@ -1282,22 +1504,8 @@ public:
 		if (body[1].temperature <= 0.25f)
 			overheated = false;
 		mid = (body[0].position + body[2].position + body[3].position + body[4].position) * 0.25f;
-
 		if (!debris && !deactivated && !overheated)
 		{
-			if (shot && !SourcePlaying(&source))
-				PlaySource(&source);
-
-			if (!shot && SourcePlaying(&source))
-				StopSource(&source);
-			if (shot)
-			{
-				SetSourcePitch(&source, freq + (((rand() % 100) * 0.01f) - 0.5f) * 0.3f + 0.02f*body[1].temperature);
-
-			}
-			t -= dt;
-			if (shot && t <= 0)
-				Shoot();
 			targetrotpoint = vDataConnections[0].data;
 			glm::vec2 dif = body[1].position - mid;
 			glm::vec2 trgvel = (targetrotpoint - prevtrgpos) *(1.0f/dt);
@@ -1322,8 +1530,6 @@ public:
 			prevtrgpos = vDataConnections[0].data;
 
 		}
-		else if (SourcePlaying(&source))
-			StopSource(&source);
 		BarrelRotation += RotationSpeed * dt;
 		RotationSpeed -= 60.0f*dt;
 		if (RotationSpeed <= 0.0f)
@@ -1378,6 +1584,33 @@ public:
 		body[4].temperature -= change * 0.25f;
 		body[1].temperature += change;
 	}
+	void Process(float dt) override
+	{
+		if (source != 0) {
+			SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
+			SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
+		}
+		
+		if (!debris && !deactivated && !overheated)
+		{
+			if (shot && !SourcePlaying(&source))
+				PlaySource(&source);
+
+			if (!shot && SourcePlaying(&source))
+				StopSource(&source);
+			if (shot)
+			{
+				SetSourcePitch(&source, freq + (((rand() % 100) * 0.01f) - 0.5f) * 0.3f + 0.02f*body[1].temperature);
+
+			}
+			t -= dt;
+			if (shot && t <= 0)
+				Shoot();
+
+		}
+		else if (SourcePlaying(&source))
+			StopSource(&source);
+	}
 
 
 	void Shoot()
@@ -1418,7 +1651,7 @@ public:
 		}
 	}
 
-	void Draw(int Z_Index = 0) override
+	void Draw() override
 	{
 		//DrawLine(body[0].position, body[1].position, body[1].r, Base.color, true, CubeNormalMapTexture, Z_Index+1);
 
@@ -1452,8 +1685,9 @@ public:
 		}
 	}
 
-	void Delete() override
+	void DeletePart() override
 	{
+		Delete = true;
 		DeleteBody();
 	}
 
@@ -1474,17 +1708,45 @@ public:
 
 
 	float t = 0.0f;
-
-	void Ready(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+	RocketEngine()
 	{
 		partid = PART::ROCKETENGINE;
-		type = TYPE::PROPULSION;
-
+		parttype = TYPE::PROPULSION;
+		type = parttype + NodeType::LASTNODE;
+		Name = "RocketEngine";
+		
 		Health = PartsData.GetPropertyAsFloat("RocketEngine", "Health");
 		HeatPerSecond = PartsData.GetPropertyAsFloat("RocketEngine", "HeatPerSecond");
 		Power = PartsData.GetPropertyAsFloat("RocketEngine", "Power");
 
 		CreateBody(2,2);
+		body[0].r = PARTSIZE;
+		body[1].r = PARTSIZE;
+		body[0].position = position + Normalize({0.0f,1.0f}) * PARTSIZE;
+		body[1].position = position - Normalize({0.0f,1.0f}) * PARTSIZE;
+
+		body[1].mass = 1.0f;
+		body[0].mass= 1.0f;
+
+		body[0].roughness = 0.0f;
+		body[0].bounciness = 0.0f;
+		body[1].roughness = 0.0f;
+		body[1].bounciness = 0.0f;
+
+
+		BodyIdsWithCollision.push_back(0);
+		BodyIdsWithCollision.push_back(1);
+		ProcessConnections();
+		OnPartCreate();
+	}
+	void Create(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+	{
+		
+
+		Health = PartsData.GetPropertyAsFloat("RocketEngine", "Health");
+		HeatPerSecond = PartsData.GetPropertyAsFloat("RocketEngine", "HeatPerSecond");
+		Power = PartsData.GetPropertyAsFloat("RocketEngine", "Power");
+
 		body[0].r = size;
 		body[1].r = size;
 		body[0].position = position + Normalize(direction) * size;
@@ -1502,8 +1764,6 @@ public:
 		Cost.Steel = 15;
 		Cost.Cu = 2;
 
-		BodyIdsWithCollision.push_back(0);
-		BodyIdsWithCollision.push_back(1);
 		ProcessConnections();
 		GenSoundSource();
 	}
@@ -1522,7 +1782,8 @@ public:
 		SetSourceGain(&source, 0.0f);
 		PlaySource(&source);
 	}
-	void Process(float dt) override
+	
+	void MTProcess (float dt) override
 	{
 		ProcessConnections();
 		ProcessBody(dt);
@@ -1540,14 +1801,40 @@ public:
 			throtle = 1.0f;
 		if (!debris )
 		{
+
+
+
 			body[1].Force = Force;
 			body[0].Force = Force;
-		
-
-
-
 			OutForce = Power * -dir * throtle;
 
+			if (abs(throtle) > 0.0f && !shutdown && !deactivated)
+			{
+				
+				body[1].Force += Power * -dir * throtle;
+				body[0].Force += Power * -dir * throtle;
+
+
+				glm::vec2 dir = Normalize(body[1].position - body[0].position);
+
+
+				
+				body[0].temperature += abs(throtle) * HeatPerSecond * dt;
+				body[1].temperature += abs(throtle) * HeatPerSecond * dt;
+
+
+			}
+		}
+		float change = (body[0].temperature - body[1].temperature);
+
+		body[0].temperature -= change;
+		body[1].temperature += change;
+
+	}
+	void Process(float dt) override
+	{
+		if (!debris )
+		{
 			if (abs(throtle) > 0.0f && !shutdown && !deactivated)
 			{
 
@@ -1572,17 +1859,6 @@ public:
 				SetSourcePosition(&source, glm::vec3((body[1].position + body[0].position) * 0.5f, 0.0f));
 					
 				
-				
-				body[1].Force += Power * -dir * throtle;
-				body[0].Force += Power * -dir * throtle;
-
-
-				glm::vec2 dir = Normalize(body[1].position - body[0].position);
-
-
-				
-				body[0].temperature += abs(throtle) * HeatPerSecond * dt;
-				body[1].temperature += abs(throtle) * HeatPerSecond * dt;
 
 
 			}
@@ -1598,12 +1874,8 @@ public:
 			body[0].Force = {0.0f,0.0f};
 
 		}
-		float change = (body[0].temperature - body[1].temperature);
-
-		body[0].temperature -= change;
-		body[1].temperature += change;
 	}
-	void Draw(int Z_Index = 5) override
+	void Draw() override
 	{
 		if (abs(throtle) > 0.0f && !shutdown)
 		{
@@ -1639,8 +1911,9 @@ public:
 	}
 
 
-	void Delete() override
+	void DeletePart() override
 	{
+		Delete = true;
 		DeleteBody();
 		StopSource(&source);
 		DeleteSource(&source);
@@ -1654,14 +1927,32 @@ class BallBody : public BodyComponent
 public:
 
 
+	BallBody()
+	{
+		partid = PART::BALLBODY;
+		parttype = TYPE::STRUCTUREPART;
+		type = parttype + NodeType::LASTNODE;
+		Name = "BallBody";
 
+		Health = PartsData.GetPropertyAsFloat("BallBody", "Health");
+		
+		CreateBody(1);
+		body[0].r = PARTSIZE;
+		body[0].position = position;
 
-	void Ready(glm::vec2 position, glm::vec2 direction, float size,float mass = 1.0f) override
+		body[0].mass = 1.0f;
+
+		body[0].roughness = 0.0f;
+		body[0].bounciness = 0.0f;
+
+		BodyIdsWithCollision.push_back(0);
+		OnPartCreate();
+	}
+
+	void Create(glm::vec2 position, glm::vec2 direction, float size,float mass = 1.0f) override
 	{
 		Health = PartsData.GetPropertyAsFloat("BallBody", "Health");
-		partid = PART::BALLBODY;
-		type = TYPE::STRUCTUREPART;
-		CreateBody(1);
+		
 		body[0].r = size;
 		body[0].position = position;
 
@@ -1671,26 +1962,31 @@ public:
 		body[0].bounciness = 0.0f;
 		Cost.Fe = 5;
 
-		BodyIdsWithCollision.push_back(0);
 	}
-
-	void Process(float dt) override
+	
+	void MTProcess (float dt) override
 	{
 		ProcessBody(dt);
 		body[0].color = color;
 		body[0].Process(dt);
 
 		body[0].Force = glm::vec2(0.0f);
+		
 	}
-	void Draw(int Z_Index) override
+
+	void Process(float dt) override
+	{
+	}
+	void Draw() override
 	{
 		//DrawTexturedQuad(body[0].position, glm::vec2(body[0].r), BallBodyTexture, 0.0f, color, Z_Index + 1, BallBodyNormalMap);
 		DrawCircle(body[0].position, body[0].r, color, true, BallNormalMapTexture, Z_Index);
 
 	}
 
-	void Delete() override
+	void DeletePart() override
 	{
+		Delete = true;
 		DeleteBody();
 	}
 };
@@ -1702,13 +1998,44 @@ public:
 
 
 	//DamageSphere Sawdamagespheres[4];
+	Rotor()
+	{
+		partid = PART::ROTOR;
+		parttype = TYPE::STRUCTUREPART;
+		type = parttype + NodeType::LASTNODE;
+		Name = "Rotor";
 
-	void Ready(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+		Health = PartsData.GetPropertyAsFloat("Rotor", "Health");
+		
+		CreateBody(5,2);
+		for (int i = 0; i < 5; i++)
+		{
+			body[i].r = PARTSIZE;
+			body[i].mass = 1.0f;
+
+			body[i].roughness = 0.0f;
+			body[i].bounciness = 0.0f;
+		}
+		body[0].position = position;
+		body[1].position = position + glm::vec2(PARTSIZE * 2.0f, 0.0f);
+		body[2].position = position + glm::vec2(0.0f, PARTSIZE * -2.0f);
+		body[3].position = position + glm::vec2(PARTSIZE * -2.0f, 0.0f);
+		body[4].position = position + glm::vec2(0.0f, PARTSIZE * 2.0f);
+		diaglen = sqrt(((PARTSIZE*2.0f) * (PARTSIZE*2.0f)) * 2.0f);
+		ProcessConnections();
+
+		BodyIdsWithCollision.push_back(0);
+		BodyIdsWithCollision.push_back(1);
+		BodyIdsWithCollision.push_back(2);
+		BodyIdsWithCollision.push_back(3);
+		BodyIdsWithCollision.push_back(4);
+		OnPartCreate();
+
+	}
+	void Create(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
 	{
 		Health = PartsData.GetPropertyAsFloat("Rotor", "Health");
-		partid = PART::ROTOR;
-		type = TYPE::STRUCTUREPART;
-		CreateBody(5,2);
+		
 		for (int i = 0; i < 5; i++)
 		{
 			body[i].r = size;
@@ -1725,11 +2052,6 @@ public:
 		diaglen = sqrt(((size*2.0f) * (size*2.0f)) * 2.0f);
 		ProcessConnections();
 
-		BodyIdsWithCollision.push_back(0);
-		BodyIdsWithCollision.push_back(1);
-		BodyIdsWithCollision.push_back(2);
-		BodyIdsWithCollision.push_back(3);
-		BodyIdsWithCollision.push_back(4);
 		Cost.Fe = 10;
 		Cost.Cu = 5;
 	}
@@ -1740,7 +2062,8 @@ public:
 		bDataConnections[0].source = false;
 		bDataConnections[1].source = false;
 	}
-	void Process(float dt) override
+	
+	void MTProcess (float dt) override
 	{
 		ProcessBody(dt);
 		ProcessConnections();
@@ -1779,9 +2102,13 @@ public:
 		Strut(&body[3], &body[4], diaglen);
 		Strut(&body[4], &body[1], diaglen);
 
+	}
+	void Process(float dt) override
+	{
+
 
 	}
-	void Draw(int Z_Index) override
+	void Draw() override
 	{
 		for (int i = 0; i < 5; i++)
 		{
@@ -1789,8 +2116,9 @@ public:
 		}
 	}
 
-	void Delete() override
+	void DeletePart() override
 	{
+		Delete = true;
 		DeleteBody();
 	}
 };
@@ -1804,7 +2132,32 @@ public:
 	float coolingSpeed;
 	float mintemp;
 	float t = 0.16f;
-	void Ready(glm::vec2 position,glm::vec2 direction, float size, float mass =1.0f) override
+	Radiator()
+	{
+		partid = PART::RADIATOR;
+		parttype = TYPE::STRUCTUREPART;
+		type = parttype + NodeType::LASTNODE;
+		Name = "Radiator";
+		
+		Health = PartsData.GetPropertyAsFloat("Radiator", "Health");
+		coolingSpeed = PartsData.GetPropertyAsFloat("Radiator", "coolingSpeed");
+		mintemp = PartsData.GetPropertyAsFloat("Radiator", "mintemp");
+
+
+		
+		CreateBody(2);
+		body[0].position = position + Normalize({0.0f,1.0f}) * PARTSIZE;
+		body[1].position = position - Normalize({0.0f,1.0f}) * PARTSIZE;
+		body[0].r = PARTSIZE;
+		body[1].r = PARTSIZE;
+		body[1].mass = 1.0f;
+		body[0].mass = 1.0f;
+
+		CoolingSpeed = coolingSpeed;
+		MinAutocooltemp = mintemp;
+		OnPartCreate();
+	}
+	void Create(glm::vec2 position,glm::vec2 direction, float size, float mass =1.0f) override
 	{
 
 		Health = PartsData.GetPropertyAsFloat("Radiator", "Health");
@@ -1812,9 +2165,7 @@ public:
 		mintemp = PartsData.GetPropertyAsFloat("Radiator", "mintemp");
 
 
-		partid = PART::RADIATOR;
-		type = TYPE::STRUCTUREPART;
-		CreateBody(2);
+		
 		body[0].position = position + Normalize(direction) * size;
 		body[1].position = position - Normalize(direction) * size;
 		body[0].r = size;
@@ -1825,16 +2176,13 @@ public:
 		CoolingSpeed = coolingSpeed;
 		MinAutocooltemp = mintemp;
 
-		BodyIdsWithCollision.push_back(0);
-		BodyIdsWithCollision.push_back(1);
 		Cost.Al = 20;
 		Cost.Cu = 5;
 		Cost.Fe = 10;
 
 	}
 
-	float delt = 0.0f;
-	void Process(float dt) override
+	void MTProcess (float dt) override
 	{
 		delt = dt;
 		ProcessBody(dt);
@@ -1843,6 +2191,20 @@ public:
 
 		mid = 0.5f * (body[0].position + body[1].position);
 		dir = (body[1].position - body[0].position);
+		body[0].Process(dt);
+		body[1].Process(dt);
+		body[1].Force = glm::vec2(0.0f);
+		body[0].Force = glm::vec2(0.0f);
+		Strut(&body[0], &body[1], body[0].r * 2.0f);
+		float change = (body[0].temperature - body[1].temperature);
+
+		body[0].temperature -= change;
+		body[1].temperature += change;
+
+	}
+	float delt = 0.0f;
+	void Process(float dt) override
+	{
 
 		float gain = 0.0f;
 
@@ -1899,18 +2261,9 @@ public:
 			}
 		}
 	
-		body[0].Process(dt);
-		body[1].Process(dt);
-		body[1].Force = glm::vec2(0.0f);
-		body[0].Force = glm::vec2(0.0f);
-		Strut(&body[0], &body[1], body[0].r * 2.0f);
-		float change = (body[0].temperature - body[1].temperature);
-
-		body[0].temperature -= change;
-		body[1].temperature += change;
 	}
 
-	void Draw(int Z_Index = 5) override
+	void Draw() override
 	{
 		glm::vec2 dif = body[0].position - body[1].position;
 		//DrawLine(body[0].position + dif*0.5f, body[1].position - dif * 0.5f, body[0].r, Base.color, true, CubeNormalMapTexture, Z_Index);
@@ -1930,8 +2283,9 @@ public:
 
 	}
 
-	void Delete() override
+	void DeletePart() override
 	{
+		Delete = true;
 		DeleteBody();
 		StopSource(&source);
 		DeleteSource(&source);
@@ -1942,12 +2296,13 @@ class StaticPoint : public BodyComponent
 public:
 	//HEAT related stuff
 	glm::vec2 position;
-
-	void Ready(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+	StaticPoint()
 	{
-
 		partid = PART::STATICPOINT;
-		type = TYPE::STRUCTUREPART;
+		parttype = TYPE::STRUCTUREPART;
+		type = parttype + NodeType::LASTNODE;
+		Name = "StaticPoint";
+		
 
 		CreateBody(1);
 		body[0].r = 10;
@@ -1957,9 +2312,22 @@ public:
 		body[0].roughness = 0.0f;
 		body[0].bounciness = 0.0f;
 		BodyIdsWithCollision.push_back(0);
+		OnPartCreate();
 	}
+	void Create(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+	{
 
-	void Process(float dt) override
+		
+
+		body[0].r = 10;
+		body[0].position = position;
+		this->position = position;
+
+		body[0].roughness = 0.0f;
+		body[0].bounciness = 0.0f;
+	}
+	
+	void MTProcess (float dt) override
 	{
 		ProcessBody(dt);
 		body[0].position = position;
@@ -1967,15 +2335,22 @@ public:
 		body[0].Force = { 0.0f,0.0f };
 		body[0].Process(dt);
 		body[0].color = color;
+	
 	}
-	void Draw(int Z_Index) override
+
+
+	void Process(float dt) override
+	{
+	}
+	void Draw() override
 	{
 		DrawCircle(body[0], color, true, BallNormalMapTexture, Z_Index);
 	}
 
 	
-	void Delete() override
+	void DeletePart() override
 	{
+		Delete = true;
 		DeleteBody();
 	}
 };
@@ -1985,14 +2360,33 @@ class CentralPart : public BodyComponent
 public:
 	//HEAT related stuff
 	glm::vec2 midvel;
-	void Ready(glm::vec2 position, glm::vec2 direction, float size,float mass = 1.0f) override
+
+	CentralPart()
 	{
-		Health = PartsData.GetPropertyAsFloat("CentralPart", "Health");
-
 		partid = PART::CENTRALPART;
-		type = TYPE::STRUCTUREPART;
-
+		parttype = TYPE::STRUCTUREPART;
+		type = parttype + NodeType::LASTNODE;
+		Name = "CentralPart";
+		Health = PartsData.GetPropertyAsFloat("CentralPart", "Health");
 		CreateBody(2,9,0,1);
+		BodyIdsWithCollision.push_back(0);
+		BodyIdsWithCollision.push_back(1);
+		body[0].position = position + Normalize({0.0f,1.0f}) * PARTSIZE;
+		body[1].position = position - Normalize({0.0f,1.0f}) * PARTSIZE;
+		body[0].r = PARTSIZE;
+		body[1].r = PARTSIZE;
+		body[1].mass = 1.0f;
+
+		ProcessConnections();
+		OnPartCreate();
+	}
+	void Create(glm::vec2 position, glm::vec2 direction, float size,float mass = 1.0f) override
+	{
+
+
+
+		
+		Health = PartsData.GetPropertyAsFloat("CentralPart", "Health");
 
 		body[0].position = position + Normalize(direction) * size;
 		body[1].position = position - Normalize(direction) * size;
@@ -2002,8 +2396,6 @@ public:
 
 		ProcessConnections();
 
-		BodyIdsWithCollision.push_back(0);
-		BodyIdsWithCollision.push_back(1);
 	}
 	void ProcessConnections()
 	{
@@ -2030,7 +2422,7 @@ public:
 
 		vDataConnections[0].source = true;
 	}
-	void Process(float dt) override
+	void MTProcess (float dt) override
 	{
 		ProcessConnections();
 		ProcessBody(dt);
@@ -2077,10 +2469,14 @@ public:
 			vDataConnections[0].data = mid;
 
 		}
+	}
+	void Process(float dt) override
+	{
+		
 
 	}
 
-	void Draw(int Z_Index = 5) override
+	void Draw() override
 	{
 		glm::vec2 dif = body[0].position - body[1].position;
 		DrawLine(body[0].position + dif*0.5f, body[1].position - dif * 0.5f, body[0].r, color, true, CubeNormalMapTexture, Z_Index);
@@ -2093,8 +2489,9 @@ public:
 
 	
 	
-	void Delete() override
+	void DeletePart() override
 	{
+		Delete = true;
 		DeleteBody();
 	}
 };
@@ -2108,28 +2505,28 @@ BodyComponent* CreatePart(int type, glm::vec2 position, glm::vec2 direction, flo
 	if (type == PART::BALLBODY) 
 	{
 		BallBody* bb = new BallBody();
-		bb->Ready(position, glm::vec2(0.0f, 1.0f), size);
+		bb->Create(position, glm::vec2(0.0f, 1.0f), size);
 		b = bb;
 	}
 
 	else if (type == PART::ROCKETENGINE) 
 	{
 		RocketEngine* bb = new RocketEngine();
-		bb->Ready(position, glm::vec2(0.0f, 1.0f), size);
+		bb->Create(position, glm::vec2(0.0f, 1.0f), size);
 		b = bb;
 	}
 
 	else if (type == PART::GUN) 
 	{
 		Gun* bb = new Gun();
-		bb->Ready(position, glm::vec2(0.0f, 1.0f), size);
+		bb->Create(position, glm::vec2(0.0f, 1.0f), size);
 		b = bb;
 	}
 
 	else if (type == PART::LASERGUN) 
 	{
 		LaserGun* bb = new LaserGun();
-		bb->Ready(position, glm::vec2(0.0f, 1.0f), size);
+		bb->Create(position, glm::vec2(0.0f, 1.0f), size);
 		b = bb;
 	}
 
@@ -2137,7 +2534,7 @@ BodyComponent* CreatePart(int type, glm::vec2 position, glm::vec2 direction, flo
 	{
 
 		StaticPoint* bb = new StaticPoint();
-		bb->Ready(position, glm::vec2(0.0f, 1.0f), size);
+		bb->Create(position, glm::vec2(0.0f, 1.0f), size);
 		b = bb;
 	}
 
@@ -2145,28 +2542,28 @@ BodyComponent* CreatePart(int type, glm::vec2 position, glm::vec2 direction, flo
 	{
 
 		Radiator* bb = new Radiator();
-		bb->Ready(position, glm::vec2(0.0f, 1.0f), size);
+		bb->Create(position, glm::vec2(0.0f, 1.0f), size);
 		b = bb;
 	}
 	else if (type == PART::ROTOR) 
 	{
 
 		Rotor* bb = new Rotor();
-		bb->Ready(position, glm::vec2(0.0f, 1.0f), size);
+		bb->Create(position, glm::vec2(0.0f, 1.0f), size);
 		b = bb;
 	}
 	else if (type == PART::ROCKETLAUNCHER)
 	{
 
 		RocketLauncher* bb = new RocketLauncher();
-		bb->Ready(position, glm::vec2(0.0f, 1.0f), size);
+		bb->Create(position, glm::vec2(0.0f, 1.0f), size);
 		b = bb;
 	}
 	else if (type == PART::MINIGUN)
 	{
 
 		MiniGun* bb = new MiniGun();
-		bb->Ready(position, glm::vec2(0.0f, 1.0f), size);
+		bb->Create(position, glm::vec2(0.0f, 1.0f), size);
 		b = bb;
 	}
 	return b;
@@ -2176,13 +2573,37 @@ BodyComponent* CreatePart(int type, glm::vec2 position, glm::vec2 direction, flo
 
 void InitParts()
 {
-	BodyComponent* b = NULL;
-	for (int i = 0; i < SpawnablePartAmount; i++)
-	{
-		b = CreatePart(i, { 0.0f,0.0f }, { 0.0f,1.0f }, 0.5f);
-		b->Delete();
-	}
-	b = new CentralPart();
-	b->Ready({ 0.0f,0.0f }, {0.0f,1.0f},0.5f);
-	b->Delete();
+
+
+	NodeConstructors.insert({NodeType::LASTNODE + PART::BALLBODY,[](){return (Node*)new BallBody();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::BALLBODY,"BallBody"});
+	NodeConstructors.insert({NodeType::LASTNODE + PART::ROCKETENGINE,[](){return (Node*)new RocketEngine();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::ROCKETENGINE,"RocketEngine"});
+	NodeConstructors.insert({NodeType::LASTNODE + PART::GUN,[](){return (Node*)new Gun();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::GUN,"Gun"});
+	NodeConstructors.insert({NodeType::LASTNODE + PART::LASERGUN,[](){return (Node*)new LaserGun();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::LASERGUN,"LaserGun"});
+	NodeConstructors.insert({NodeType::LASTNODE + PART::RADIATOR,[](){return (Node*)new Radiator();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::RADIATOR,"Radiator"});
+	NodeConstructors.insert({NodeType::LASTNODE + PART::ROTOR,[](){return (Node*)new Rotor();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::ROTOR,"Rotor"});
+	NodeConstructors.insert({NodeType::LASTNODE + PART::ROCKETLAUNCHER,[](){return (Node*)new RocketLauncher();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::ROCKETLAUNCHER,"RocketLauncher"});
+	NodeConstructors.insert({NodeType::LASTNODE + PART::MINIGUN,[](){return (Node*)new MiniGun();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::RAILGUN,"MiniGun"});
+	NodeConstructors.insert({NodeType::LASTNODE + PART::STATICPOINT,[](){return (Node*)new StaticPoint();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::STATICPOINT,"StaticPoint"});
+	NodeConstructors.insert({NodeType::LASTNODE + PART::CENTRALPART,[](){return (Node*)new CentralPart();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::CENTRALPART,"CentralPart"});
+
+
+	//BodyComponent* b = NULL;
+	//for (int i = 0; i < SpawnablePartAmount; i++)
+	//{
+	//	b = CreatePart(i, { 0.0f,0.0f }, { 0.0f,1.0f }, 0.5f);
+	//	b->DeletePart();
+	//}
+	//b = new CentralPart();
+	//b->Create({ 0.0f,0.0f }, {0.0f,1.0f},0.5f);
+	//b->DeletePart();
 }

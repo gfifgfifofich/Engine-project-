@@ -17,6 +17,14 @@ lots of textures
 UI
 */
 
+/*
+
+nodes[100] -> parts*[80]
+
+centralpart{ parts**[20] }
+
+
+*/
 
 #include "engine/Components/Redactor.h"
 #include "engine/Components/Include/sounds.h"
@@ -397,7 +405,7 @@ std::vector <Node> PartSpawnPoints;
 void Delete()
 {
 	for (int i = 0; i < SpawnableParts.size(); i++)
-		SpawnableParts[i]->Delete();
+		SpawnableParts[i]->DeletePart();
 }
 
 void ChangeMap(std::string FilePath, bool scaleDown = true)
@@ -432,7 +440,7 @@ void ChangeMap(std::string FilePath, bool scaleDown = true)
 	Entities.clear();
 
 	for (int i = 0; i < Debris.Parts.size(); i++)
-		Debris.Parts[i]->Delete();
+		Debris.Parts[i]->DeletePart();
 	Debris.Parts.clear();
 
 	for (int i = 0; i < sources.size(); i++)
@@ -450,7 +458,7 @@ void ChangeMap(std::string FilePath, bool scaleDown = true)
 	else
 		MainMenu = false;
 	for (int i = 0; i < SpawnableParts.size(); i++)
-		SpawnableParts[i]->Ready({ 0.0f,0.0f }, { 0.0f,1.0f }, PARTSIZE);
+		SpawnableParts[i]->Create({ 0.0f,0.0f }, { 0.0f,1.0f }, PARTSIZE);
 
 }
 
@@ -1162,7 +1170,7 @@ void WaveProcess(float dt)
 
 void Ready()
 {
-
+	
 	LoadTextures();
 
 	noize = NULL;
@@ -1278,9 +1286,6 @@ void Ready()
 
 	//Background.LoadFrom("Scenes/Sun.sav");
 
-	PartsData.Load("PartsProperties.ds");
-	InitParts();
-	PartsData.Save("PartsProperties.ds");
 	
 }
 
@@ -1612,17 +1617,52 @@ void PreReady()
 		}
 
 	f.close();
+
+	PartsData.Load("PartsProperties.ds");
+	InitParts();
+	PartsData.Save("PartsProperties.ds");
+	
 }
 
 
+void SceneEnd()
+{
+
+	for(int i=0;i<Entities.size();i++)
+		Entities[i]->Destroy();
+	Entities.clear();
+
+	for (int i = 0; i < Debris.Parts.size(); i++)
+		Debris.Parts[i]->DeletePart();
+	Debris.Parts.clear();
+
+	bullets.clear();
+	Rockets.clear();
+	DamageSpheres.clear();
+	DamageSpheresArray.clear();
+	Lasers.clear();
+	LightEffects.clear();
+
+}
 void Rescale(int newWindth,int newHeight)
 {
+
+	Window* sw = GetWindow(ForeWindowID);
+	Window* bw = GetWindow(BackgroundWindowID);
+	Window* mw = GetWindow(MenuWindowID);
+	sw->ViewportSize = GetWindow(SceneWindowID)->ViewportSize;
+	sw->RecalculateSize();
+
+	bw->ViewportSize = GetWindow(SceneWindowID)->ViewportSize;
+	bw->RecalculateSize();
+
+	mw->ViewportSize = GetWindow(SceneWindowID)->ViewportSize;
+	mw->RecalculateSize();
 
 }
 
 void Destroy()
 {
-	SaveSettings();
-	AL_Destroy();
 	Delete();
+	SaveSettings();
 }

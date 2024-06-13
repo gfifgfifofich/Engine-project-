@@ -66,13 +66,13 @@ public:
 				Parts[i]->throtle = 0.0f;
 				Parts[i]->deactivated = true;
 
-				if (!Parts[i]->dead)
-				{
-
-					Parts[i]->Process(dt);
-					if (lastiter)
-						Parts[i]->Draw();
-				}
+				//if (!Parts[i]->dead)
+				//{
+//
+				//	Parts[i]->Process(dt);
+				//	if (lastiter)
+				//		Parts[i]->Draw();
+				//}
 
 				for (int a = 0; a < GameScene->Collision_cubes.size(); a++)
 					if (GameScene->Collision_cubes[a]->id == 1)
@@ -125,7 +125,7 @@ public:
 			StopSource(&Parts[index]->source);
 			alDeleteSources(1, &Parts[index]->source);
 		}
-		Parts[index]->Delete();
+		Parts[index]->Delete=true;
 
 		Parts[index] = Parts[Parts.size() - 1];
 		Parts.pop_back();
@@ -495,7 +495,7 @@ public:
 	}
 	void Ready(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f)
 	{
-		CP.Ready(position, direction, size, mass);
+		CP.Create(position, direction, size, mass);
 		Parts.push_back(&CP);
 
 	}
@@ -592,22 +592,22 @@ public:
 						Balls.push_back(&Parts[i]->body[pid]);
 				}
 
-				if (!Parts[i]->dead||i==0)
-				{
-					Parts[i]->Process(dt);
-				}
+				//if (!Parts[i]->dead||i==0)
+				//{
+				//	Parts[i]->Process(dt);
+				//}
 
 
 				Parts[i]->freq = freq;
 				Parts[i]->deactivated = false;
 				Parts[i]->targetrotpoint = GunsTargetrotPoint;
 
-				if (FireGuns && Parts[i]->type == TYPE::WEAPON)
+				if (FireGuns && Parts[i]->parttype == TYPE::WEAPON)
 					Parts[i]->shot = true;
 				else
 					Parts[i]->shot = false;
 
-				if (Parts[i]->type == TYPE::PROPULSION)
+				if (Parts[i]->parttype == TYPE::PROPULSION)
 					Engines.push_back(Parts[i]);
 			}
 			CloseDamageSpheres.clear();
@@ -722,8 +722,8 @@ public:
 	void Draw(float dt)
 	{
 
-		for (int i = 0; i < Parts.size(); i++)
-			Parts[i]->Draw();
+		//for (int i = 0; i < Parts.size(); i++)
+		//	Parts[i]->Draw();
 
 		for (int i = 0; i < Connections.size(); i++)
 			Connections[i].Draw(dt);
@@ -1248,7 +1248,7 @@ public:
 	void Clear()
 	{
 		for (int i = 1; i < Parts.size(); i++)
-			Parts[i]->Delete();
+			Parts[i]->Delete=true;
 		Parts.clear();
 		Parts.push_back(&CP);
 		Connections.clear();
@@ -1532,7 +1532,7 @@ void ProcessEntities(float dt,int substeps)
 					le.position = glm::vec3(Entities[i]->CP.mid,0.0f);
 					LightEffects.push_back(le);
 					Entities[i]->Destroy();
-					Entities[i]->CP.Delete();
+					Entities[i]->CP.Delete=true;
 					Entities[i] = Entities[Entities.size() - 1];
 					Entities.pop_back();
 				}
