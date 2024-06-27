@@ -70,3 +70,7 @@ void ProcessExplodions(float dt)
 		ExplodionArray[i].timeLeft -= dt;
 	}
 }
+void DrawExplodions()
+{
+
+}

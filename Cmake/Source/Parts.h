@@ -16,14 +16,6 @@ struct CostMaterial
 	int Steel = 0;
 };
 
-class BallBodyComponent : public ball
-{
-public:
-	float temperature = 0.0f;
-	SoundSource* SS = NULL;
-};
-
-
 
 
 
@@ -426,14 +418,7 @@ public:
 	}
 	void DeleteBody()
 	{
-		for (int i = 0; i < bodysize; i++)
-		{
-			if (body[i].Source != NULL)
-			{
-				StopSource(body[i].Source);
-				DeleteSource(body[i].Source);
-			}
-		}
+		
 		delete[] body;
 		if(bDCsize>0)
 			delete[] bDataConnections;
@@ -1260,11 +1245,11 @@ public:
 	}
 	void Process(float dt) override
 	{
-		if (source != 0)
-		{
-			SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
-			SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
-		}
+		if (source == 0)
+			GenSource(&source);
+		SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
+		SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
+		
 		if (!debris)
 		{
 		
@@ -1323,8 +1308,11 @@ public:
 
 
 		//SpawnBullet(body[1].position, bulletSpeed * Normalize(body[1].position - body[0].position), dmg, body[1].r * 0.5f, BulletHeat, recoil, enemy);
-	
-		PlaySound(&source,&GunSound, body[1].position, (1.0f + rand() % 10 * 0.04f - 0.2f) * freq, freq <= 0.001f ? 0.0f : 1.0f);
+		
+		SetSourceGain(&source,(1.0f + rand() % 10 * 0.04f - 0.2f) * freq);
+		SetSourcePitch(&source,freq <= 0.001f ? 0.0f : 1.0f);
+		SetSourceSound(&source,&GunSound);
+		PlaySource(&source);
 
 		ScreenShake += body[1].r * bulletSpeed * 0.000001f;
 		ChromaticAbberation += body[1].r * bulletSpeed * 0.000001f;
@@ -1811,7 +1799,6 @@ public:
 		SetSourceSound(&source, &RocketEngineSound);
 		SetSourceLooping(&source, true);
 		SetSourceGain(&source, 0.0f);
-		PlaySource(&source);
 	}
 	
 	void MTProcess (float dt) override
@@ -1882,10 +1869,14 @@ public:
 				if (source == 0)
 				{
 					GenSoundSource();
+					SetSourceSound(&source, &RocketEngineSound);
+					SetSourceLooping(&source, true);
 				}
+				else if (!SourcePlaying(&source))
+					PlaySource(&source);
 				SetSourcePitch(&source, freq);
 				SetSourceGain(&source, throtle * 0.25f * (freq <= 0.001f ? 0.0f : 1.0f));
-					
+				
 				SetSourceVelocity(&source, glm::vec3(body[0].velocity, 0.0f));
 				SetSourcePosition(&source, glm::vec3((body[1].position + body[0].position) * 0.5f, 0.0f));
 					
@@ -1896,11 +1887,17 @@ public:
 			else
 			{
 				SetSourceGain(&source, 0.0f);
+				if (SourcePlaying(&source))
+					StopSource(&source);
+				body[1].Force = { 0.0f,0.0f };
+				body[0].Force = {0.0f,0.0f};
 			}
 		}
 		else
 		{
 			SetSourceGain(&source, 0.0f);
+			if (SourcePlaying(&source))
+				StopSource(&source);
 			body[1].Force = { 0.0f,0.0f };
 			body[0].Force = {0.0f,0.0f};
 
@@ -2258,6 +2255,8 @@ public:
 				}
 				if (source >= 0)
 				{
+					if(!SourcePlaying(&source))
+						PlaySource(&source);
 					SetSourceGain(&source, gain * 0.03f);
 
 					
@@ -2270,9 +2269,7 @@ public:
 				if (source != 0)
 				{
 					SetSourceGain(&source, 0.0f);
-				
 					StopSource(&source);
-					DeleteSource(&source);
 				}
 			}
 
@@ -2285,10 +2282,7 @@ public:
 			if (source != 0)
 			{
 				SetSourceGain(&source, 0.0f);
-				SetSourcePosition(&source, (body[0].position + body[1].position) * 0.5f);
-
 				StopSource(&source);
-				DeleteSource(&source);
 			}
 		}
 	
@@ -2697,7 +2691,7 @@ public:
 	glm::vec2 CenterOfMass = glm::vec2(0.0f);
 
 
-	std::vector<ball*> Balls;
+	std::vector<BallBodyComponent*> Balls;
 	std::vector<BodyComponent*> Parts;
 	std::vector<BodyComponent*> Engines;
 
@@ -2791,7 +2785,6 @@ public:
 	}
 	void MTProcess (float dt) override
 	{
-		
 		ProcessConnections();
 		ProcessBody(dt);
 		body[0].color = color;
@@ -2836,7 +2829,6 @@ public:
 			}
 		}
 		
-		
 		Engines.clear();
 		Balls.clear();
 		maxR = 0.0f;
@@ -2844,16 +2836,27 @@ public:
 		{
 			front = &body[0];
 			back = &body[1];
-
+			
+			int deliter = 0;
+			while (deliter<Parts.size())
+			{	
+				if(Parts[deliter]->Delete)
+				{
+					Parts[deliter] = Parts[Parts.size()-1];
+					Parts.pop_back();
+				}
+				else
+					deliter++;
+			}
 
 			
 			for (int i = 0; i < Parts.size(); i++)
 			{
 				float len = sqrlength(Parts[i]->body[0].position - CenterOfMass);
 				if (len > maxR)
-					maxR = len;
+					maxR = sqrt(len);
 			}
-			maxR += 32.0f;
+			maxR += 2.0f;
 			for (int d = 0; d < DamageSpheres.size(); d++)
 			{
 				if (DamageSpheres[d]->id == id)
@@ -3038,13 +3041,16 @@ public:
 			}
 			
 		}
+		
 	}
 	void Process(float dt) override
 	{
+		
+		CheckPartsConnections();
 		int pt = 0;
 		while (pt < Parts.size())
 		{
-			if (Parts[pt]->Health <= 0.0f && pt < Parts.size())
+			if (pt < Parts.size() && Parts[pt]->Health <= 0.0f)
 			{
 				DestroyPart(pt);
 			}

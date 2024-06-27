@@ -31,6 +31,28 @@ CentralPart == Entity;
 #include "engine/Components/Include/sounds.h"
 
 
+class BallBodyComponent : public ball
+{
+public:
+	float temperature = 0.0f;
+	SoundSource* SS = NULL;
+	float soundcd = 0.0f;
+};
+
+std::vector<SoundSource*> collisionsounds;
+int lastcollisionsound = 0;
+
+void PlayCollisionSound(glm::vec2 position)
+{
+	collisionsounds[lastcollisionsound]->position = position;
+	collisionsounds[lastcollisionsound]->pitch = 0.1f + (rand() % 100 * 0.00025f);
+	collisionsounds[lastcollisionsound]->gain = 0.25f;
+	collisionsounds[lastcollisionsound]->Play();
+	
+	lastcollisionsound++;
+	if(lastcollisionsound>=20)
+		lastcollisionsound = 0;
+}
 
 #define PARTSIZE 0.5f
 
@@ -229,8 +251,8 @@ void SaveSettings()
 struct GridCell
 {
 	int size = 0;
-	ball* balls[10];
-	void add(ball* b)
+	BallBodyComponent* balls[10];
+	void add(BallBodyComponent* b)
 	{
 		if (size < 10)
 		{
@@ -242,7 +264,7 @@ struct GridCell
 GridCell Grid[300][300];
 
 int balllbuffersize;
-ball* ballbuffer[200];
+BallBodyComponent* ballbuffer[200];
 float Exposure = 0.0f;
 
 
@@ -308,8 +330,8 @@ Scene Background;
 float Speed = 1.0f;
 
 
-ball* NewConBall1;
-ball* NewConBall2;
+BallBodyComponent* NewConBall1;
+BallBodyComponent* NewConBall2;
 int NewConType =0;
 int NewConPart1;
 int NewConPart2;
@@ -349,9 +371,9 @@ bool align = false;
 bool snapToGrid = false;
 
 
-std::vector<ball*>balls;
+std::vector<BallBodyComponent*>balls;
 
-ball* GrabbedBall = NULL;
+BallBodyComponent* GrabbedBall = NULL;
 
 int SelectedPart = 0;
 
@@ -414,6 +436,17 @@ void ChangeMap(std::string FilePath, bool scaleDown = true)
 {
 	
 	GameScene->LoadFrom(FilePath);
+	collisionsounds.resize(20);
+	for(int i=0;i< 20 ;i++)
+	{
+		collisionsounds[i] = new SoundSource();
+		collisionsounds[i]->position = glm::vec2(0.0f,0.0f);
+		collisionsounds[i]->NoAsset = true;
+		collisionsounds[i]->noAssetSound = Hit;
+		collisionsounds[i]->pitch = 0.1f + (rand() % 100 * 0.00025f);
+		collisionsounds[i]->gain = 0.25f;
+		GameScene->Nodes.push_back(collisionsounds[i]);
+	}
 	if (scaleDown)
 	{
 		CameraScale = { 20,20 };
@@ -1263,6 +1296,7 @@ void Ready()
 
 	listenerPos.z = 2.0f;
 
+	
 
 	glfwSwapInterval(0);
 	VSync = 0;
@@ -1304,6 +1338,7 @@ void Ready()
 void SubSteppedProcess(float dt, int SubStep)
 {
 
+	ProcessEntities(delta, SubStep);
 }
 
 void Process(float dt)
@@ -1363,7 +1398,8 @@ void Process(float dt)
 
 
 	ImGui::Text("sources size (%.i)", sources.size());
-	
+
+
 
 
 	
@@ -1545,7 +1581,6 @@ void Process(float dt)
 
 	ProcessPE(delta);
 
-	ProcessEntities(delta, 10);
 
 	ProcessLightEffects(delta);
 
@@ -1564,6 +1599,7 @@ void Process(float dt)
 	ProcessCamera(delta);
 	
 	//Map.ParticleEmiters.clear();
+	ProcessExplodions(delta);
 
     GameScene->Draw();
 	
