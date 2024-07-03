@@ -95,15 +95,10 @@ void PartsPile::DeletePart(int  index)
 		if (SelectedPart = index)
 			SelectedPart = -1;
 	}
-	if (Parts[index]->source != 0)
-	{
-		StopSource(&Parts[index]->source);
-		alDeleteSources(1, &Parts[index]->source);
-	}
 	Parts[index]->Delete=true;
 	Parts[index] = Parts[Parts.size() - 1];
 	Parts.pop_back();
-	PlaySound(&PartDestrSOund, mid, 0.085f+rand()%100*0.001f, 0.25f);
+	playsound(PartDestrSOund, mid, 0.25f,0.085f+rand()%100*0.001f);
 }
 void PartsPile::SpawnPart(int type, glm::vec2 position, float size)
 {
@@ -228,14 +223,9 @@ void CentralPart::DestroyPart(int  index)
 			if (SelectedPart = index)
 				SelectedPart = -1;
 		}
-		if (Parts[index]->source != 0)
-		{
-			StopSource(&Parts[index]->source);
-			alDeleteSources(1, &Parts[index]->source);
-		}
 		Parts[index]->Health = -10;
 		DetachPart(index);
-		PlaySound(&PartDestrSOund, mid, 0.085f + rand() % 100 * 0.001f, 0.25f);
+		playsound(PartDestrSOund, mid, 0.25f,0.085f + rand() % 100 * 0.001f);
 
 
 	}
@@ -258,7 +248,6 @@ void CentralPart::DetachPart( int  index)
 		Debris.Parts.push_back(Parts[index]);
 		//Parts[index]->attached = false;
 		int index2 = Parts.size() - 1;
-		DeleteSource(&Parts[index]->source);
 		Parts[index] = Parts[Parts.size() - 1];
 		Parts.pop_back();
 
@@ -319,7 +308,6 @@ int CentralPart::ClaimPart(int index)
 	{
 		Parts.push_back(Debris.Parts[index]);
 		Parts[Parts.size() - 1]->debris = false;
-		Parts[Parts.size() - 1]->GenSoundSource();
 		Debris.Parts[index] = Debris.Parts[Debris.Parts.size() - 1];
 		Debris.Parts.pop_back();
 		return Parts.size() - 1;
@@ -535,7 +523,6 @@ void CentralPart::SaveTo(std::string filename)
 void CentralPart::LoadFrom(std::string filename)
 {
 	glm::vec2 mid = 0.5f * (Parts[0]->body[0].position + Parts[0]->body[1].position);
-	DeleteSoundSources();
 	Clear();
 	std::ifstream f(filename);
 	if (!f.is_open())
@@ -631,7 +618,6 @@ void CentralPart::Clear()
 }
 void CentralPart::Destroy()
 {
-	DeleteSoundSources();
 	for (int i = 0; i < Parts.size(); i++)
 	{
 		if (rand() % 100 < 50)
@@ -664,14 +650,41 @@ void EntityToEntityCollision(CentralPart* e1, CentralPart* e2)
 	if(!BtBCollisionCheck(e1Collider,e2Collider))
 		return;
 
+	float maxdif = 7.0f;
 	if(e1->Balls.size()>e2->Balls.size())
 		for(auto i : e1->Balls)
 			for(auto a : e2->Balls)
-				BtBCollision(i,a);
+				{
+					glm::vec2 prevvel = i->velocity;
+					glm::vec2 prevvel2 = a->velocity;
+					BtBCollision(i,a);
+					
+					glm::vec2 dif = prevvel - i->velocity;
+					float len = sqrlength(dif);
+					if (len > maxdif * maxdif)
+						playsound(Hit,i->position,0.25f,0.1f + (rand() % 100 * 0.00025f),i->velocity);
+					 dif = prevvel2 - a->velocity;
+					len = sqrlength(dif);
+					if (len > maxdif * maxdif)
+						playsound(Hit,a->position,0.25f,0.1f + (rand() % 100 * 0.00025f),a->velocity);
+				}
 	else
 		for(auto i : e2->Balls)
 			for(auto a : e1->Balls)
-				BtBCollision(i,a);
+				{
+					glm::vec2 prevvel = i->velocity;
+					glm::vec2 prevvel2 = a->velocity;
+					BtBCollision(i,a);
+					
+					glm::vec2 dif = prevvel - i->velocity;
+					float len = sqrlength(dif);
+					if (len > maxdif * maxdif)
+						playsound(Hit,i->position,0.25f,0.1f + (rand() % 100 * 0.00025f),i->velocity);
+					 dif = prevvel2 - a->velocity;
+					len = sqrlength(dif);
+					if (len > maxdif * maxdif)
+						playsound(Hit,a->position,0.25f,0.1f + (rand() % 100 * 0.00025f),a->velocity);
+				}
 
 	/*
 	for (int x = 1; x < 300; x++)
@@ -754,7 +767,6 @@ void ProcessEntities(float dt,int s)
 	//for (int x = 0; x < 300; x++)
 	//	for (int y = 0; y < 300; y++)
 	//		Grid[x][y].size = 0;
-	balls.clear();
 	
 
 
@@ -839,7 +851,7 @@ void ProcessEntities(float dt,int s)
 				CollisionSmoke.Spawn(position,
 					15);
 				
-				PlayCollisionSound(ballbuffer[i]->position);
+				playsound(Hit,ballbuffer[i]->position,0.25f,0.1f + (rand() % 100 * 0.00025f));
 				balls[i]->soundcd = 1.0f; 
 				
 			}
@@ -959,6 +971,7 @@ void ProcessEntities(float dt,int s)
 		}
 	*/
 
+	balls.clear();
 	int i = 0;
 	while (i < Entities.size())
 	{

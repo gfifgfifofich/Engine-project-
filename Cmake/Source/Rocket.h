@@ -17,7 +17,6 @@ public:
 	glm::vec2 midvel;
 	float throtle = 0.0f;
 	float explodionR = 5.0f;
-	unsigned int source;
 	
 	bool ThrowParticles = false;
 	float T = 0.015f;
@@ -39,21 +38,6 @@ public:
 		lifet = lifetime;
 		
 	};
-	void GenSrc()
-	{
-
-		DeleteSource(&source);
-		GenSource(&source);
-		SetSourceSound(&source, &RocketEngineSound);
-		SetSourceLooping(&source, true);
-		PlaySource(&source);
-	}
-	void DeleteSrc()
-	{
-		StopSource(&source);
-		DeleteSource(&source);
-
-	}
 	void Process(float dt)
 	{
 		T -= dt;
@@ -68,16 +52,11 @@ public:
 		midvel = (body[0].velocity + body[1].velocity) * 0.5f;
 		glm::vec2 Force = glm::vec2(0.0f);
 		
-		SetSourcePosition(&source, mid);
-		SetSourcePitch(&source, 4.0f);
-		SetSourceVelocity(&source, glm::vec3(midvel, 0.0f));
-		SetSourceGain(&source, 0.25f);
-
 		if (DS.dead)
 			Explode();
 		if (fired && !Exploded) {
 			DamageSpheres.push_back(&DS);
-
+			playsound(RocketEngineSound,mid,0.25f,4.0f,midvel);
 			timeLeft -= dt;
 
 			// NeuralNetwork without NeuralNetwork
@@ -97,7 +76,6 @@ public:
 			if (timeLeft <= 0.0f)
 			{
 				Explode();
-				DeleteSrc();
 			}
 
 			glm::vec2 trgdir = Normalize(Force);
@@ -109,11 +87,8 @@ public:
 		}
 		else
 		{
-			SetSourceGain(&source, 0.0f);
 			throtle = 0.0f;
 		}
-		if (Exploded)
-			DeleteSource(&source);
 		body[0].Force = Force;
 		body[1].Force = Force;
 
@@ -128,14 +103,12 @@ public:
 				if (GameScene->Collision_cubes[a]->id == -1 && BtCCollisionCheck(DS.body, *GameScene->Collision_cubes[a]))
 				{
 					Explode();
-					DeleteSrc();
 				}
 		for (int a = 0; a < GameScene->Collision_balls.size(); a++)
 			if (!DS.dead)
 				if (GameScene->Collision_balls[a]->id == -1 && BtBCollisionCheck(DS.body, *GameScene->Collision_balls[a]))
 				{
 					Explode();
-					DeleteSrc();
 				}
 	}
 	void Explode()
@@ -143,8 +116,6 @@ public:
 		if (!Exploded)
 		{
 			mid = (body[1].position + body[0].position) * 0.5f;
-			SetSourceGain(&source, 0.0f);
-			DeleteSrc();
 			SpawnExplodion(mid, explodionR, dmg, 1.0f,ExplodionForce);
 			ScreenShake += explodionR * 0.01f;
 			ChromaticAbberation += explodionR * 0.2f;
@@ -165,10 +136,6 @@ public:
 		DrawLight(body[1].position + dir * body[0].r, glm::vec2(30.0f * abs(throtle)), glm::vec4(10.0f, 2.0f, 1.0f, abs(0.5f + abs(throtle) + (rand() % 100 - 50) * 0.01f)), 0.0f);
 		DrawTexturedQuad(mid, glm::vec2(1.0f * body[1].r, 3.0f * body[1].r), RocketEngineTexture, get_angle_between_points(mid, mid - dir), glm::vec4(1.0f), 100, CubeNormalMapTexture);
 
-	}
-	~Rocket()
-	{
-		DeleteSrc();
 	}
 };
 

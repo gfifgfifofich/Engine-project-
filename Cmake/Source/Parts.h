@@ -94,7 +94,6 @@ public:
 	std::vector<int> BodyIdsWithCollision;
 	int bodysize = 1;
 	float freq = 1.0f;
-	unsigned int source = 0.0f;
 	int parttype = TYPE::STRUCTUREPART;
 	int partid = -1;
 	int id = 0;
@@ -183,19 +182,9 @@ public:
 		if (Health < 0.0f)
 			dead = true;
 
-		if (reloadSources)
-		{
-			if (source != NULL)
-			{
-				StopSource(&source);
-				DeleteSource(&source);
-			}
-			GenSoundSource();
-		}
 	}
 
 	virtual void Create(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) {}
-	virtual void GenSoundSource(){}
 	virtual void DeletePart(){}
 
 	virtual ~BodyComponent() override
@@ -640,10 +629,6 @@ public:
 	{
 
 
-		if (source != 0) {
-			SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
-			SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
-		}
 		if (!debris && !overheated)
 		{
 			t -= dt;
@@ -673,7 +658,11 @@ public:
 
 
 			body[1].temperature += HeatPerShot;
-			PlaySound(&source, &GunSound, body[1].position, (1.0f + rand() % 10 * 0.04f - 0.2f) * freq, freq <= 0.001f ? 0.0f : 1.0f);
+			playsound(GunSound,
+			 body[1].position,
+			 freq <= 0.001f ? 0.0f : 1.0f,
+			 (1.0f + rand() % 10 * 0.04f - 0.2f) * freq,
+			  body[0].velocity);
 
 
 			ScreenShake += body[1].r * bulletSpeed * 0.000001f;
@@ -1014,24 +1003,9 @@ public:
 			if (t < 0.0f)
 				t = 0.0f;
 
-			if (t > 0.0f && source ==0)
-			{
-				GenSource(&source);
-				SetSourceSound(&source, &LaserGunSound);
-				SetSourceLooping(&source, true);
-				PlaySource(&source);
-			}
-			else if (t <= 0.0f && SourcePlaying(&source))
-			{
-				StopSource(&source);
-				DeleteSource(&source);
-			}
-			if (source != 0) {
-				SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
-				SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
-				SetSourcePitch(&source, t * freq);
-				SetSourceGain(&source, t * (freq <= 0.0001f ? 0.0f : 1.0f));
-			}
+			if (t > 0.0f)
+				playsound(LaserGunSound,body[1].position,t * (freq <= 0.0001f ? 0.0f : 1.0f),t * freq,body[0].velocity);
+			
 			body[1].temperature += t * HeatPerShot * dt;
 
 			ScreenShake += body[1].r * recoil * 0.000021f * t;
@@ -1062,8 +1036,6 @@ public:
 	{
 		Delete = true;
 		DeleteBody();
-		StopSource(&source);
-		DeleteSource(&source);
 		lsr->~Laser();
 		free(lsr);
 	}
@@ -1225,7 +1197,6 @@ public:
 			{
 				if (FiredRockets[iter]->Exploded)
 				{
-					FiredRockets[iter]->DeleteSrc();
 					FiredRockets[iter] = FiredRockets[FiredRockets.size() - 1];
 					FiredRockets.pop_back();
 				}
@@ -1245,10 +1216,6 @@ public:
 	}
 	void Process(float dt) override
 	{
-		if (source == 0)
-			GenSource(&source);
-		SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
-		SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
 		
 		if (!debris)
 		{
@@ -1276,7 +1243,6 @@ public:
 			for (int i = 0; i < FiredRockets.size(); i++)
 			{
 				FiredRockets[i]->Explode();
-				FiredRockets[i]->DeleteSrc();
 			}
 			FiredRockets.clear();
 		}
@@ -1294,7 +1260,6 @@ public:
 		Rocket* R = new Rocket();
 
 		R->Init(HoldingRocket.body[0].position, HoldingRocket.dir, HoldingRocket.body[0].r, dmg, 10.0f);
-		R->GenSrc();
 		R->fired = true;
 		R->body[0].velocity = dir * 100.0f + body[1].velocity;
 		R->body[1].velocity = dir * 100.0f + body[1].velocity;
@@ -1309,10 +1274,9 @@ public:
 
 		//SpawnBullet(body[1].position, bulletSpeed * Normalize(body[1].position - body[0].position), dmg, body[1].r * 0.5f, BulletHeat, recoil, enemy);
 		
-		SetSourceGain(&source,(1.0f + rand() % 10 * 0.04f - 0.2f) * freq);
-		SetSourcePitch(&source,freq <= 0.001f ? 0.0f : 1.0f);
-		SetSourceSound(&source,&GunSound);
-		PlaySource(&source);
+		//Position 
+		//Velocity 
+		playsound(GunSound,body[1].position,(1.0f + rand() % 10 * 0.04f - 0.2f) * freq,freq <= 0.001f ? 0.0f : 1.0f,body[0].velocity);
 
 		ScreenShake += body[1].r * bulletSpeed * 0.000001f;
 		ChromaticAbberation += body[1].r * bulletSpeed * 0.000001f;
@@ -1346,7 +1310,6 @@ public:
 		for (int i = 0; i < FiredRockets.size(); i++)
 		{
 			FiredRockets[i]->Explode();
-			FiredRockets[i]->DeleteSrc();
 		}
 		FiredRockets.clear();
 		DeleteBody();
@@ -1486,17 +1449,7 @@ public:
 		ProcessConnections();
 
 
-		GenSoundSource();
 		//PlaySource(&source);
-	}
-	void GenSoundSource() override
-	{
-		GenSource(&source);
-		SetSourceSound(&source, &MiniGunSound);
-		SetSourceLooping(&source, true);
-
-		SetSourcePitch(&source, 1.0f);
-		SetSourceGain(&source, 1.0f);
 	}
 	void ProcessConnections()
 	{
@@ -1605,30 +1558,17 @@ public:
 	}
 	void Process(float dt) override
 	{
-		if (source != 0) {
-			SetSourcePosition(&source, glm::vec3(body[1].position, 0.0f));
-			SetSourceVelocity(&source, glm::vec3(body[0].velocity, 1.0f));
-		}
 		
 		if (!debris && !deactivated && !overheated)
 		{
-			if (shot && !SourcePlaying(&source))
-				PlaySource(&source);
-
-			if (!shot && SourcePlaying(&source))
-				StopSource(&source);
 			if (shot)
-			{
-				SetSourcePitch(&source, freq + (((rand() % 100) * 0.01f) - 0.5f) * 0.3f + 0.02f*body[1].temperature);
+				playsound(MiniGunSound,body[1].position,1.0f,freq + (((rand() % 100) * 0.01f) - 0.5f) * 0.3f + 0.02f*body[1].temperature,body[0].velocity);
 
-			}
 			t -= dt;
 			if (shot && t <= 0)
 				Shoot();
 
 		}
-		else if (SourcePlaying(&source))
-			StopSource(&source);
 	}
 
 
@@ -1784,7 +1724,6 @@ public:
 		Cost.Cu = 2;
 
 		ProcessConnections();
-		GenSoundSource();
 	}
 	void ProcessConnections()
 	{
@@ -1793,14 +1732,6 @@ public:
 		bDataConnections[1].name = "Boost";
 		bDataConnections[1].source = false;
 	}
-	void GenSoundSource() override
-	{
-		GenSource(&source);
-		SetSourceSound(&source, &RocketEngineSound);
-		SetSourceLooping(&source, true);
-		SetSourceGain(&source, 0.0f);
-	}
-	
 	void MTProcess (float dt) override
 	{
 		ProcessConnections();
@@ -1866,38 +1797,42 @@ public:
 				{
 					throtle *= 2.5f;
 				}
-				if (source == 0)
-				{
-					GenSoundSource();
-					SetSourceSound(&source, &RocketEngineSound);
-					SetSourceLooping(&source, true);
-				}
-				else if (!SourcePlaying(&source))
-					PlaySource(&source);
-				SetSourcePitch(&source, freq);
-				SetSourceGain(&source, throtle * 0.25f * (freq <= 0.001f ? 0.0f : 1.0f));
-				
-				SetSourceVelocity(&source, glm::vec3(body[0].velocity, 0.0f));
-				SetSourcePosition(&source, glm::vec3((body[1].position + body[0].position) * 0.5f, 0.0f));
-					
+				//if (source == 0)
+				//{
+				//	//GenSoundSource();
+				//	SetSourceSound(&source, &RocketEngineSound);
+				//	SetSourceLooping(&source, true);
+				//}
+				//else if (!SourcePlaying(&source))
+				//	PlaySource(&source);
+				//SetSourcePitch(&source, freq);
+				//SetSourceGain(&source, throtle * 0.25f * (freq <= 0.001f ? 0.0f : 1.0f));
+				//
+				//SetSourceVelocity(&source, glm::vec3(body[0].velocity, 0.0f));
+				//SetSourcePosition(&source, glm::vec3((body[1].position + body[0].position) * 0.5f, 0.0f));
+				playsound(RocketEngineSound,(body[1].position + body[0].position) * 0.5f,
+				throtle * 0.25f * (freq <= 0.001f ? 0.0f : 1.0f),
+				freq,
+				body[0].velocity,
+				false);
 				
 
 
 			}
 			else
 			{
-				SetSourceGain(&source, 0.0f);
-				if (SourcePlaying(&source))
-					StopSource(&source);
+				//SetSourceGain(&source, 0.0f);
+				//if (SourcePlaying(&source))
+				//	StopSource(&source);
 				body[1].Force = { 0.0f,0.0f };
 				body[0].Force = {0.0f,0.0f};
 			}
 		}
 		else
 		{
-			SetSourceGain(&source, 0.0f);
-			if (SourcePlaying(&source))
-				StopSource(&source);
+			//SetSourceGain(&source, 0.0f);
+			//if (SourcePlaying(&source))
+			//	StopSource(&source);
 			body[1].Force = { 0.0f,0.0f };
 			body[0].Force = {0.0f,0.0f};
 
@@ -1943,8 +1878,6 @@ public:
 	{
 		Delete = true;
 		DeleteBody();
-		StopSource(&source);
-		DeleteSource(&source);
 	}
 };
 
@@ -2243,34 +2176,9 @@ public:
 
 			CoolingSpeed = coolingSpeed;
 			MinAutocooltemp = mintemp;
-			if (gain > 0.0f)
+			if (gain > 0.1f)
 			{
-				if (source == 0)
-				{
-					GenSource(&source);
-					SetSourceSound(&source, &SHHSound);
-					SetSourceLooping(&source, true);
-					SetSourcePosition(&source, (body[0].position + body[1].position) * 0.5f);
-					PlaySource(&source);
-				}
-				if (source >= 0)
-				{
-					if(!SourcePlaying(&source))
-						PlaySource(&source);
-					SetSourceGain(&source, gain * 0.03f);
-
-					
-					SetSourceVelocity(&source, glm::vec3(body[0].velocity, 0.0f));
-					SetSourcePosition(&source, (body[0].position + body[1].position) * 0.5f);
-				}
-			}
-			else
-			{
-				if (source != 0)
-				{
-					SetSourceGain(&source, 0.0f);
-					StopSource(&source);
-				}
+				playsound(SHHSound,(body[0].position + body[1].position) * 0.5f,gain * 0.03f,1.0f,body[0].velocity);
 			}
 
 			
@@ -2279,11 +2187,6 @@ public:
 		else
 		{
 			CoolingSpeed = 1.0f;
-			if (source != 0)
-			{
-				SetSourceGain(&source, 0.0f);
-				StopSource(&source);
-			}
 		}
 	
 	}
@@ -2312,8 +2215,6 @@ public:
 	{
 		Delete = true;
 		DeleteBody();
-		StopSource(&source);
-		DeleteSource(&source);
 	}
 };
 class StaticPoint : public BodyComponent
@@ -2714,11 +2615,6 @@ public:
 	std::vector<DamageSphere*> CloseDamageSpheres;
 
 	float maxR = 0.0f;
-	void DeleteSoundSources()
-	{
-		for (int i = 0; i < Parts.size(); i++)
-			DeleteSource(&Parts[i]->source);
-	}
 	CentralPart()
 	{
 		

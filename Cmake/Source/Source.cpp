@@ -39,20 +39,8 @@ public:
 	float soundcd = 0.0f;
 };
 
-std::vector<SoundSource*> collisionsounds;
-int lastcollisionsound = 0;
 
-void PlayCollisionSound(glm::vec2 position)
-{
-	collisionsounds[lastcollisionsound]->position = position;
-	collisionsounds[lastcollisionsound]->pitch = 0.1f + (rand() % 100 * 0.00025f);
-	collisionsounds[lastcollisionsound]->gain = 0.25f;
-	collisionsounds[lastcollisionsound]->Play();
-	
-	lastcollisionsound++;
-	if(lastcollisionsound>=20)
-		lastcollisionsound = 0;
-}
+
 
 #define PARTSIZE 0.5f
 
@@ -436,17 +424,7 @@ void ChangeMap(std::string FilePath, bool scaleDown = true)
 {
 	
 	GameScene->LoadFrom(FilePath);
-	collisionsounds.resize(20);
-	for(int i=0;i< 20 ;i++)
-	{
-		collisionsounds[i] = new SoundSource();
-		collisionsounds[i]->position = glm::vec2(0.0f,0.0f);
-		collisionsounds[i]->NoAsset = true;
-		collisionsounds[i]->noAssetSound = Hit;
-		collisionsounds[i]->pitch = 0.1f + (rand() % 100 * 0.00025f);
-		collisionsounds[i]->gain = 0.25f;
-		GameScene->Nodes.push_back(collisionsounds[i]);
-	}
+	
 	if (scaleDown)
 	{
 		CameraScale = { 20,20 };
@@ -755,11 +733,11 @@ void ProcessPlayerControls()
 				if (ConCreationStage == 1 && prevcon != ConCreationStage)
 				{
 					Sparks.Spawn(NewConBall1->position, rand() % 5 + 5);
-					PlaySound(&Clang, MousePosition, 2.5f, 0.3f);
+					playsound(Clang, MousePosition, 0.3f,2.5f);
 				}
 				if (ConCreationStage >= 2)
 				{
-					PlaySound(&Clang, MousePosition, 2.5f, 0.3f);
+					playsound(Clang, MousePosition, 0.3f,2.5f);
 					Sparks.Spawn(NewConBall2->position, rand() % 5 + 5);
 					ConCreationStage = 0;
 					if (NewConDebrie1)
@@ -795,7 +773,7 @@ void ProcessPlayerControls()
 
 							if (i < Entities[0]->Parts.size() && BalltoPointCollisionCheck(Entities[0]->Parts[i]->body[a], MousePosition) && !detached)
 							{
-								PlaySound(&Detach, MousePosition, 3.5f, 0.3f);
+								playsound(Detach, MousePosition, 0.3f,3.5f);
 								Entities[0]->DetachPart(i);
 								detached = true;
 							}
@@ -1271,10 +1249,6 @@ void Ready()
 	ExplodionSound = LoadSound("Sounds/VineBoom.wav");
 
 	MiniGunSound = LoadSound("Sounds/Minigun.wav");
-
-
-
-
 	SetupPEs();
 
 
@@ -1334,11 +1308,34 @@ void Ready()
 	//Background.LoadFrom("Scenes/Sun.sav");
 
 	
+	addsound(SHHSound,true,10);
+	addsound(RocketEngineSound,true,20);
+	addsound(MiniGunSound,true,10);
+	addsound(ExplodionSound,false,10);
+	addsound(BulletHit,false,10);
+	addsound(Hit,false,10);
+	addsound(PartDestrSOund,false,10);
+	addsound(Scratch,true,10);
+	addsound(Detach,false,10);
+	addsound(Clang,false,10);
+	addsound(LaserGunSound,true,10);
+	addsound(HeavyHit,false,10);
+	addsound(GunSound,false,10);
+	//130 sources used
+
 }
 void SubSteppedProcess(float dt, int SubStep)
 {
-
+	Window* sw = GetWindow(ForeWindowID);
+	sw->Use();
 	ProcessEntities(delta, SubStep);
+
+	for(int i=0;i<Sounds.size();i++)
+	{
+		Sounds[i].Update();
+	}
+	sw->End();
+    UseWindow(SceneWindowID);
 }
 
 void Process(float dt)
@@ -1583,7 +1580,7 @@ void Process(float dt)
 
 
 	ProcessLightEffects(delta);
-
+	
 	//DrawCircle(MousePosition,10.0f);
 
 	if (!OpenMenu && !MainMenu)

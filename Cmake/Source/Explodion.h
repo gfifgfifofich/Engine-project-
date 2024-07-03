@@ -30,7 +30,7 @@ Explodion NewExplodion(glm::vec2 position, float r, float dmg, float lifetime,fl
 	e.timeLeft = lifetime;
 	e.lifet = lifetime;
 	ExplodionPE.SpawnInCircle(e.DS.body.position, e.DS.body.r, 100);
-	PlaySound(&ExplodionSound, position, 0.5f, 2.0f);
+	playsound(ExplodionSound, position, 2.0f,0.5f);
 	DamageSpheresArray.push_back(e.DS);
 	return e;
 }
