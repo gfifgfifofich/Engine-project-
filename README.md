@@ -13,21 +13,3 @@ https://github.com/gfifgfifofich/Engine-project-/assets/73363091/fa4fd094-886d-4
 
 Constructor sandbox game prototype. Inspired from games like Cosmoteer or Nimbatus.
 Created mostly for testing capabilities of my engine.
-
-## Screenshots
-Some test ships
-
-![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/VS%20project/Textures/craft1.png)
-
-![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/VS%20project/Textures/craft2.png)
-
-Building mode
-
-![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/VS%20project/Textures/Screenshot_3.png)
-
-Fighting a dummy craft
-![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/VS%20project/Textures/Screenshot_1.png)
-
-
-
-
