@@ -17,16 +17,16 @@ Created mostly for testing capabilities of my engine.
 ## Screenshots
 Some test ships
 
-![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/Project/Textures/craft1.png)
+![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/Project/resources/Textures/craft1.png)
 
-![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/Project/Textures/craft2.png)
+![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/Project/resources/Textures/craft2.png)
 
 Building mode
 
-![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/Project/Textures/Screenshot_3.png)
+![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/Project/resources/Textures/Screenshot_3.png)
 
 Fighting a dummy craft
-![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/Project/Textures/Screenshot_1.png)
+![github3](https://github.com/gfifgfifofich/Engine-project-/blob/main/Project/resources/Textures/Screenshot_1.png)
 
 
 
