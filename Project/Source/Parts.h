@@ -437,7 +437,6 @@ public:
 };
 PartsPile Debris;
 
-std::vector<BodyComponent*> SpawnableParts;
 
 // guns
 class Gun : public BodyComponent

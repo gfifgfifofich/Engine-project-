@@ -476,8 +476,6 @@ std::vector <Node> PartSpawnPoints;
 
 void Delete()
 {
-	for (int i = 0; i < SpawnableParts.size(); i++)
-		SpawnableParts[i]->DeletePart();
 }
 
 void ChangeMap(std::string FilePath, bool scaleDown = true)
@@ -499,8 +497,6 @@ void ChangeMap(std::string FilePath, bool scaleDown = true)
 	Rockets.clear();
 	Lasers.clear();
 	LightEffects.clear();
-	clearParticleMaterials();
-
 	GameScene->LoadFrom(FilePath);
 
 	if (scaleDown)
@@ -529,18 +525,6 @@ void ChangeMap(std::string FilePath, bool scaleDown = true)
 
 
 
-	for(int i=0;i<Entities.size();i++)
-		Entities[i]->Destroy();
-	Entities.clear();
-
-	for (int i = 0; i < Debris.Parts.size(); i++)
-		Debris.Parts[i]->DeletePart();
-	Debris.Parts.clear();
-
-	for (int i = 0; i < sources.size(); i++)
-		DeleteSource(sources[i]);
-	sources.clear();
-	AL_Reload();
 
 	lastEntityID = 0;
 	std::string menustr = "Scenes/Sun.sav";
@@ -551,9 +535,8 @@ void ChangeMap(std::string FilePath, bool scaleDown = true)
 	}
 	else
 		MainMenu = false;
-	for (int i = 0; i < SpawnableParts.size(); i++)
-		SpawnableParts[i]->Create({ 0.0f,0.0f }, { 0.0f,1.0f }, PARTSIZE);
 
+	std::cout<<"\nMap Changed to: "<<FilePath;
 }
 
 void SpawnPlayer(std::string filename = "Ships/Save0.sav")
@@ -565,6 +548,7 @@ void SpawnPlayer(std::string filename = "Ships/Save0.sav")
 	Entities[0]->Create(glm::vec2(0.0f, 0.0f) * Scale + position, { 0.0f,1.0f }, PARTSIZE);
 	camerapos = Entities[0]->body[0].position;
 	Entities[0]->LoadFrom(filename);
+	std::cout<<"\nPlayer Spawned";
 }
 
 CentralPart* SpawnAiShip(glm::vec2 pos, std::string name)

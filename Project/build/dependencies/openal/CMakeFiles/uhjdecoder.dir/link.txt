@@ -1,1 +1,1 @@
-/usr/bin/clang++ -Wall -Wextra -O3 CMakeFiles/uhjdecoder.dir/utils/uhjdecoder.cpp.o -o uhjdecoder  libalcommon.a -pthread /usr/lib/libsndfile.so
+/usr/bin/clang++ -Wall -Wextra -O1 CMakeFiles/uhjdecoder.dir/utils/uhjdecoder.cpp.o -o uhjdecoder  libalcommon.a -pthread /usr/lib/libsndfile.so

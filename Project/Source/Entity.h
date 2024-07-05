@@ -515,92 +515,95 @@ void CentralPart::SaveTo(std::string filename)
 			f << "\n";
 		}
 		f.close();
+		std::cout<<"\n"<<filename<<" Saved";
 	}
 void CentralPart::LoadFrom(std::string filename)
 {
+	std::cout<<"\nLoading Entity: "<<filename;
 	glm::vec2 mid = 0.5f * (Parts[0]->body[0].position + Parts[0]->body[1].position);
 	Clear();
 	std::ifstream f(filename);
 	if (!f.is_open())
 	{
-		std::cerr << "ERROR LOADING MAP: Unable to load " << filename;
+		std::cerr << "ERROR LOADING Entity: Unable to open " << filename;
 		return;
 	}
 	while (!f.eof())
+	{
+		char junk;
+		char line[256];
+		f.getline(line, 256);
+		std::strstream s;
+		s << line;
+		if (line[0] == 'P')
 		{
-			char junk;
-			char line[256];
-			f.getline(line, 256);
-			std::strstream s;
-			s << line;
-			if (line[0] == 'P')
+			std::vector<glm::vec2> positions;
+
+			int type = 0;
+			int bodysize = 0;
+
+			s >> junk >> type >> bodysize;
+			for (int i = 0; i < bodysize; i++)
 			{
-				std::vector<glm::vec2> positions;
+				float x = 0;
+				float y = 0;
 
-				int type = 0;
-				int bodysize = 0;
-
-				s >> junk >> type >> bodysize;
-				for (int i = 0; i < bodysize; i++)
-				{
-					float x = 0;
-					float y = 0;
-
-					s >> x >> y;
-					positions.push_back({ x,y });
-				}
-				BodyComponent* b = CreatePart(type, { 0.0f,0.0f }, { 0.0f,1.0f }, PARTSIZE);
-
-				for (int i = 0; i < bodysize; i++)
-					b->body[i].position = positions[i]+ mid;
-				Parts.push_back(b);
+				s >> x >> y;
+				positions.push_back({ x,y });
 			}
+			BodyComponent* b = CreatePart(type, { 0.0f,0.0f }, { 0.0f,1.0f }, PARTSIZE);
 
-			if (line[0] == 'C')
-			{
-				int type;
-				float len;
-				float width;
-				float stiffness;
-				float absorbtion;
-				float HeatTransferSpeed;
-				int part1;
-				int index1;
-				int part2;
-				int index2;
-
-				s >>junk>> type >> len >> width >> stiffness >> absorbtion 
-					>> HeatTransferSpeed >> part1 >> index1 >> part2 >> index2;
-
-				AddConnection(type, len, width, stiffness, absorbtion, HeatTransferSpeed,
-					part1, index1,
-					part2, index2);
-			}
-			if (line[0] == 'D')
-			{
-				int type;
-				int part1;
-				int index1;
-				int part2;
-				int index2;
-
-				s >> junk >> type >> part1 >> index1 >> part2 >> index2;
-				/*std::cout<< "adding dc: ";
-				std::cout << type << ' ';
-				std::cout << part1 << ' ';
-				std::cout << index1 << ' ';
-				std::cout << part2 << ' ';
-				std::cout << index2 << ' ';*/
-				AddDataConnection(type,part1, index1, part2, index2);
-
-				/*std::cout << "consize = " << DataConnections.size();
-				std::cout <<  '\n';*/
-			}
-
+			for (int i = 0; i < bodysize; i++)
+				b->body[i].position = positions[i]+ mid;
+			Parts.push_back(b);
 		}
+
+		if (line[0] == 'C')
+		{
+			int type;
+			float len;
+			float width;
+			float stiffness;
+			float absorbtion;
+			float HeatTransferSpeed;
+			int part1;
+			int index1;
+			int part2;
+			int index2;
+
+			s >>junk>> type >> len >> width >> stiffness >> absorbtion 
+				>> HeatTransferSpeed >> part1 >> index1 >> part2 >> index2;
+
+			AddConnection(type, len, width, stiffness, absorbtion, HeatTransferSpeed,
+				part1, index1,
+				part2, index2);
+		}
+		if (line[0] == 'D')
+		{
+			int type;
+			int part1;
+			int index1;
+			int part2;
+			int index2;
+
+			s >> junk >> type >> part1 >> index1 >> part2 >> index2;
+			/*std::cout<< "adding dc: ";
+			std::cout << type << ' ';
+			std::cout << part1 << ' ';
+			std::cout << index1 << ' ';
+			std::cout << part2 << ' ';
+			std::cout << index2 << ' ';*/
+			AddDataConnection(type,part1, index1, part2, index2);
+
+			/*std::cout << "consize = " << DataConnections.size();
+			std::cout <<  '\n';*/
+		}
+
+	}
 	f.close();
 	firstdrawafterload = true;
 	
+	std::cout<<"\nLoaded";
 }
 void CentralPart::Clear()
 {

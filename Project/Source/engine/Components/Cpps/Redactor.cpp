@@ -1885,7 +1885,13 @@ void On_Update()
 	
 	Corner = { WIDTH * -0.5f, HEIGHT * 0.5f - CameraPosition.y };
 	Corner += glm::vec2(20.0f, -25.0f);
-
+	if(!Paused && Running)
+	{
+		SelectedNode = NULL;
+		SelectedNodeID = -1;
+		SelectedAsset =NULL;
+		SelectedAssetID=-1;
+	}
 	if(SelectedAsset!=NULL || SelectedNode!=NULL)
 		ProcessSelectedNodeUI();
 
@@ -2379,6 +2385,13 @@ void On_Update()
 		grabbed = false;		
 	}
 	
+	if(!Paused && Running)
+	{
+		SelectedNode = NULL;
+		SelectedNodeID = -1;
+		SelectedAsset =NULL;
+		SelectedAssetID=-1;
+	}
 	GameScene = &Map;
 	Map.dt = delta * Simulation_speed /substeps;
 
@@ -2492,8 +2505,13 @@ void On_Update()
 		}
 	}
 	if(!Paused && Running)
+	{
+		SelectedNode = NULL;
+		SelectedNodeID = -1;
+		SelectedAsset =NULL;
+		SelectedAssetID=-1;
 		Process(delta * Simulation_speed / substeps);
-
+	}
 	if(Paused || !Running)
 	{
 		UpdateListenerPosition();
