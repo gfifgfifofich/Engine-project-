@@ -1,0 +1,5 @@
+-I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/src
+-I/usr/include
+-o
+/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/openal/utils/alsoft-config/moc_mainwindow.cpp
+/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/openal/utils/alsoft-config/mainwindow.h

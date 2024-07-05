@@ -1,0 +1,119 @@
+CO_Cube_0000000000
+{
+	Additive 0
+	Bounciness 0.000000
+	Class 4
+	Collision_layer 0
+	Color 1.000000 1.000000 1.000000 1.000000
+	Depth 0.000000
+	Height 200.000000
+	ID -1
+	Material M_Cube
+	Name CO_Cube
+	Position 190.925049 -9.338785
+	Rotation 0.000000
+	Roughness 0.000000
+	Scale 25.002224 200.004517
+	Type 1
+	Width 25.000000
+	Z_Index 0
+	invertX 0
+	invertY 0
+}
+Cube_0000000000
+{
+	Class 1
+	ID 0
+	Name Cube
+	Type 0
+	texture_FileName 
+	texture_Gradient_Color1 1.000000 1.000000 1.000000 1.000000
+	texture_Gradient_Color2 1.000000 1.000000 1.000000 0.000000
+	texture_Noize_Frequency 10.000000
+	texture_Noize_Layers 3
+	texture_Size 100.000000
+	texture_Type 7
+	texture_filter 0
+}
+M_Cube_0000000001
+{
+	Class 2
+	Height_Map No_texture
+	ID 0
+	Name M_Cube
+	Normal_Map No_texture
+	Texture Cube
+	Type 0
+}
+Node_0000000001
+{
+	Class 0
+	ID 1
+	Name Node
+	Position 153.426788 53.759872
+	Type 1
+	Z_Index 0
+}
+Node_0000000002
+{
+	Class 0
+	ID 1
+	Name Node
+	Position 153.808731 176.364044
+	Type 1
+	Z_Index 0
+}
+Node_0000000003
+{
+	Class 0
+	ID 1
+	Name Node
+	Position 153.044846 158.794601
+	Type 1
+	Z_Index 0
+}
+Node_0000000004
+{
+	Class 0
+	ID 1
+	Name Node
+	Position 153.426788 139.315430
+	Type 1
+	Z_Index 0
+}
+Node_0000000005
+{
+	Class 0
+	ID 1
+	Name Node
+	Position 153.426788 122.127930
+	Type 1
+	Z_Index 0
+}
+Node_0000000006
+{
+	Class 0
+	ID 1
+	Name Node
+	Position 153.808731 106.468208
+	Type 1
+	Z_Index 0
+}
+Node_0000000007
+{
+	Class 0
+	ID 1
+	Name Node
+	Position 153.426788 88.516823
+	Type 1
+	Z_Index 0
+}
+Node_0000000008
+{
+	Class 0
+	ID 1
+	Name Node
+	Position 153.808731 72.475151
+	Type 1
+	Z_Index 0
+}
