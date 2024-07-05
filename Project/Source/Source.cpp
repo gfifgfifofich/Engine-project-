@@ -7,23 +7,33 @@ TODO:
 	lots of textures
 	AI
 	UI
-	also rewrite particle sysytem cuz it sucs
-}
+	bullets are buggy
 
+	
+}
+current task
+{
+	Parts "shop"
+	Save info	
+	md Saving of crafts
+}
 resources - one material (matter or whatever)
 
 Missions, base location, resources. Parts cost materials, missions give. Retrieving vehicle returns all resorces.....
 
 Mission ideas:
-	retrive part/object/debrie
-	kill N crafts ("Pirates" or whatever)
+	retrive part/object/debrie ?? 
+	kill N crafts ("Pirates") // mostly implemented
+	kill N bugs ("Infestation") // need to create new enemy type with its tree (bug->hiver,rammer,stalker,motherbug)
+	//also possible with Central part 
+	
 	defend building/mine for N minutes/waves (or factory/mine, the longer its alive, the more resources player gets)
 
 Mission
 {
-	Random objects (static asteroids, planets, fog fields that slow down...)
+	Random objects (static asteroids - DONE, planets, fog fields that slow down...)
 	Debrie (Random parts for free mb)
-	Matter deposits (Extra reward for exploration)
+	Matter deposits (geodes?)(Extra reward for exploration)
 
 
 	bool retrival necessary ( retrieve to get resources or not) // probably always necessary
@@ -36,33 +46,6 @@ Mission
 	enum int type // mining, retrival, defeat pirates, clear bugs etc
 
 }
-	
-Mission
-{
-	int type = 0;
-	int dificulty = 0;
-	int size = 0;
-	void Start()
-	{
-		changemap("Empty");
-		Create random stuff;
-	}
-
-	void Process(float dt)
-	{
-		switch(type)
-		case 
-	}
-}
-
-enum MissionType 
-{
-	base = 0,
-	mining =1,
-	retrival =2,
-	pirates =3,
-	infestation =4
-};
 */
 
 
@@ -979,7 +962,7 @@ void ProcessPlayerControls()
 	{
 		Exposure = -0.85f;
 		switchToMission = true;
-		CurrnetMission.Start(3,1,1);
+		CurrnetMission.Start(3,1,5);
 	}
 
 
