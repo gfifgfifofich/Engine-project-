@@ -42,7 +42,6 @@ void SpawnExplodion(glm::vec2 position, float r, float dmg, float lifetime, floa
 void ProcessExplodions(float dt)
 {
 	Explodions.clear();
-	glm::vec3 Color = glm::vec3(10.0f, 2.0f, 1.0f);
 	int iter = 0;
 	while (iter < ExplodionArray.size())
 	{
@@ -57,6 +56,11 @@ void ProcessExplodions(float dt)
 			iter++;
 	}
 
+
+}
+void DrawExplodions(float dt)
+{	
+	glm::vec3 Color = glm::vec3(10.0f, 2.0f, 1.0f);
 	for (int i = 0; i < ExplodionArray.size(); i++)
 	{
 		float stage = ExplodionArray[i].timeLeft / ExplodionArray[i].lifet;
@@ -69,8 +73,5 @@ void ProcessExplodions(float dt)
 		
 		ExplodionArray[i].timeLeft -= dt;
 	}
-}
-void DrawExplodions()
-{
 
 }

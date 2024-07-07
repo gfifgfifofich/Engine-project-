@@ -6,5 +6,5 @@ C_DEFINES = -DGLEW_NO_GLU -DGLEW_STATIC
 
 C_INCLUDES = -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/src -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/glew/build/cmake/../../include
 
-C_FLAGS = -O3 -DNDEBUG
+C_FLAGS = -g
 

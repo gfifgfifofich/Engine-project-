@@ -1,1 +1,1 @@
-/usr/bin/clang -O3 -DNDEBUG -rdynamic CMakeFiles/glewinfo.dir/__/__/src/glewinfo.c.o -o ../../../../bin/glewinfo  ../../../../lib/libGLEW.a -lSM -lICE -lX11 -lXext -lOpenGL -lGLX -lGLU -lSM -lICE -lX11 -lXext
+/usr/bin/clang -g -rdynamic CMakeFiles/glewinfo.dir/__/__/src/glewinfo.c.o -o ../../../../bin/glewinfo  ../../../../lib/libGLEWd.a -lSM -lICE -lX11 -lXext -lOpenGL -lGLX -lGLU -lSM -lICE -lX11 -lXext

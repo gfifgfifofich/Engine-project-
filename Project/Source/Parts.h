@@ -3,17 +3,19 @@
 
 struct CostMaterial
 {
-	//Raw
-	int Fe = 0;
-	int C = 0;
-	int Al = 0;
-	int Cu = 0;
-	int Au = 0;
-	int U = 0;
+	int Matter = 0;
 
-	int Ti = 0;
-	//Processed
-	int Steel = 0;
+	////Raw
+	//int Fe = 0;
+	//int C = 0;
+	//int Al = 0;
+	//int Cu = 0;
+	//int Au = 0;
+	//int U = 0;
+	//int Ti = 0;
+
+	////Processed
+	//int Steel = 0;
 };
 
 
@@ -528,9 +530,7 @@ public:
 		recoil = PartsData.GetPropertyAsFloat("Gun", "Recoil");
 		bulletSize = PartsData.GetPropertyAsFloat("Gun", "BulletSize");
 		shutdownTemp = 15.0f;
-		Cost.Steel = 5;
-		Cost.Cu = 2;
-		Cost.Al = 2;
+		Cost.Matter = 20;
 		
 		ProcessConnections();
 	}
@@ -823,9 +823,7 @@ public:
 		lsr->body.singleHit = false;
 		lsr->fraction = body[0].id;
 
-		Cost.Steel = 10;
-		Cost.Cu = 20;
-		Cost.Au = 5;
+		Cost.Matter = 50;
 
 		Health = PartsData.GetPropertyAsFloat("LaserGun", "Health");
 		HeatPerShot = PartsData.GetPropertyAsFloat("LaserGun", "HeatPerShot");
@@ -1131,9 +1129,7 @@ public:
 		ProcessConnections();
 		
 
-		Cost.Steel = 20;
-		Cost.Cu = 2;
-		Cost.Al = 5;
+		Cost.Matter = 75;
 
 
 
@@ -1387,9 +1383,8 @@ public:
 
 		diaglength = sqrt(body[0].r * 2.0f * body[0].r * 2.0f + body[0].r * 2.0f * body[0].r * 2.0f);
 
-		Cost.Steel = 25;
-		Cost.Cu = 20;
-		Cost.Al = 20;
+		Cost.Matter = 75;
+
 		shutdownTemp = 15.0f;
 		ProcessConnections();
 		BodyIdsWithCollision.push_back(0);
@@ -1438,9 +1433,6 @@ public:
 
 		diaglength = sqrt(body[0].r * 2.0f * body[0].r * 2.0f + body[0].r * 2.0f * body[0].r * 2.0f);
 
-		Cost.Steel = 25;
-		Cost.Cu = 20;
-		Cost.Al = 20;
 		shutdownTemp = 15.0f;
 		ProcessConnections();
 
@@ -1714,9 +1706,6 @@ public:
 		body[1].roughness = 0.0f;
 		body[1].bounciness = 0.0f;
 
-		Cost.Ti = 5;
-		Cost.Steel = 15;
-		Cost.Cu = 2;
 
 		ProcessConnections();
 	}
@@ -1915,7 +1904,7 @@ public:
 
 		body[0].roughness = 0.0f;
 		body[0].bounciness = 0.0f;
-		Cost.Fe = 5;
+		Cost.Matter = 2;
 
 	}
 	
@@ -2007,8 +1996,7 @@ public:
 		diaglen = sqrt(((size*2.0f) * (size*2.0f)) * 2.0f);
 		ProcessConnections();
 
-		Cost.Fe = 10;
-		Cost.Cu = 5;
+		Cost.Matter = 5;
 	}
 	void ProcessConnections()
 	{
@@ -2132,9 +2120,7 @@ public:
 		CoolingSpeed = coolingSpeed;
 		MinAutocooltemp = mintemp;
 
-		Cost.Al = 20;
-		Cost.Cu = 5;
-		Cost.Fe = 10;
+		Cost.Matter = 30;
 
 	}
 
@@ -2371,8 +2357,6 @@ public:
 						else
 							position2 = ent->Parts[part2]->body[0].position + ent->Parts[part2]->dir * float(index2 - ent->Parts[part2]->fDCsize * 0.5f) * Scale2 * 2.0f - norm2 * Scale2;
 
-						DrawLine(position1, position2,
-							0.0625f, glm::vec4(0.0f, 1.5f, 0.0f, 1.0f), false, 0, 1000);
 					}
 				}
 				else if (type == 2 && index1 < ent->Parts[part1]->vDCsize && index2 < ent->Parts[part2]->vDCsize)
@@ -2403,8 +2387,6 @@ public:
 						else
 							position2 = ent->Parts[part2]->body[0].position + ent->Parts[part2]->dir * float(index2 - ent->Parts[part2]->fDCsize * 0.5f) * Scale2 * 2.0f + norm2 * Scale2;
 
-						DrawLine(position1, position2,
-							0.0625f, glm::vec4(1.5f, 0.0f, 0.0f, 1.0f), false, 0, 1000);
 					}
 				}
 				else
@@ -2701,6 +2683,8 @@ public:
 	}
 	void MTProcess (float dt) override
 	{
+		if(Health<=0.0f || destroyed || Delete || !Alive)
+			return;
 		ProcessConnections();
 		ProcessBody(dt);
 		body[0].color = color;
@@ -2873,7 +2857,14 @@ public:
 
 			if (back != NULL && front != NULL)
 			{
-				direction = Normalize(front->position - back->position);
+
+				float len = length((front->position - back->position));
+				if(len<0.001f)
+				{
+					front->position.y+=0.001f;
+					len = length((front->position - back->position));
+				}
+				direction = (front->position - back->position)/len;
 
 				float aligment = DOT(Normalize(direction), Normalize(glm::vec2(-LookAt.y, LookAt.x)));
 				glm::vec2 dirTotrg = Normalize((trgPos - (body[0].position + body[1].position) * 0.5f));
@@ -2919,17 +2910,21 @@ public:
 
 					Force.x = sigmoid(((CenterOfMass.x - trgPos.x) * sizemult * -0.496329 + avgvel.x * sizemult * -0.0841397)) * 2.0f - 1.0f;
 					Force.y = sigmoid(((CenterOfMass.y - trgPos.y) * sizemult * -0.496329 + avgvel.y * sizemult * -0.0841397)) * 2.0f - 1.0f;
+					glm::vec2 rotatedvec = Rotate((mid - trgPos), pi * 0.5f);
+					float len = length(rotatedvec);
+					if(len >= 0.001f)
+					{
+						glm::vec2 norm = rotatedvec/len;
+						Force -= DOT(norm, body[0].velocity) * norm * 4.0f;
 
-					glm::vec2 norm = Normalize(Rotate((mid - trgPos), pi * 0.5f));
-					Force -= DOT(norm, body[0].velocity) * norm * 4.0f;
-
-					//float forceNeeded = length(Force);// (maxVelocity - entVelocity)* mass / (ForceToThrustDirection);
-					ThrustDirection = Force;
-					/*if (DOT(ThrustDirection, dir) < 0.0f && DOT(avgvel, dir) < 0.0f)
-						ThrustDirection += dir * 0.5f;*/
-					//ThrustDirection -= glm::vec2(-dir.y, dir.x) * DOT(glm::vec2(-dir.y, dir.x), avgvel);
-					if (distance < 10)
-						friction = 1.0;
+						//float forceNeeded = length(Force);// (maxVelocity - entVelocity)* mass / (ForceToThrustDirection);
+						ThrustDirection = Force;
+						/*if (DOT(ThrustDirection, dir) < 0.0f && DOT(avgvel, dir) < 0.0f)
+							ThrustDirection += dir * 0.5f;*/
+						//ThrustDirection -= glm::vec2(-dir.y, dir.x) * DOT(glm::vec2(-dir.y, dir.x), avgvel);
+						if (distance < 10)
+							friction = 1.0;
+					}
 				}
 
 
@@ -2951,7 +2946,10 @@ public:
 			ForceToThrustDirection = 0.0f;
 			for (int i = 0; i < Balls.size(); i++)
 			{
-				glm::vec2 dif = Normalize(CenterOfMass - Balls[i]->position);
+				float len = length(CenterOfMass - Balls[i]->position);
+				if(len<0.001f)
+					continue;
+				glm::vec2 dif = (CenterOfMass - Balls[i]->position)/len;
 				Balls[i]->velocity -= DOT(Balls[i]->velocity - avgvel, glm::vec2(-dif.y, dif.x)) * glm::vec2(-dif.y, dif.x) * RotationalFriction * dt;
 				Balls[i]->velocity -= Balls[i]->velocity * friction * dt;
 			}
@@ -2962,6 +2960,8 @@ public:
 	void Process(float dt) override
 	{
 		
+		if(Health<=0.0f || destroyed || Delete || !Alive)
+			return;
 		CheckPartsConnections();
 		int pt = 0;
 		while (pt < Parts.size())
@@ -2978,6 +2978,9 @@ public:
 
 	void Draw() override
 	{
+		
+		if(Health<=0.0f || destroyed || Delete || !Alive)
+			return;
 		if(firstdrawafterload)
 		{
 			firstdrawafterload = false;
@@ -3019,12 +3022,20 @@ public:
 
 
 
-
+std::vector<int> PurchasableParts;
 
 
 void InitParts()
 {
-
+	PurchasableParts.clear();
+	PurchasableParts.push_back(PART::BALLBODY);
+	PurchasableParts.push_back(PART::ROCKETENGINE);
+	PurchasableParts.push_back(PART::GUN);
+	PurchasableParts.push_back(PART::LASERGUN);
+	PurchasableParts.push_back(PART::RADIATOR);
+	PurchasableParts.push_back(PART::ROTOR);
+	PurchasableParts.push_back(PART::ROCKETLAUNCHER);
+	PurchasableParts.push_back(PART::MINIGUN);
 
 	NodeConstructors.insert({NodeType::LASTNODE + PART::BALLBODY,[](){return (Node*)new BallBody();}});
 	NodeConstructorNames.insert({NodeType::LASTNODE + PART::BALLBODY,"BallBody"});

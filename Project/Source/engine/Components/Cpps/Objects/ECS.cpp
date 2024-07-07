@@ -663,6 +663,11 @@ void Node::DebugDraw()
 {
 	DrawCircle(position,1.0f,{1.0f,1.0f,1.0f,1.0f});
 };
+void Node::DrawPreview(glm::vec2 ui_position, glm::vec2 size) 
+{
+	UI_DrawCircle(ui_position,size.x,glm::vec4(1.0f),false,0,-100);
+};
+
 void Node::OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp)
 {
 

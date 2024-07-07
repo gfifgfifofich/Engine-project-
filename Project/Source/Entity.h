@@ -312,7 +312,8 @@ void CentralPart::AddConnection(int type, float len, float width, float stiffnes
 	int part1, int  index1,
 	int part2, int  index2)
 	{
-		
+		if(part1>=Parts.size() || part2 >= Parts.size())
+			return;
 		int it = -1;
 		for (int i = 0; i < Connections.size(); i++)
 		{
@@ -361,6 +362,8 @@ void CentralPart::AddConnection(int type, float len, float width, float stiffnes
 	}
 void CentralPart::AddDataConnection(int type, int part1, int  index1, int part2, int  index2)
 	{
+		if(part1>=Parts.size() || part2 >= Parts.size())
+			return;
 		if (part1 != part2)
 		{
 			int it = -1;
@@ -552,10 +555,13 @@ void CentralPart::LoadFrom(std::string filename)
 				positions.push_back({ x,y });
 			}
 			BodyComponent* b = CreatePart(type, { 0.0f,0.0f }, { 0.0f,1.0f }, PARTSIZE);
-
-			for (int i = 0; i < bodysize; i++)
-				b->body[i].position = positions[i]+ mid;
-			Parts.push_back(b);
+			if(b!=NULL)
+			{
+				b->Create({ 0.0f,0.0f }, { 0.0f,1.0f }, PARTSIZE);
+				for (int i = 0; i < bodysize; i++)
+					b->body[i].position = positions[i]+ mid;
+				Parts.push_back(b);
+			}
 		}
 
 		if (line[0] == 'C')
@@ -626,7 +632,12 @@ void CentralPart::Destroy()
 			Parts[i]->Health = -1.0f;
 	}
 	Connections.clear();
-	CheckPartsConnections();
+	DataConnections.clear();
+	while(Parts.size()>0)
+		DetachPart(Parts.size()-1);
+	Balls.clear();
+	Engines.clear();
+	CloseDamageSpheres.clear();
 	destroyed = true;
 	firstdrawafterload = true;
 }
@@ -754,14 +765,20 @@ void EntityToEntityCollision(CentralPart* e1, CentralPart* e2)
 
 void ProcessEntities(float dt,int s)
 {
-	subdt = dt / substeps;
-
-	// refactor required
-	ProcessDamageSpheres(subdt);
-	ProcessLasers(subdt, false);
-	ProcessBullets(subdt, s==0);
-	ProcessRockets(subdt);
-	ProcessLasers(subdt, true,true);//?
+	std::cout<<"\n DSs";
+	ProcessDamageSpheres(dt);
+	std::cout<<"\n Lsr";
+	ProcessLasers(dt, false);
+	std::cout<<"\n Bul";
+	ProcessBullets(dt, true);
+	std::cout<<"\n Rkt";
+	ProcessRockets(dt);
+	std::cout<<"\n Ls2";
+	ProcessLasers(dt, false,true);
+	std::cout<<"\n Exp";
+	ProcessExplodions(dt);
+	std::cout<<"\n Don";
+	// refactor required//?
 
 	for (int x = 0; x < 300; x++)
 		for (int y = 0; y < 300; y++)
@@ -973,37 +990,27 @@ void ProcessEntities(float dt,int s)
 	*/
 
 	balls.clear();
+	std::cout<<"\n Entities";
 	int i = 0;
 	while (i < Entities.size())
 	{
-		if (!Entities[i]->Alive && !Entities[i]->destroyed || Entities[i]->Health<=0.0f)
+		std::cout<<"\n sl";
+		if (Entities[i]->Alive && !Entities[i]->destroyed && Entities[i]->Health>0.0f && !Entities[i]->Delete)
 		{
-			
-			LightEffect le;
-			le.volume = 0.005f;
-			le.S_Color = { 1.0f,20.0f,200.0f,1.0f };
-			le.S_Scale = 250.0f;
-			le.time = 3.0f;
-			le.maxT = 3.0f;
-			le.position = glm::vec3(Entities[i]->mid,0.0f);
-			LightEffects.push_back(le);
-			Entities[i]->Destroy();
-			Entities[i]->Delete=true;
-			Entities[i] = Entities[Entities.size() - 1];
-			Entities.pop_back();
-		}
-		else
-		{
+			std::cout<<"\n sc "<<i;
 			for(int a = i+1; a< Entities.size();a++)
 			{
-				if (Entities[a]->Alive && Entities[a]->Health>0.0f)
+				std::cout<<"\n c "<<i << " "<< a;
+				if (Entities[a]->Alive && Entities[a]->Health>0.0f && !Entities[a]->Delete && !Entities[a]->destroyed)
 					EntityToEntityCollision(Entities[i],Entities[a]);
+				std::cout<<" d ";
 			}
-			i++;
 		}
+		i++;
+		std::cout<<"e";
 	}
+	std::cout<<"\n Processed";
 	
-
 
 	
 

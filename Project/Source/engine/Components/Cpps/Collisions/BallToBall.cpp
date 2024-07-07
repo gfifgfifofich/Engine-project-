@@ -75,7 +75,13 @@ void BtBCollision(ball* b1, ball* b2, float roughness)
 	{
 		float dist = length(dif);
 		float distancedifference = (b1->r + b2->r) - dist;
-
+		if(dist<0.0001f)
+		{
+			b2->position.y += 0.0002f;
+			dif = b2->position - b1->position;
+			dist = length(dif);
+			distancedifference = (b1->r + b2->r) - dist;
+		}
 		// all the normals
 		glm::vec2 n2 = dif / dist;
 		glm::vec2 n1 = -n2;

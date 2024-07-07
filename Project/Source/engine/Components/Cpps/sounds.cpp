@@ -415,7 +415,7 @@ void soundpool::AddSound(glm::vec2 position,float gain,float pitch,glm::vec2 vel
 	{
 		float score = 0.0f;
 		score += sqrlength(avgpositions[i] - position);
-		score += sourceUsageAmount[i] * 1000.0f;
+		score += sourceUsageAmount[i] * 10000.0f;
 		
 		if(score < ll|| ll<0.0f)
 		{

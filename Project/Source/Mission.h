@@ -14,6 +14,7 @@ class Mission
 	int size = 0;
 	float materialReward = 0.0f;
 	std::vector<CentralPart*> AIShips;
+	std::vector<unsigned int> AIShipsIds;
 
 	std::vector<glm::vec4> TakenAreas;
 
@@ -26,7 +27,7 @@ class Mission
 		materialReward = 0.0f;
 		TakenAreas.clear();
 		TakenAreas.push_back({0,0,50,50});
-
+		AIShips.clear();
 		if(Entities.size()>0)
 			Entities[0]->SaveTo(EntityBackUpName);
 		//ClearMap
@@ -94,7 +95,8 @@ class Mission
 					}
 				}
 				int randshipid = rand()% shipNames.size(); 
-				AIShips.push_back(SpawnAiShip(randpos,"Save0.sav"));
+				AIShips.push_back(SpawnAiShip(randpos,"./Ships/Save0.sav"));
+				AIShipsIds.push_back(AIShips[AIShips.size()-1]->id);
 				TakenAreas.push_back(glm::vec4(randpos,AIShips[AIShips.size()-1]->maxR,AIShips[AIShips.size()-1]->maxR));
 			}
 			
@@ -108,20 +110,23 @@ class Mission
 			break;
 		}
 	}
-
+	void CheckShips(float dt)
+	{
+		AIShips.clear();
+		int AIShipsi =0; 
+		if(Entities.size()>0) 
+		while(AIShipsi<AIShipsIds.size())
+		{
+			int i=0;
+			for(int i = 1;i <Entities.size();i++)// first is player
+				if(Entities[i]->id == AIShipsIds[AIShipsi])
+					AIShips.push_back(Entities[i]);
+			AIShipsi++;
+		}
+	}
 	void Process(float dt)
 	{
-		int AIShipsi =0; 
-		while(AIShipsi<AIShips.size())
-		{
-			if(AIShips[AIShipsi]->Delete)
-			{
-				AIShips[AIShipsi] = AIShips[AIShips.size()];
-				AIShips.pop_back();
-			}
-			else
-				AIShipsi++;
-		}
+		
 		switch (type)
 		{
 		case MissionType::mining:

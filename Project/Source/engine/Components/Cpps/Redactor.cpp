@@ -1772,7 +1772,7 @@ void On_Update()
 		{
 		float size = 100;
 		int AssetStep = 20.0f;
-		int MaxAmountRow = cw->ViewportSize.x/(size + AssetStep)-1; 	
+		int MaxAmountRow = cw->ViewportSize.x/(size + AssetStep * 2.0f)-1; 	
 		int counterX = 0;
 		float AssetstepX = 0.0f;
 
@@ -2510,7 +2510,7 @@ void On_Update()
 		SelectedNodeID = -1;
 		SelectedAsset =NULL;
 		SelectedAssetID=-1;
-		Process(delta * Simulation_speed / substeps);
+		Process(delta * Simulation_speed);
 	}
 	if(Paused || !Running)
 	{

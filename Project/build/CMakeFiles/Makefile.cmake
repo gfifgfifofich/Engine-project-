@@ -246,8 +246,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "dependencies/stb_image/CMakeFiles/stb_image.dir/DependInfo.cmake"
   "dependencies/glew/build/cmake/CMakeFiles/glew.dir/DependInfo.cmake"
   "dependencies/glew/build/cmake/CMakeFiles/glew_s.dir/DependInfo.cmake"
-  "dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/DependInfo.cmake"
-  "dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/DependInfo.cmake"
   "dependencies/freetype/CMakeFiles/freetype.dir/DependInfo.cmake"
   "dependencies/openal/CMakeFiles/alcommon.dir/DependInfo.cmake"
   "dependencies/openal/CMakeFiles/OpenAL.dir/DependInfo.cmake"

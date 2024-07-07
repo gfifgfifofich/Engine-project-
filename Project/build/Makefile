@@ -664,32 +664,6 @@ glew_s/fast:
 .PHONY : glew_s/fast
 
 #=============================================================================
-# Target rules for targets named glewinfo
-
-# Build rule for target.
-glewinfo: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glewinfo
-.PHONY : glewinfo
-
-# fast build rule for target.
-glewinfo/fast:
-	$(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/build
-.PHONY : glewinfo/fast
-
-#=============================================================================
-# Target rules for targets named visualinfo
-
-# Build rule for target.
-visualinfo: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 visualinfo
-.PHONY : visualinfo
-
-# fast build rule for target.
-visualinfo/fast:
-	$(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/build
-.PHONY : visualinfo/fast
-
-#=============================================================================
 # Target rules for targets named freetype
 
 # Build rule for target.
@@ -1944,7 +1918,6 @@ help:
 	@echo "... glad"
 	@echo "... glew"
 	@echo "... glew_s"
-	@echo "... glewinfo"
 	@echo "... glfw"
 	@echo "... glfwinfo"
 	@echo "... heightmap"
@@ -1973,7 +1946,6 @@ help:
 	@echo "... triangle-vulkan"
 	@echo "... uhjdecoder"
 	@echo "... uhjencoder"
-	@echo "... visualinfo"
 	@echo "... wave"
 	@echo "... windows"
 	@echo "... Source/Source.o"

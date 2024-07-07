@@ -210,34 +210,6 @@ glew_s/fast:
 	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/glew_s.dir/build.make dependencies/glew/build/cmake/CMakeFiles/glew_s.dir/build
 .PHONY : glew_s/fast
 
-# Convenience name for target.
-dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/rule:
-	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/rule
-.PHONY : dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/rule
-
-# Convenience name for target.
-glewinfo: dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/rule
-.PHONY : glewinfo
-
-# fast build rule for target.
-glewinfo/fast:
-	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/build
-.PHONY : glewinfo/fast
-
-# Convenience name for target.
-dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/rule:
-	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/rule
-.PHONY : dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/rule
-
-# Convenience name for target.
-visualinfo: dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/rule
-.PHONY : visualinfo
-
-# fast build rule for target.
-visualinfo/fast:
-	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/build
-.PHONY : visualinfo/fast
-
 __/__/src/glew.o: __/__/src/glew.c.o
 .PHONY : __/__/src/glew.o
 
@@ -265,54 +237,6 @@ __/__/src/glew.c.s:
 	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/glew_s.dir/build.make dependencies/glew/build/cmake/CMakeFiles/glew_s.dir/__/__/src/glew.c.s
 .PHONY : __/__/src/glew.c.s
 
-__/__/src/glewinfo.o: __/__/src/glewinfo.c.o
-.PHONY : __/__/src/glewinfo.o
-
-# target to build an object file
-__/__/src/glewinfo.c.o:
-	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/__/__/src/glewinfo.c.o
-.PHONY : __/__/src/glewinfo.c.o
-
-__/__/src/glewinfo.i: __/__/src/glewinfo.c.i
-.PHONY : __/__/src/glewinfo.i
-
-# target to preprocess a source file
-__/__/src/glewinfo.c.i:
-	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/__/__/src/glewinfo.c.i
-.PHONY : __/__/src/glewinfo.c.i
-
-__/__/src/glewinfo.s: __/__/src/glewinfo.c.s
-.PHONY : __/__/src/glewinfo.s
-
-# target to generate assembly for a file
-__/__/src/glewinfo.c.s:
-	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/__/__/src/glewinfo.c.s
-.PHONY : __/__/src/glewinfo.c.s
-
-__/__/src/visualinfo.o: __/__/src/visualinfo.c.o
-.PHONY : __/__/src/visualinfo.o
-
-# target to build an object file
-__/__/src/visualinfo.c.o:
-	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/__/__/src/visualinfo.c.o
-.PHONY : __/__/src/visualinfo.c.o
-
-__/__/src/visualinfo.i: __/__/src/visualinfo.c.i
-.PHONY : __/__/src/visualinfo.i
-
-# target to preprocess a source file
-__/__/src/visualinfo.c.i:
-	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/__/__/src/visualinfo.c.i
-.PHONY : __/__/src/visualinfo.c.i
-
-__/__/src/visualinfo.s: __/__/src/visualinfo.c.s
-.PHONY : __/__/src/visualinfo.s
-
-# target to generate assembly for a file
-__/__/src/visualinfo.c.s:
-	cd /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build && $(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/__/__/src/visualinfo.c.s
-.PHONY : __/__/src/visualinfo.c.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -329,17 +253,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... glew"
 	@echo "... glew_s"
-	@echo "... glewinfo"
-	@echo "... visualinfo"
 	@echo "... __/__/src/glew.o"
 	@echo "... __/__/src/glew.i"
 	@echo "... __/__/src/glew.s"
-	@echo "... __/__/src/glewinfo.o"
-	@echo "... __/__/src/glewinfo.i"
-	@echo "... __/__/src/glewinfo.s"
-	@echo "... __/__/src/visualinfo.o"
-	@echo "... __/__/src/visualinfo.i"
-	@echo "... __/__/src/visualinfo.s"
 .PHONY : help
 
 

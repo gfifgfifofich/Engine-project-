@@ -9,15 +9,27 @@ TODO:
 	UI
 	bullets are buggy
 
+	Test on windows 
 	
 }
 current task
 {
 	Parts "shop"
+	{
+		vector<partids> (what to by)
+		clear()
+		buy()
+
+	}
 	Save info	
+
 	md Saving of crafts
+
 }
 resources - one material (matter or whatever)
+
+
+
 
 Missions, base location, resources. Parts cost materials, missions give. Retrieving vehicle returns all resorces.....
 
@@ -213,7 +225,7 @@ void LoadTextures()
 
 }
 
-glm::vec2 camerapos;
+glm::vec2 camerapos = {0.0f,0.0f};
 
 float ScreenShake = 0.0f;
 float ChromaticAbberation = 0.0f;
@@ -529,7 +541,6 @@ void SpawnPlayer(std::string filename = "Ships/Save0.sav")
 	glm::vec2 Scale = glm::vec2(0.5f, 0.5f);
 	Entities.push_back(new CentralPart);
 	Entities[0]->Create(glm::vec2(0.0f, 0.0f) * Scale + position, { 0.0f,1.0f }, PARTSIZE);
-	camerapos = Entities[0]->body[0].position;
 	Entities[0]->LoadFrom(filename);
 	std::cout<<"\nPlayer Spawned";
 }
@@ -554,6 +565,88 @@ std::vector<std::string> shipNames;
 #include "Mission.h"
 
 Mission CurrnetMission;
+
+std::vector<BodyComponent*> PartInstances;
+
+void SetupInstances()
+{
+	PartInstances.clear();
+	for(auto i : PurchasableParts)
+	{
+		PartInstances.push_back(CreatePart(i,{0.0f,0.0f},{0.0f,1.0f},1.0f,1.0f));
+		GameScene->Nodes.pop_back();// delete autocreated pointer from scene tree
+	}
+}
+
+class Shop
+{
+public:
+	int window = -1;
+
+	void Process(float dt)
+	{
+		Window* sw = GetWindow(ForeWindowID);
+		Window* www = GetWindow(window);
+		sw->End();
+		www->Use();
+		www->active = true;
+		glm::vec2 WindowMousePosition = ((GetWindow(SceneWindowID)->WindowMousePosition - www->Position) ) / (www->Scale);
+		LastJustPressedLMBScrMousePos = (GetWindow(SceneWindowID)->w_LastJustPressedLMBScrMousePos - www->Position )/ (www->Scale);
+		ScreenMousePosition = WindowMousePosition;
+		foregroundMousePosition =MousePosition; 
+
+		float size = 100;
+		int AssetStep = 20.0f;
+		int MaxAmountRow = www->ViewportSize.x/(size + AssetStep * 2.0f)-1; 	
+		int counterX = 0;
+		float AssetstepX = 0.0f;
+
+		float step = 20.0f;
+		glm::vec2 Corner =  { WIDTH * -0.5f , HEIGHT * 0.5f - size};
+		bool b = false;
+		
+		AssetstepX = 0.0f;
+		for(int i=0;i<PartInstances.size();i++)
+		{
+			
+			if(counterX>=MaxAmountRow)
+			{
+				AssetstepX =0.0f;
+				counterX = 0;
+			}
+			counterX++;
+			b = false;
+			
+			PartInstances[i]->DrawPreview(Corner + glm::vec2(AssetstepX + size*0.5f + 10.0f,0.0f),{size*0.5f,size*0.5f});
+			glm::vec2 UIObjSize = UI_button(&b, "", Corner + glm::vec2(AssetstepX,0.0f),{size+20.0f,size+20.0f},0.35f,glm::vec4(0.9f),glm::vec4(0.1f),glm::vec4(0.0f));
+			UI_DrawText(PartInstances[i]->Name.c_str(), Corner + glm::vec2(AssetstepX,UIObjSize.y*-0.5f - step*0.5f), 0.35f).x + AssetStep;
+			
+
+			if(counterX<MaxAmountRow)
+				AssetstepX += UIObjSize.x + AssetStep;
+			else
+				Corner.y += UIObjSize.y *-1.0f - step;
+			if(b)
+			{
+				Debris.Parts.push_back(CreatePart(PurchasableParts[i],{0.0f,0.0f},{0.0f,1.0f},PARTSIZE,1.0f));
+			}
+			
+		}
+		www->End();
+		sw->Use();
+		WindowMousePosition = (GetWindow(SceneWindowID)->WindowMousePosition);
+		MousePosition.x = WindowMousePosition.x / CameraScale.x + CameraPosition.x;
+		MousePosition.y = WindowMousePosition.y / CameraScale.y + CameraPosition.y;
+		LastJustPressedLMBScrMousePos = GetWindow(SceneWindowID)->w_LastJustPressedLMBScrMousePos;
+		ScreenMousePosition = WindowMousePosition;
+		foregroundMousePosition =MousePosition; 
+	}
+
+
+	
+
+};
+Shop shopmenu;
 
 void ProcessPlayerControls()
 {
@@ -1023,40 +1116,19 @@ void ProcessPlayerControls()
 
 	//base
 	if(inbase)
-		for (int i = 0; i < PartSpawnPoints.size(); i++)
-		{
-			glm::vec2 offset = Entities[0]->mid + glm::vec2(-150, -150);
-			glm::ivec2 pos = { roundf(PartSpawnPoints[i].position.x - offset.x),roundf(PartSpawnPoints[i].position.y - offset.y) };
+	{
+		Window* shw = GetWindow(shopmenu.window);
+		shopmenu.Process(delta);
+		shw->Scale = CameraScale * 0.25f;
+		shw->Position = (glm::vec2(-50,50) - CameraPosition)* CameraScale;
+		UI_DrawTexturedQuad(shw->Position , shw->GetSize(), shw->Texture, 0.0f, {1.0f,1.0f,1.0f,1.0f}, -1, false,false,false,true);
 
-			bool inrange = false;
-			bool able = true;
-			for (int x = -1; x < 2; x++)
-				if (able)
-				{
-					for (int y = -1; y < 2; y++)
-						if ((pos.x + x) >= 0 && (pos.x + x < 300) &&
-							(pos.y + y) >= 0 && (pos.y + y < 300))
-						{
-							inrange = true;
-							if ((Grid[pos.x + x][pos.y + y].size > 0) && able)
-							{
-								able = false;
-								break;
-							}
-						}
-				}
-				else
-					break;
-			if (inrange && able )
-			{
-				if(sqrlength(PartSpawnPoints[i].position - CameraPosition) < 100 * 100)
-					Debris.SpawnPart(PartSpawnPoints[i].id, PartSpawnPoints[i].position, PARTSIZE);
-			}
-		}
+	
+	}
 	else
 	{
+		
 		CurrnetMission.Process(delta);
-
 	}
 
 }
@@ -1075,6 +1147,7 @@ void ProcessMainMenu()
 	glm::vec2 WindowMousePosition = (GetWindow(SceneWindowID)->WindowMousePosition);
 	MousePosition.x = WindowMousePosition.x / CameraScale.x + CameraPosition.x;
 	MousePosition.y = WindowMousePosition.y / CameraScale.y + CameraPosition.y;
+	LastJustPressedLMBScrMousePos = GetWindow(SceneWindowID)->w_LastJustPressedLMBScrMousePos;
 	ScreenMousePosition = WindowMousePosition;
 
 	glm::vec2 Corner = { WIDTH * -0.45f,HEIGHT *0.35f };
@@ -1115,6 +1188,7 @@ void ProcessMainMenu()
 		glm::vec2 WindowMousePosition = (GetWindow(SceneWindowID)->WindowMousePosition);
 		MousePosition.x = WindowMousePosition.x / CameraScale.x + CameraPosition.x;
 		MousePosition.y = WindowMousePosition.y / CameraScale.y + CameraPosition.y;
+		LastJustPressedLMBScrMousePos = GetWindow(SceneWindowID)->w_LastJustPressedLMBScrMousePos;
 		ScreenMousePosition = WindowMousePosition;
 	}
 
@@ -1262,6 +1336,11 @@ void Ready()
 	}
 	soundscale = { 40.0f,40.0f ,1.0f };
 
+	shopmenu.window = CreateWindow();
+	Window* shw = GetWindow(shopmenu.window);
+	shw->Init({800,600});
+	shw->backgroundColor = {0.0f,0.0f,0.0f,0.0f};
+	shw->Position = {-50,50};
 
 	RocketEngineSound = LoadSound("Sounds/noize_L.wav");
 	SHHSound = LoadSound("Sounds/wind.wav");
@@ -1347,12 +1426,14 @@ void Ready()
 	addsound(GunSound,false,10);
 	//150 sources used
 
+	SetupInstances();
 }
 void SubSteppedProcess(float dt, int SubStep)
 {
 	Window* sw = GetWindow(ForeWindowID);
 	sw->Use();
-	ProcessEntities(delta, SubStep);
+	
+	ProcessEntities(dt, SubStep);
 
 	for(int i=0;i<Sounds.size();i++)
 	{
@@ -1397,6 +1478,7 @@ void Process(float dt)
 	MousePosition.x = WindowMousePosition.x / CameraScale.x + CameraPosition.x;
 	MousePosition.y = WindowMousePosition.y / CameraScale.y + CameraPosition.y;
 	ScreenMousePosition = WindowMousePosition;
+	LastJustPressedLMBScrMousePos = GetWindow(SceneWindowID)->w_LastJustPressedLMBScrMousePos;
 	foregroundMousePosition =MousePosition; 
 	
 
@@ -1547,6 +1629,7 @@ void Process(float dt)
 		MousePosition.x = WindowMousePosition.x / CameraScale.x + CameraPosition.x;
 		MousePosition.y = WindowMousePosition.y / CameraScale.y + CameraPosition.y;
 		ScreenMousePosition = WindowMousePosition;
+		LastJustPressedLMBScrMousePos = GetWindow(SceneWindowID)->w_LastJustPressedLMBScrMousePos;
 		foregroundMousePosition =MousePosition; 
 	}
 	
@@ -1599,8 +1682,8 @@ void Process(float dt)
 
 	ProcessPE(delta);
 
-
 	ProcessLightEffects(delta);
+	DrawExplodions(delta);
 	
 	//DrawCircle(MousePosition,10.0f);
 
@@ -1609,10 +1692,38 @@ void Process(float dt)
 	ProcessCamera(delta);
 	
 	//Map.ParticleEmiters.clear();
-	ProcessExplodions(delta);
 
     GameScene->Draw();
+	int ent=0;
+	std::cout<<"\n Deleating";
 	
+	while (ent < Entities.size())
+	{
+		std::cout<<"\n sl";
+		if (!Entities[ent]->Alive && !Entities[ent]->destroyed || Entities[ent]->Health<=0.0f || Entities[ent]->Delete)
+		{
+			
+			std::cout<<"\n Deleting: "<<ent;
+			LightEffect le;
+			le.volume = 0.005f;
+			le.S_Color = { 1.0f,20.0f,200.0f,1.0f };
+			le.S_Scale = 250.0f;
+			le.time = 3.0f;
+			le.maxT = 3.0f;
+			le.position = glm::vec3(Entities[ent]->mid,0.0f);
+			LightEffects.push_back(le);
+			Entities[ent]->Destroy();
+			Entities[ent]->Delete=true;
+			Entities[ent] = Entities[Entities.size() - 1];
+			Entities.pop_back();
+			std::cout<<"\n Deleted: "<<ent;
+		}
+		else
+			ent++;
+		std::cout<<"e";
+	}
+	std::cout<<"\n Done";
+	CurrnetMission.CheckShips(delta);
 	sw->End();
 
 	if (OpenMenu || MainMenu)
@@ -1694,6 +1805,9 @@ void SceneEnd()
 	Lasers.clear();
 	LightEffects.clear();
 	clearParticleMaterials();
+	CurrnetMission.TakenAreas.clear();
+	CurrnetMission.TakenAreas.push_back({0,0,50,50});
+	CurrnetMission.AIShips.clear();
 
 }
 void Rescale(int newWindth,int newHeight)
@@ -1716,6 +1830,9 @@ void Rescale(int newWindth,int newHeight)
 void Destroy()
 {	
 	GameSaveFile.Save("SaveFile.sav");
-	Delete();
+	CurrnetMission.TakenAreas.clear();
+	CurrnetMission.TakenAreas.push_back({0,0,50,50});
+	CurrnetMission.AIShips.clear();
 	SaveSettings();
+	Delete();
 }

@@ -13,6 +13,7 @@ public:
 	float lifetime = 3.0f;
 	bool wasdead = false;
 
+	ball ball;
 	float t = 0.0f;
 	void Process(float dt)
 	{
@@ -23,7 +24,8 @@ public:
 			Dead();
 		if (!body.dead)
 		{
-			body.body.Process(dt);
+			ball.Process(dt);
+			body.body.position = ball.position;
 			DamageSpheres.push_back(&body);
 			t -= dt;
 		}	
@@ -49,7 +51,7 @@ public:
 
 	void Draw()
 	{
-		DrawCircle(body.body, body.body.color,true);
+		DrawCircle(body.body, glm::vec4(5.0f,2.0f,1.0f,1.0f),true);
 	}
 
 	void Dead()
@@ -58,7 +60,7 @@ public:
 		{
 			wasdead = true;
 
-			playsound(BulletHit, body.body.position,0.5f,1.0f);
+			playsound(BulletHit, body.body.position,0.5f,1.0f,{0.0f,0.0f}, false);
 			float speed = length(body.body.velocity);
 			ScreenShake += body.body.r * speed * 0.000001f;
 			ChromaticAbberation += body.body.r * speed * 0.000001f;
@@ -102,8 +104,8 @@ void SpawnBullet(glm::vec2 position, glm::vec2 velocity, float damage, float siz
 {
 	Bullet b;
 
-	b.body.body.position = position;
-	b.body.body.velocity = velocity;
+	b.ball.position = position;
+	b.ball.velocity = velocity;
 	b.body.body.r = size;
 	b.body.Damage = damage;
 	b.body.id = id;

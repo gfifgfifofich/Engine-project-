@@ -394,6 +394,7 @@ public:
 	virtual void DebugProcess(float dt);
 	virtual void Draw();
 	virtual void DebugDraw();
+	virtual void DrawPreview(glm::vec2 ui_position, glm::vec2 size);
 	virtual void OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp);
 	virtual bool SelectionCheck(glm::vec2 point);
 };

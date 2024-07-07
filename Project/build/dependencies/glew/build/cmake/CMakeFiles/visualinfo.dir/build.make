@@ -92,7 +92,7 @@ visualinfo_EXTERNAL_OBJECTS =
 
 bin/visualinfo: dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/__/__/src/visualinfo.c.o
 bin/visualinfo: dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/build.make
-bin/visualinfo: lib/libGLEW.a
+bin/visualinfo: lib/libGLEWd.a
 bin/visualinfo: /usr/lib/libSM.so
 bin/visualinfo: /usr/lib/libICE.so
 bin/visualinfo: /usr/lib/libX11.so

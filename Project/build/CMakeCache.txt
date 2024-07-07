@@ -249,7 +249,7 @@ BROTLIDEC_LIBRARIES:FILEPATH=/usr/lib/libbrotlidec.so
 BUILD_SHARED_LIBS:BOOL=OFF
 
 //utilities
-BUILD_UTILS:BOOL=ON
+BUILD_UTILS:BOOL=OFF
 
 //Path to a file.
 BZIP2_INCLUDE_DIR:PATH=/usr/include

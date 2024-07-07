@@ -99,8 +99,6 @@
 /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/glm/CMakeFiles/install/strip.dir
 /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/glew/build/cmake/CMakeFiles/glew.dir
 /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/glew/build/cmake/CMakeFiles/glew_s.dir
-/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir
-/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir
 /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/glew/build/cmake/CMakeFiles/package.dir
 /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/glew/build/cmake/CMakeFiles/package_source.dir
 /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/glew/build/cmake/CMakeFiles/edit_cache.dir
