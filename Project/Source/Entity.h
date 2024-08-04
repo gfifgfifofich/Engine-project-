@@ -48,6 +48,7 @@ void PartsPile::Process(float dt, int iter,bool lastiter)
 			//	if (lastiter)
 			//		Parts[i]->Draw();
 			//}
+			
 			for (int a = 0; a < GameScene->Collision_cubes.size(); a++)
 				if (GameScene->Collision_cubes[a]->id == 1)
 					for (int bp = 0; bp < Parts[i]->bodysize; bp++)
@@ -66,6 +67,22 @@ void PartsPile::Process(float dt, int iter,bool lastiter)
 							Parts[i]->Health = -1.0f;
 						}
 					}
+		}
+		for (int bp = 0; bp < Parts[i]->bodysize; bp++)
+		{
+
+			Parts[i]->body[bp].velbuff = Parts[i]->body[bp].velocity;
+			for (int a = 0; a < GameScene->Collision_balls.size(); a++)
+			{
+				BalltoStaticBallCollision(&Parts[i]->body[bp], GameScene->Collision_balls[a],0.25f);
+				GameScene->Collision_balls[a]->velocity *= 0.0f;
+			}
+
+			for (int a = 0; a < GameScene->Collision_cubes.size(); a++)
+				if (GameScene->Collision_cubes[a]->id == -1)
+					BallToStaticQuadCollision(&Parts[i]->body[bp], *GameScene->Collision_cubes[a]);
+
+
 		}
 	}
 	CloseDamageSpheres.clear();
@@ -94,7 +111,7 @@ void PartsPile::DeletePart(int  index)
 	Parts[index]->Delete=true;
 	Parts[index] = Parts[Parts.size() - 1];
 	Parts.pop_back();
-	playsound(PartDestrSOund, mid, 0.25f,0.085f+rand()%100*0.001f);
+	playsound(PartDestrSOund, mid, 0.25f,0.085f+rand()%100*0.001f,{0.0f,0.0f},false);
 }
 void PartsPile::SpawnPart(int type, glm::vec2 position, float size)
 {
@@ -221,7 +238,7 @@ void CentralPart::DestroyPart(int  index)
 		}
 		Parts[index]->Health = -10;
 		DetachPart(index);
-		playsound(PartDestrSOund, mid, 0.25f,0.085f + rand() % 100 * 0.001f);
+		playsound(PartDestrSOund, mid, 0.25f,0.085f + rand() % 100 * 0.001f,{0.0f,0.0f},false);
 
 
 	}
@@ -457,71 +474,72 @@ void CentralPart::AddDataConnection(int type, int part1, int  index1, int part2,
 		}
 	}
 void CentralPart::SaveTo(std::string filename)
+{
+	std::string fn = "./Ships/"+filename + ".sav";
+	filename = fn;
+	std::ofstream f;
+	f.open(filename);
+	glm::vec2 mid = 0.5f * (Parts[0]->body[0].position + Parts[0]->body[1].position);
+	for (int i = 1; i < Parts.size(); i++) // skip part[0] - central part
 	{
-		std::ofstream f;
-		f.open(filename);
-
-		glm::vec2 mid = 0.5f * (Parts[0]->body[0].position + Parts[0]->body[1].position);
-
-		for (int i = 1; i < Parts.size(); i++) // skip part[0] - central part
+		f << "P ";
+		f << Parts[i]->partid;
+		f << " ";
+		f << Parts[i]->bodysize;
+		for (int a = 0; a < Parts[i]->bodysize; a++)
 		{
-			f << "P ";
-			f << Parts[i]->partid;
 			f << " ";
-			f << Parts[i]->bodysize;
-			for (int a = 0; a < Parts[i]->bodysize; a++)
-			{
-				f << " ";
-				f << Parts[i]->body[a].position.x - mid.x;
-				f << " ";
-				f << Parts[i]->body[a].position.y - mid.y;
-			}
-			f << "\n";
+			f << Parts[i]->body[a].position.x - mid.x;
+			f << " ";
+			f << Parts[i]->body[a].position.y - mid.y;
 		}
-
-		for (int i = 0; i < Connections.size(); i++)
-		{
-			f << "C ";
-			f << Connections[i].type;
-			f << " ";
-			f << Connections[i].length;
-			f << " ";
-			f << Connections[i].width;
-			f << " ";
-			f << Connections[i].stiffnes;
-			f << " ";
-			f << Connections[i].absorbtion;
-			f << " ";
-			f << Connections[i].HeatTransferSpeed;
-			f << " ";
-			f << Connections[i].part1;
-			f << " ";
-			f << Connections[i].index1;
-			f << " ";
-			f << Connections[i].part2;
-			f << " ";
-			f << Connections[i].index2;
-			f << "\n";
-		}
-		for (int i = 0; i < DataConnections.size(); i++)
-		{
-			f << "D ";
-			f << DataConnections[i].type;
-			f << " ";
-			f << DataConnections[i].part1;
-			f << " ";
-			f << DataConnections[i].index1;
-			f << " ";
-			f << DataConnections[i].part2;
-			f << " ";
-			f << DataConnections[i].index2;
-			f << "\n";
-		}
-		f.close();
-		std::cout<<"\n"<<filename<<" Saved";
+		f << "\n";
 	}
+	for (int i = 0; i < Connections.size(); i++)
+	{
+		f << "C ";
+		f << Connections[i].type;
+		f << " ";
+		f << Connections[i].length;
+		f << " ";
+		f << Connections[i].width;
+		f << " ";
+		f << Connections[i].stiffnes;
+		f << " ";
+		f << Connections[i].absorbtion;
+		f << " ";
+		f << Connections[i].HeatTransferSpeed;
+		f << " ";
+		f << Connections[i].part1;
+		f << " ";
+		f << Connections[i].index1;
+		f << " ";
+		f << Connections[i].part2;
+		f << " ";
+		f << Connections[i].index2;
+		f << "\n";
+	}
+	for (int i = 0; i < DataConnections.size(); i++)
+	{
+		f << "D ";
+		f << DataConnections[i].type;
+		f << " ";
+		f << DataConnections[i].part1;
+		f << " ";
+		f << DataConnections[i].index1;
+		f << " ";
+		f << DataConnections[i].part2;
+		f << " ";
+		f << DataConnections[i].index2;
+		f << "\n";
+	}
+	f.close();
+	std::cout<<"\n"<<filename<<" Saved";
+}
 void CentralPart::LoadFrom(std::string filename)
 {
+	std::string fn = "./Ships/"+filename + ".sav";
+	filename = fn;
 	std::cout<<"\nLoading Entity: "<<filename;
 	glm::vec2 mid = 0.5f * (Parts[0]->body[0].position + Parts[0]->body[1].position);
 	Clear();
@@ -641,7 +659,60 @@ void CentralPart::Destroy()
 	destroyed = true;
 	firstdrawafterload = true;
 }
+int GetShipCost(CentralPart* Ent)// returns -1 if not an ship, returns cost if succesfull
+{
+	int cost = -1;
 	
+
+	for(int e=0;e<Ent->Parts.size();e++)
+		for(int i=0;i<PartInstances.size();i++)
+		{
+			if(PartInstances[i]->type == Ent->Parts[e]->type)
+				{
+					cost +=PartInstances[i]->Cost.Matter;
+					break;
+				}
+		}
+
+	return cost;
+}
+
+int CheckShipSaveFile(std::string filename)// returns -1 if not an ship, returns cost if succesfull
+{
+	std::string fn = "./Ships/"+filename + ".sav";
+	filename = fn;
+	std::ifstream f(filename);
+	int cost = -1;
+	if (!f.is_open())
+	{
+		return cost;
+	}
+	while (!f.eof())
+	{
+		char junk;
+		char line[256];
+		f.getline(line, 256);
+		std::strstream s;
+		s << line;
+		if (line[0] == 'P')
+		{
+
+			int type = 0;
+
+			s >> junk >> type;
+			for(int i=0;i<PartInstances.size();i++)
+			{
+				if(PartInstances[i]->type == NodeType::LASTNODE + type)
+					{
+						cost +=PartInstances[i]->Cost.Matter;
+						break;
+					}
+			}
+		}
+	}
+	f.close();
+	return cost;
+}
 
 int _MultithreadEntitiesProcesStep = 0;
 
@@ -672,11 +743,11 @@ void EntityToEntityCollision(CentralPart* e1, CentralPart* e2)
 					glm::vec2 dif = prevvel - i->velocity;
 					float len = sqrlength(dif);
 					if (len > maxdif * maxdif)
-						playsound(Hit,i->position,0.5f,0.1f + (rand() % 100 * 0.00025f),i->velocity);
+						playsound(Hit,i->position,0.5f,0.1f + (rand() % 100 * 0.00025f),i->velocity,false);
 					 dif = prevvel2 - a->velocity;
 					len = sqrlength(dif);
 					if (len > maxdif * maxdif)
-						playsound(Hit,a->position,0.5f,0.1f + (rand() % 100 * 0.00025f),a->velocity);
+						playsound(Hit,a->position,0.5f,0.1f + (rand() % 100 * 0.00025f),a->velocity,false);
 				}
 	else
 		for(auto i : e2->Balls)
@@ -689,11 +760,11 @@ void EntityToEntityCollision(CentralPart* e1, CentralPart* e2)
 					glm::vec2 dif = prevvel - i->velocity;
 					float len = sqrlength(dif);
 					if (len > maxdif * maxdif)
-						playsound(Hit,i->position,0.5f,0.1f + (rand() % 100 * 0.00025f),i->velocity);
+						playsound(Hit,i->position,0.5f,0.1f + (rand() % 100 * 0.00025f),i->velocity,false);
 					 dif = prevvel2 - a->velocity;
 					len = sqrlength(dif);
 					if (len > maxdif * maxdif)
-						playsound(Hit,a->position,0.5f,0.1f + (rand() % 100 * 0.00025f),a->velocity);
+						playsound(Hit,a->position,0.5f,0.1f + (rand() % 100 * 0.00025f),a->velocity,false);
 				}
 
 	/*
@@ -765,19 +836,12 @@ void EntityToEntityCollision(CentralPart* e1, CentralPart* e2)
 
 void ProcessEntities(float dt,int s)
 {
-	std::cout<<"\n DSs";
 	ProcessDamageSpheres(dt);
-	std::cout<<"\n Lsr";
 	ProcessLasers(dt, false);
-	std::cout<<"\n Bul";
 	ProcessBullets(dt, true);
-	std::cout<<"\n Rkt";
 	ProcessRockets(dt);
-	std::cout<<"\n Ls2";
 	ProcessLasers(dt, false,true);
-	std::cout<<"\n Exp";
 	ProcessExplodions(dt);
-	std::cout<<"\n Don";
 	// refactor required//?
 
 	for (int x = 0; x < 300; x++)
@@ -817,6 +881,8 @@ void ProcessEntities(float dt,int s)
 	for (int i = 0; i < balls.size(); i++)
 	{
 		// friction
+		glm::vec2 aVel = balls[i]->velocity;
+		glm::vec2 pVel = balls[i]->velbuff;
 		balls[i]->velocity -= balls[i]->velocity * sqrlength(balls[i]->velocity) * subdt * 0.000002f;
 		glm::vec2 offset = Entities[0]->mid + glm::vec2(-150, -150);
 		int x = roundf(balls[i]->position.x - offset.x);
@@ -833,19 +899,6 @@ void ProcessEntities(float dt,int s)
 		if(balls[i]->soundcd <-1.0f)
 			balls[i]->soundcd = -1.0f;
 
-		glm::vec2 pVel = balls[i]->velocity;
-		for (int a = 0; a < GameScene->Collision_balls.size(); a++)
-		{
-			BtBCollision(balls[i], GameScene->Collision_balls[a]);
-			GameScene->Collision_balls[a]->velocity *= 0.0f;
-
-		}
-
-		for (int a = 0; a < GameScene->Collision_cubes.size(); a++)
-			if (GameScene->Collision_cubes[a]->id == -1)
-				BallToStaticQuadCollision(balls[i], *GameScene->Collision_cubes[a]);
-
-		glm::vec2 aVel = balls[i]->velocity;
 
 		if (balls[i]->soundcd <=0.0f && (!snapToGrid || !BuildingMode))
 		{
@@ -868,7 +921,7 @@ void ProcessEntities(float dt,int s)
 				CollisionSmoke.Spawn(position,
 					15);
 				
-				playsound(Hit,balls[i]->position,0.5f,0.1f + (rand() % 100 * 0.00025f),balls[i]->velocity);
+				playsound(Hit,balls[i]->position,0.5f,0.1f + (rand() % 100 * 0.00025f),balls[i]->velocity,false);
 				balls[i]->soundcd = 1.0f; 
 				
 			}
@@ -990,28 +1043,21 @@ void ProcessEntities(float dt,int s)
 	*/
 
 	balls.clear();
-	std::cout<<"\n Entities";
 	int i = 0;
 	while (i < Entities.size())
 	{
-		std::cout<<"\n sl";
 		if (Entities[i]->Alive && !Entities[i]->destroyed && Entities[i]->Health>0.0f && !Entities[i]->Delete)
 		{
-			std::cout<<"\n sc "<<i;
 			for(int a = i+1; a< Entities.size();a++)
 			{
-				std::cout<<"\n c "<<i << " "<< a;
 				if (Entities[a]->Alive && Entities[a]->Health>0.0f && !Entities[a]->Delete && !Entities[a]->destroyed)
 					EntityToEntityCollision(Entities[i],Entities[a]);
-				std::cout<<" d ";
+				
 			}
 		}
 		i++;
-		std::cout<<"e";
 	}
-	std::cout<<"\n Processed";
 	
-
 	
 
 }

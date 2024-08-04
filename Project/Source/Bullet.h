@@ -32,8 +32,8 @@ public:
 		else
 		{
 			dyingtime -= dt;
-			float stage = abs(((dyingtime - 1.3f)* 2.0f - 0.4f) / 0.4f);
-			if(dyingtime>1.3f)
+			float stage = abs(((dyingtime - 1.45f)* 2.0f - 0.1f) / 0.1f);
+			if(dyingtime>1.45f)
 				DrawLight(glm::vec3(body.body.position.x, body.body.position.y, BulletHitLightHeight), glm::vec2(1000 * (1.0f-stage))*0.025f, glm::vec4(2.5f, 1.0f, 0.5f, 0.5f));
 		}
 
@@ -85,9 +85,9 @@ void ProcessBullets(float dt, bool draw)
 			{
 				bullets[i].t = 0.025f;
 				if ((int)bullets[i].body.body.r != 0)
-					bulletFlightPm.SpawnInCircle(bullets[i].body.body.position, bullets[i].body.body.r, 1, bullets[i].body.body.velocity * 0.25f);
+					bulletFlightPm.SpawnInCircle(bullets[i].body.body.position, bullets[i].body.body.r, 1, bullets[i].ball.velocity * 0.5f);
 				else
-					bulletFlightPm.SpawnInCircle(bullets[i].body.body.position, 1, 1, bullets[i].body.body.velocity * 0.25f);
+					bulletFlightPm.SpawnInCircle(bullets[i].body.body.position, 1, 1, bullets[i].ball.velocity * 0.5f);
 			}
 			if (draw)bullets[i].Draw();
 			i++;

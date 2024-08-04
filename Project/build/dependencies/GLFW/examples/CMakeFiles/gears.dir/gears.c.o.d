@@ -13,15 +13,18 @@ dependencies/GLFW/examples/CMakeFiles/gears.dir/gears.c.o: \
   /usr/include/bits/fp-logb.h /usr/include/bits/fp-fast.h \
   /usr/include/bits/mathcalls-helper-functions.h \
   /usr/include/bits/mathcalls.h /usr/include/stdlib.h \
-  /usr/lib/clang/17/include/stddef.h /usr/include/bits/waitflags.h \
-  /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
-  /usr/include/bits/types/clock_t.h /usr/include/bits/types/clockid_t.h \
-  /usr/include/bits/types/time_t.h /usr/include/bits/types/timer_t.h \
-  /usr/include/bits/stdint-intn.h /usr/include/endian.h \
-  /usr/include/bits/endian.h /usr/include/bits/endianness.h \
-  /usr/include/bits/byteswap.h /usr/include/bits/uintn-identity.h \
-  /usr/include/sys/select.h /usr/include/bits/select.h \
-  /usr/include/bits/types/sigset_t.h \
+  /usr/lib/clang/18/include/stddef.h \
+  /usr/lib/clang/18/include/__stddef_size_t.h \
+  /usr/lib/clang/18/include/__stddef_wchar_t.h \
+  /usr/lib/clang/18/include/__stddef_null.h \
+  /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
+  /usr/include/sys/types.h /usr/include/bits/types/clock_t.h \
+  /usr/include/bits/types/clockid_t.h /usr/include/bits/types/time_t.h \
+  /usr/include/bits/types/timer_t.h /usr/include/bits/stdint-intn.h \
+  /usr/include/endian.h /usr/include/bits/endian.h \
+  /usr/include/bits/endianness.h /usr/include/bits/byteswap.h \
+  /usr/include/bits/uintn-identity.h /usr/include/sys/select.h \
+  /usr/include/bits/select.h /usr/include/bits/types/sigset_t.h \
   /usr/include/bits/types/__sigset_t.h \
   /usr/include/bits/types/struct_timeval.h \
   /usr/include/bits/types/struct_timespec.h \
@@ -32,7 +35,9 @@ dependencies/GLFW/examples/CMakeFiles/gears.dir/gears.c.o: \
   /usr/include/bits/struct_mutex.h /usr/include/bits/struct_rwlock.h \
   /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
   /usr/include/bits/stdlib-float.h /usr/include/stdio.h \
-  /usr/lib/clang/17/include/stdarg.h /usr/include/bits/types/__fpos_t.h \
+  /usr/lib/clang/18/include/stdarg.h \
+  /usr/lib/clang/18/include/__stdarg___gnuc_va_list.h \
+  /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__mbstate_t.h \
   /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
   /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
@@ -42,7 +47,9 @@ dependencies/GLFW/examples/CMakeFiles/gears.dir/gears.c.o: \
   /usr/include/bits/types/__locale_t.h /usr/include/strings.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/deps/glad/gl.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/deps/glad/khrplatform.h \
-  /usr/lib/clang/17/include/stdint.h /usr/include/stdint.h \
+  /usr/lib/clang/18/include/stdint.h /usr/include/stdint.h \
   /usr/include/bits/wchar.h /usr/include/bits/stdint-uintn.h \
   /usr/include/bits/stdint-least.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/include/GLFW/glfw3.h
+  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/include/GLFW/glfw3.h \
+  /usr/lib/clang/18/include/__stddef_ptrdiff_t.h \
+  /usr/lib/clang/18/include/__stddef_offsetof.h

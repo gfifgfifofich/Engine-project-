@@ -1438,8 +1438,6 @@ float InspectorWindowMaxScroll = 0.0f;
 float ProjectWindowMaxScroll = 0.0f;
 float ConsoleWindowMaxScroll = 0.0f;
 
-glm::vec4 EditorColor = { 0.025f,0.025f,0.025f,1.0f };
-glm::vec4 SceneBackgroundColor = { 0.0f,0.0f,0.0f,0.0f };
 
 bool Test[10];
 bool sTestb[10];
@@ -1458,7 +1456,147 @@ std::string AssetWindowSelectionNames[3]= {"Assets","EventGraph","Animation"};//
 std::string InspectorWindowSelectionNames[3]= {"Properties","none","none"};// placeholder 
 
 
+glm::vec2 PrevMousePos = glm::vec2(0.0f);
+bool MMBJustPressedWindow[4];
 
+bool grabbedWindow[3];// bools for window resizing
+bool grabbedAnyWindow = false;// bools for window resizing
+glm::vec2 GrabStartMousePos = { 0.0f,0.0f };
+bool initialsizecalc = true;
+std::string sTest[10];
+
+
+
+void ProcessScene(Scene* scn,bool mt,bool mainScene)
+{
+	GameScene = scn;
+	scn->dt = delta * Simulation_speed /substeps;
+
+	
+	//listenerVel = { Entities[0]->CP.midvel.x ,Entities[0]->CP.midvel.y ,1.0f };
+	listenerPos.z = 1.0f / (CameraScale.x);
+	std::vector <int> iter;
+	iter.resize(threadcount);
+	
+	
+	
+	for (int i = 0; i < threadcount; i++)
+		iter[i] = i;
+
+	scn->Update();
+	threadNodestep = scn->Nodes.size()/threadcount;
+	threadNodeEnd = scn->Nodes.size();
+	threadsprepass = true;
+	
+	if (scn->Nodes.size() > threadcount && mt)
+	{
+		for(auto thr : iter)
+		{
+			_ScenethreadsStates[thr] = 0;
+			std::unique_lock<std::mutex> lm(_SceneMutexes[thr]);
+			_SceneConVars[thr].notify_one();
+		}
+		bool wait = true;
+		float startWaittime = glfwGetTime(); 
+		while(wait)
+		{
+			wait = false;
+			for(int thr = 0;thr<threadcount;thr++)
+			{
+				if(!_ScenethreadsStates[thr].load())
+					wait = true;
+			}
+			if(glfwGetTime() - startWaittime  > delta*10.0f) // something happend with threads
+			{
+				std::cout<<"something happend with threads\n";
+				for(int thr = 0;thr<threadcount;thr++)
+				{						
+					_SceneConVars[thr].notify_one();
+					_ScenethreadsStates[thr].store(1);
+				}
+				break;
+			}	
+		}
+	}
+	else
+	{
+		int buf = threadcount;
+		threadcount=1;
+		_mt_SceneProcess(0);
+		threadcount = buf;
+
+	}
+	threadsprepass = false;
+	for(int s=0;s<substeps ;s++)
+	{
+
+		if (scn->Nodes.size() > threadcount && mt)
+		{
+			for(auto thr : iter)
+			{
+				_ScenethreadsStates[thr].store(0);
+				std::unique_lock<std::mutex> lm(_SceneMutexes[thr]);
+				_SceneConVars[thr].notify_one();
+			}
+			//_SceneBarrier.arrive_and_wait();
+			//for(auto thr : iter)
+			//{
+			//	std::unique_lock<std::mutex> lm(_SceneMutexWaiters[thr]);
+			//	_SceneConVarWaiters[thr].wait(lm);		
+			//}
+			bool wait = true;
+			float startWaittime = glfwGetTime(); 
+			while(wait)
+			{
+				wait = false;
+				for(int thr = 0;thr<threadcount;thr++)
+				{
+					if(!_ScenethreadsStates[thr].load())
+						wait = true;
+				}
+				if(glfwGetTime() - startWaittime > delta*10.0f) // something happend with threads
+				{
+					std::cout<<"\nsomething happend with threads";
+					for(int thr = 0;thr<threadcount;thr++)
+					{						
+						_SceneConVars[thr].notify_one();
+						_ScenethreadsStates[thr].store(1);
+					}
+					break;
+				}	
+			}
+		}
+		else
+		{
+			int buf = threadcount;
+			threadcount=1;
+			_mt_SceneProcess(0);
+			threadcount = buf;
+
+		}
+
+		if(!Paused && Running)
+		{
+			scn->Process(delta * Simulation_speed / substeps);
+			if(mainScene)SubSteppedProcess(delta * Simulation_speed / substeps, s);
+		}
+	}
+	if(!Paused && Running &&mainScene)
+	{
+		SelectedNode = NULL;
+		SelectedNodeID = -1;
+		SelectedAsset =NULL;
+		SelectedAssetID=-1;
+		Process(delta * Simulation_speed);
+	}
+	if(Paused || !Running)
+	{
+		if(mainScene)UpdateListenerPosition();
+		scn->Draw(delta * Simulation_speed);
+	}
+	
+	GameScene = &Map;
+}
 
 
 
@@ -1545,16 +1683,6 @@ void On_Create()
 	
 	_StartScenethreads();
 }
-
-glm::vec2 PrevMousePos = glm::vec2(0.0f);
-bool MMBJustPressedWindow[4];
-
-bool grabbedWindow[3];// bools for window resizing
-bool grabbedAnyWindow = false;// bools for window resizing
-glm::vec2 GrabStartMousePos = { 0.0f,0.0f };
-bool initialsizecalc = true;
-std::string sTest[10];
-
 
 
 
@@ -2204,6 +2332,7 @@ void On_Update()
 			Running = true;
 			Paused = false;
 			Map.SaveAs("PreRunSave.sav");
+			//Ready();
 
 		}
 	}
@@ -2392,131 +2521,7 @@ void On_Update()
 		SelectedAsset =NULL;
 		SelectedAssetID=-1;
 	}
-	GameScene = &Map;
-	Map.dt = delta * Simulation_speed /substeps;
-
-	
-	//listenerVel = { Entities[0]->CP.midvel.x ,Entities[0]->CP.midvel.y ,1.0f };
-	listenerPos.z = 1.0f / (CameraScale.x);
-	std::vector <int> iter;
-	iter.resize(threadcount);
-	
-	
-	
-	for (int i = 0; i < threadcount; i++)
-		iter[i] = i;
-
-	Map.Update();
-	threadNodestep = Map.Nodes.size()/threadcount;
-	threadNodeEnd = Map.Nodes.size();
-	threadsprepass = true;
-	
-	if (Map.Nodes.size() > threadcount)
-	{
-		for(auto thr : iter)
-		{
-			_ScenethreadsStates[thr] = 0;
-			std::unique_lock<std::mutex> lm(_SceneMutexes[thr]);
-			_SceneConVars[thr].notify_one();
-		}
-		bool wait = true;
-		float startWaittime = glfwGetTime(); 
-		while(wait)
-		{
-			wait = false;
-			for(int thr = 0;thr<threadcount;thr++)
-			{
-				if(!_ScenethreadsStates[thr].load())
-					wait = true;
-			}
-			if(glfwGetTime() - startWaittime  > delta*10.0f) // something happend with threads
-			{
-				std::cout<<"something happend with threads\n";
-				for(int thr = 0;thr<threadcount;thr++)
-				{						
-					_SceneConVars[thr].notify_one();
-					_ScenethreadsStates[thr].store(1);
-				}
-				break;
-			}	
-		}
-	}
-	else
-	{
-		int buf = threadcount;
-		threadcount=1;
-		_mt_SceneProcess(0);
-		threadcount = buf;
-
-	}
-	threadsprepass = false;
-	for(int s=0;s<substeps ;s++)
-	{
-
-		if (Map.Nodes.size() > threadcount)
-		{
-			for(auto thr : iter)
-			{
-				_ScenethreadsStates[thr].store(0);
-				std::unique_lock<std::mutex> lm(_SceneMutexes[thr]);
-				_SceneConVars[thr].notify_one();
-			}
-			//_SceneBarrier.arrive_and_wait();
-			//for(auto thr : iter)
-			//{
-			//	std::unique_lock<std::mutex> lm(_SceneMutexWaiters[thr]);
-			//	_SceneConVarWaiters[thr].wait(lm);		
-			//}
-			bool wait = true;
-			float startWaittime = glfwGetTime(); 
-			while(wait)
-			{
-				wait = false;
-				for(int thr = 0;thr<threadcount;thr++)
-				{
-					if(!_ScenethreadsStates[thr].load())
-						wait = true;
-				}
-				if(glfwGetTime() - startWaittime > delta*10.0f) // something happend with threads
-				{
-					std::cout<<"\nsomething happend with threads";
-					for(int thr = 0;thr<threadcount;thr++)
-					{						
-						_SceneConVars[thr].notify_one();
-						_ScenethreadsStates[thr].store(1);
-					}
-					break;
-				}	
-			}
-		}
-		else
-		{
-			int buf = threadcount;
-			threadcount=1;
-			_mt_SceneProcess(0);
-			threadcount = buf;
-
-		}
-
-		if(!Paused && Running)
-		{
-			Map.Process(delta * Simulation_speed / substeps);
-			SubSteppedProcess(delta * Simulation_speed / substeps, s);
-		}
-	}
-	if(!Paused && Running)
-	{
-		SelectedNode = NULL;
-		SelectedNodeID = -1;
-		SelectedAsset =NULL;
-		SelectedAssetID=-1;
-		Process(delta * Simulation_speed);
-	}
-	if(Paused || !Running)
-	{
-		UpdateListenerPosition();
-		Map.Draw(delta * Simulation_speed);
-	}
+	ProcessScene(&Map,true,true);
 
 
 	GetWindow(SceneWindowID)->End();

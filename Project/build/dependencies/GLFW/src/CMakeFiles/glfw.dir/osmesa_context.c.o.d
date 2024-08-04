@@ -5,7 +5,10 @@ dependencies/GLFW/src/CMakeFiles/glfw.dir/osmesa_context.c.o: \
   /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
   /usr/include/stdc-predef.h /usr/include/sys/cdefs.h \
   /usr/include/bits/long-double.h /usr/include/gnu/stubs.h \
-  /usr/include/gnu/stubs-64.h /usr/lib/clang/17/include/stddef.h \
+  /usr/include/gnu/stubs-64.h /usr/lib/clang/18/include/stddef.h \
+  /usr/lib/clang/18/include/__stddef_size_t.h \
+  /usr/lib/clang/18/include/__stddef_wchar_t.h \
+  /usr/lib/clang/18/include/__stddef_null.h \
   /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
   /usr/include/bits/floatn.h /usr/include/bits/floatn-common.h \
   /usr/include/sys/types.h /usr/include/bits/types.h \
@@ -33,7 +36,9 @@ dependencies/GLFW/src/CMakeFiles/glfw.dir/osmesa_context.c.o: \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/src/internal.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/src/glfw_config.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/src/../include/GLFW/glfw3.h \
-  /usr/lib/clang/17/include/stdint.h /usr/include/stdint.h \
+  /usr/lib/clang/18/include/__stddef_ptrdiff_t.h \
+  /usr/lib/clang/18/include/__stddef_offsetof.h \
+  /usr/lib/clang/18/include/stdint.h /usr/include/stdint.h \
   /usr/include/bits/wchar.h /usr/include/bits/stdint-uintn.h \
   /usr/include/bits/stdint-least.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/src/x11_platform.h \
@@ -58,7 +63,9 @@ dependencies/GLFW/src/CMakeFiles/glfw.dir/osmesa_context.c.o: \
   /usr/include/X11/Xosdefs.h /usr/include/X11/keysym.h \
   /usr/include/X11/keysymdef.h /usr/include/X11/Xatom.h \
   /usr/include/X11/Xcursor/Xcursor.h /usr/include/stdio.h \
-  /usr/lib/clang/17/include/stdarg.h /usr/include/bits/types/__fpos_t.h \
+  /usr/lib/clang/18/include/stdarg.h \
+  /usr/lib/clang/18/include/__stdarg___gnuc_va_list.h \
+  /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__mbstate_t.h \
   /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
   /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \

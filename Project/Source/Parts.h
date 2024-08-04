@@ -421,6 +421,7 @@ public:
 
 };
 
+std::vector<BodyComponent*> PartInstances;
 float DrawingDistance = (WIDTH * 1.0f) / CameraScale.x;
 class PartsPile
 {
@@ -475,7 +476,7 @@ public:
 	{
 		partid = PART::GUN;
 		parttype = TYPE::WEAPON;
-		type = parttype + NodeType::LASTNODE;
+		type = partid + NodeType::LASTNODE;
 		Name = "Gun";
 
 		CreateBody(3,1,0,1);
@@ -688,7 +689,11 @@ public:
 		Delete = true;
 		DeleteBody();
 	}
-
+	void DrawPreview(glm::vec2 ui_position, glm::vec2 size) override
+	{
+		UI_DrawTexturedQuad(ui_position, {size.x*0.25f*0.75f,size.y*0.75f}, GunTexture, 0.0f, color, Z_Index+2, GunNormalMap);
+		UI_DrawTexturedQuad(ui_position, {size.x*0.5f,size.y}, GunBaseTexture, 0.0f, color, Z_Index, GunBaseNormalMap);
+	};
 };
 
 class LaserGun : public BodyComponent
@@ -722,7 +727,7 @@ public:
 		
 		partid = PART::LASERGUN;
 		parttype = TYPE::WEAPON;
-		type = parttype + NodeType::LASTNODE;
+		type = partid + NodeType::LASTNODE;
 		Name = "LaserGun";
 		CreateBody(5, 1, 0, 1);
 		float ang = 0.25f * pi;
@@ -1033,6 +1038,11 @@ public:
 		lsr->~Laser();
 		free(lsr);
 	}
+	void DrawPreview(glm::vec2 ui_position, glm::vec2 size) override
+	{
+		UI_DrawTexturedQuad(ui_position, {size.x*0.125f*0.75f,size.y*0.75f}, LaserGunTexture, 0.0f, color, Z_Index+2, LaserGunNormalMap);
+		UI_DrawTexturedQuad(ui_position, {size.x,size.y}, GunBaseTexture, 0.0f, color, Z_Index, GunBaseNormalMap);
+	};
 };
 
 class RocketLauncher : public BodyComponent
@@ -1062,7 +1072,7 @@ public:
 		
 		partid = PART::ROCKETLAUNCHER;
 		parttype = TYPE::STRUCTUREPART;
-		type = parttype + NodeType::LASTNODE;
+		type = partid + NodeType::LASTNODE;
 		Name = "RocketLauncher";
 		
 		Health = PartsData.GetPropertyAsFloat("RocketLauncher", "Health");
@@ -1307,6 +1317,10 @@ public:
 		DeleteBody();
 	}
 
+	void DrawPreview(glm::vec2 ui_position, glm::vec2 size) override
+	{
+		UI_DrawTexturedQuad(ui_position, {size.x*0.5f,size.y}, RocketLauncherTexture, 0.0f, color, Z_Index+2, RocketLauncherNormalMap);
+	};
 };
 
 class MiniGun : public BodyComponent
@@ -1341,8 +1355,7 @@ public:
 		
 		partid = PART::MINIGUN;
 		parttype = TYPE::WEAPON;
-		
-		type = parttype + NodeType::LASTNODE;
+		type = partid + NodeType::LASTNODE;
 		Name = "MiniGun";
 		
 		Health = PartsData.GetPropertyAsFloat("MiniGun", "Health");
@@ -1638,6 +1651,38 @@ public:
 		DeleteBody();
 	}
 
+	void DrawPreview(glm::vec2 ui_position, glm::vec2 size) override
+	{
+		ui_position.y -= size.y*0.3f; 
+		size *= 0.5f;
+		UI_DrawTexturedQuad(ui_position + glm::vec2(0.0f,size.y*0.5f), {size.x*0.5f,size.y * 1.25f}, MiniGunTexture, 0.0f, color, Z_Index+2, MiniGunNormalMap);
+		UI_DrawTexturedQuad(ui_position, {size.x,size.y}, GunBaseTexture, 0.0f, color, Z_Index, GunBaseNormalMap);
+		size *= 0.75f;
+		for (int i = 0; i < 6; i++)
+		{
+			float angle = i * pi * 0.3333f + BarrelRotation;
+		
+			glm::vec2 berrrelPos = Rotate(glm::vec2(1.0f, 0.0f), angle);
+		
+			int z = 0;
+		
+			if (berrrelPos.y > 0.0f && berrrelPos.y < 0.6f)
+				z = 1;
+			else
+				if (berrrelPos.y >= 0.6)
+					z = 2;
+			if (berrrelPos.y < 0.0f && berrrelPos.y > -0.6f)
+				z = -1;
+			else
+				if (berrrelPos.y <= -0.6)
+					z = -2;
+		
+			z += 2;
+			UI_DrawTexturedQuad(ui_position + glm::vec2(0.0f,size.y*0.5f * 3.8f) + Rotate({0.0f,1.0f}, pi * 0.5f) * berrrelPos.x * size.y*0.5f*0.75f *0.6f, {size.y*0.5f*0.75f * 0.35f ,size.y*0.5f * 3.8f }, PipeTexture, 0.0f, color, z + Z_Index, PipeNormalMap);
+		}
+		
+		
+	};
 };
 
 // propulsion
@@ -1658,7 +1703,7 @@ public:
 	{
 		partid = PART::ROCKETENGINE;
 		parttype = TYPE::PROPULSION;
-		type = parttype + NodeType::LASTNODE;
+		type = partid + NodeType::LASTNODE;
 		Name = "RocketEngine";
 		
 		Health = PartsData.GetPropertyAsFloat("RocketEngine", "Health");
@@ -1679,6 +1724,7 @@ public:
 		body[1].roughness = 0.0f;
 		body[1].bounciness = 0.0f;
 
+		Cost.Matter = 15;
 
 		BodyIdsWithCollision.push_back(0);
 		BodyIdsWithCollision.push_back(1);
@@ -1826,9 +1872,10 @@ public:
 	{
 		if (abs(throtle) > 0.0f && !shutdown)
 		{
+			float Particleforce = throtle;
 			if ((bDataConnections[1].connected && bDataConnections[1].data))
 			{
-				throtle *= 1.5f;
+				Particleforce *= 0.65f;
 			}
 			if (freq > 0.001f)
 			{
@@ -1837,15 +1884,15 @@ public:
 				{
 					t = 0.016f;
 
-					
+
 					for (int i = 0; i < 5; i++)
 						EngineSmoke.Spawn(body[1].position + dir * body[0].r * -1.0f - dir * (rand() % 1000 * 0.002f * body[0].r),
-							dir * 5000.0f * throtle * 0.025f, 1,
-							EngineSmoke.lifetime * abs(throtle) * (rand() % 1000 * 0.0005f + 0.5f));
+							dir * 5000.0f * Particleforce * 0.025f, 1,
+							EngineSmoke.lifetime * abs(Particleforce) * (rand() % 1000 * 0.0005f + 0.5f));
 				}
 			}
 			glm::vec2 lp = (body[1].position + dir * body[0].r);
-			DrawLight(glm::vec3(lp.x,lp.y, EngineLightHeight), glm::vec2( 800 * abs(throtle)*0.025f), glm::vec4(4.0f, 0.8f, 0.4f, abs(0.5f + abs(throtle) + (rand() % 100 - 50) * 0.01f)), 0.0f);
+			DrawLight(glm::vec3(lp.x,lp.y, EngineLightHeight), glm::vec2( 800 * abs(Particleforce)*0.025f), glm::vec4(4.0f, 0.8f, 0.4f, abs(0.5f + abs(Particleforce) + (rand() % 100 - 50) * 0.01f)), 0.0f);
 		}
 		glm::vec2 mid = (body[1].position + body[0].position) * 0.5f;
 		DrawTexturedQuad(mid,glm::vec2(1.0f * body[1].r,2.0f* body[1].r), RocketEngineTexture,  get_angle_between_points(mid, mid - dir),color, Z_Index,RocketEngineNormalMap);
@@ -1863,6 +1910,10 @@ public:
 		Delete = true;
 		DeleteBody();
 	}
+	void DrawPreview(glm::vec2 ui_position, glm::vec2 size) override
+	{
+		UI_DrawTexturedQuad(ui_position,glm::vec2(0.5f * size.x,1.0f* size.y), RocketEngineTexture,  0.0f,color, Z_Index,RocketEngineNormalMap);
+	};
 };
 
 // structure
@@ -1875,7 +1926,7 @@ public:
 	{
 		partid = PART::BALLBODY;
 		parttype = TYPE::STRUCTUREPART;
-		type = parttype + NodeType::LASTNODE;
+		type = partid + NodeType::LASTNODE;
 		Name = "BallBody";
 
 		Health = PartsData.GetPropertyAsFloat("BallBody", "Health");
@@ -1933,6 +1984,11 @@ public:
 		Delete = true;
 		DeleteBody();
 	}
+	
+	void DrawPreview(glm::vec2 ui_position, glm::vec2 size) override
+	{
+		UI_DrawCircle(ui_position, size.x*0.25f, color, true, BallNormalMapTexture, Z_Index);
+	};
 };
 
 class Rotor : public BodyComponent
@@ -1946,7 +2002,7 @@ public:
 	{
 		partid = PART::ROTOR;
 		parttype = TYPE::STRUCTUREPART;
-		type = parttype + NodeType::LASTNODE;
+		type = partid + NodeType::LASTNODE;
 		Name = "Rotor";
 
 		Health = PartsData.GetPropertyAsFloat("Rotor", "Health");
@@ -2064,6 +2120,15 @@ public:
 		Delete = true;
 		DeleteBody();
 	}
+	void DrawPreview(glm::vec2 ui_position, glm::vec2 size) override
+	{
+		UI_DrawCircle(ui_position, size.x*0.25f, color, true, BallNormalMapTexture, Z_Index);
+		size *=0.25f;
+		UI_DrawCircle(ui_position + glm::vec2(-size.x,0.0f) * 2.0f, size.x, color, true, BallNormalMapTexture, Z_Index);
+		UI_DrawCircle(ui_position + glm::vec2(0.0f,-size.x) * 2.0f, size.x, color, true, BallNormalMapTexture, Z_Index);
+		UI_DrawCircle(ui_position + glm::vec2(size.x,0.0f) * 2.0f,  size.x, color, true, BallNormalMapTexture, Z_Index);
+		UI_DrawCircle(ui_position + glm::vec2(0.0f,size.x) * 2.0f,  size.x, color, true, BallNormalMapTexture, Z_Index);
+	};
 };
 
 // Misc
@@ -2078,7 +2143,7 @@ public:
 	{
 		partid = PART::RADIATOR;
 		parttype = TYPE::STRUCTUREPART;
-		type = parttype + NodeType::LASTNODE;
+		type = partid + NodeType::LASTNODE;
 		Name = "Radiator";
 		
 		Health = PartsData.GetPropertyAsFloat("Radiator", "Health");
@@ -2197,6 +2262,10 @@ public:
 		Delete = true;
 		DeleteBody();
 	}
+	void DrawPreview(glm::vec2 ui_position, glm::vec2 size) override
+	{
+		UI_DrawTexturedQuad(ui_position, glm::vec2(size.x*0.5f,size.y), RadiatorTexture, 0.0f, color, Z_Index, RadiatorNormalMap);
+	};
 };
 
 class StaticPoint : public BodyComponent
@@ -2208,7 +2277,7 @@ public:
 	{
 		partid = PART::STATICPOINT;
 		parttype = TYPE::STRUCTUREPART;
-		type = parttype + NodeType::LASTNODE;
+		type = partid + NodeType::LASTNODE;
 		Name = "StaticPoint";
 		
 
@@ -2622,7 +2691,7 @@ public:
 		
 		partid = PART::CENTRALPART;
 		parttype = TYPE::STRUCTUREPART;
-		type = parttype + NodeType::LASTNODE;
+		type = partid + NodeType::LASTNODE;
 		Name = "CentralPart";
 		Health = PartsData.GetPropertyAsFloat("CentralPart", "Health");
 		CreateBody(2,9,0,1);
@@ -2637,6 +2706,7 @@ public:
 		ProcessConnections();
 		OnPartCreate();
 
+		Cost.Matter = 0;
 	}
 	void Create(glm::vec2 position, glm::vec2 direction, float size,float mass = 1.0f) override
 	{
@@ -2700,7 +2770,7 @@ public:
 		body[0].Force = glm::vec2(0.0f);
 		Strut(&body[0], &body[1], body[0].r * 2.0f);
 
-		if (player)
+		if (player && !deactivated)
 		{
 			bDataConnections[0].data = buttons[GLFW_MOUSE_BUTTON_1];
 			bDataConnections[1].data = buttons[GLFW_MOUSE_BUTTON_2];
@@ -2946,12 +3016,27 @@ public:
 			ForceToThrustDirection = 0.0f;
 			for (int i = 0; i < Balls.size(); i++)
 			{
-				float len = length(CenterOfMass - Balls[i]->position);
+				float len = sqrlength(CenterOfMass - Balls[i]->position);
 				if(len<0.001f)
 					continue;
 				glm::vec2 dif = (CenterOfMass - Balls[i]->position)/len;
 				Balls[i]->velocity -= DOT(Balls[i]->velocity - avgvel, glm::vec2(-dif.y, dif.x)) * glm::vec2(-dif.y, dif.x) * RotationalFriction * dt;
 				Balls[i]->velocity -= Balls[i]->velocity * friction * dt;
+
+				Balls[i]->velbuff = Balls[i]->velocity;
+				for (int a = 0; a < GameScene->Collision_balls.size(); a++)
+				{
+					BalltoStaticBallCollision(Balls[i], GameScene->Collision_balls[a],0.25f);
+					GameScene->Collision_balls[a]->velocity *= 0.0f;
+				}
+
+				for (int a = 0; a < GameScene->Collision_cubes.size(); a++)
+					if (GameScene->Collision_cubes[a]->id == -1)
+						BallToStaticQuadCollision(Balls[i], *GameScene->Collision_cubes[a]);
+
+				for(int a = i+1;a<Balls.size();a++)
+					BtBCollision(Balls[i],Balls[a]);
+
 			}
 			
 		}
@@ -3055,7 +3140,6 @@ void InitParts()
 	NodeConstructorNames.insert({NodeType::LASTNODE + PART::RAILGUN,"MiniGun"});
 	NodeConstructors.insert({NodeType::LASTNODE + PART::CENTRALPART,[](){return (Node*)new CentralPart();}});
 	NodeConstructorNames.insert({NodeType::LASTNODE + PART::CENTRALPART,"CentralPart"});
-
 
 	//BodyComponent* b = NULL;
 	//for (int i = 0; i < SpawnablePartAmount; i++)

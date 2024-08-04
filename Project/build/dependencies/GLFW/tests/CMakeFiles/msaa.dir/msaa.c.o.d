@@ -2,7 +2,7 @@ dependencies/GLFW/tests/CMakeFiles/msaa.dir/msaa.c.o: \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/tests/msaa.c \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/deps/glad/gl.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/deps/glad/khrplatform.h \
-  /usr/lib/clang/17/include/stdint.h /usr/include/stdint.h \
+  /usr/lib/clang/18/include/stdint.h /usr/include/stdint.h \
   /usr/include/bits/libc-header-start.h /usr/include/features.h \
   /usr/include/features-time64.h /usr/include/bits/wordsize.h \
   /usr/include/bits/timesize.h /usr/include/stdc-predef.h \
@@ -13,7 +13,12 @@ dependencies/GLFW/tests/CMakeFiles/msaa.dir/msaa.c.o: \
   /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
   /usr/include/bits/stdint-least.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/include/GLFW/glfw3.h \
-  /usr/lib/clang/17/include/stddef.h \
+  /usr/lib/clang/18/include/stddef.h \
+  /usr/lib/clang/18/include/__stddef_ptrdiff_t.h \
+  /usr/lib/clang/18/include/__stddef_size_t.h \
+  /usr/lib/clang/18/include/__stddef_wchar_t.h \
+  /usr/lib/clang/18/include/__stddef_null.h \
+  /usr/lib/clang/18/include/__stddef_offsetof.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/deps/linmath.h \
   /usr/include/math.h /usr/include/bits/math-vector.h \
   /usr/include/bits/libm-simd-decl-stubs.h /usr/include/bits/floatn.h \
@@ -21,7 +26,9 @@ dependencies/GLFW/tests/CMakeFiles/msaa.dir/msaa.c.o: \
   /usr/include/bits/fp-logb.h /usr/include/bits/fp-fast.h \
   /usr/include/bits/mathcalls-helper-functions.h \
   /usr/include/bits/mathcalls.h /usr/include/stdio.h \
-  /usr/lib/clang/17/include/stdarg.h /usr/include/bits/types/__fpos_t.h \
+  /usr/lib/clang/18/include/stdarg.h \
+  /usr/lib/clang/18/include/__stdarg___gnuc_va_list.h \
+  /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__mbstate_t.h \
   /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
   /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \

@@ -6,7 +6,9 @@ dependencies/GLFW/tests/CMakeFiles/empty.dir/__/deps/tinycthread.c.o: \
   /usr/include/bits/timesize.h /usr/include/stdc-predef.h \
   /usr/include/sys/cdefs.h /usr/include/bits/long-double.h \
   /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
-  /usr/lib/clang/17/include/stddef.h /usr/include/bits/time.h \
+  /usr/lib/clang/18/include/stddef.h \
+  /usr/lib/clang/18/include/__stddef_size_t.h \
+  /usr/lib/clang/18/include/__stddef_null.h /usr/include/bits/time.h \
   /usr/include/bits/types.h /usr/include/bits/typesizes.h \
   /usr/include/bits/time64.h /usr/include/bits/timex.h \
   /usr/include/bits/types/struct_timeval.h \
@@ -31,15 +33,16 @@ dependencies/GLFW/tests/CMakeFiles/empty.dir/__/deps/tinycthread.c.o: \
   /usr/include/bits/setjmp.h \
   /usr/include/bits/types/struct___jmp_buf_tag.h \
   /usr/include/bits/pthread_stack_min-dynamic.h /usr/include/stdlib.h \
-  /usr/include/bits/libc-header-start.h /usr/include/bits/waitflags.h \
-  /usr/include/bits/waitstatus.h /usr/include/bits/floatn.h \
-  /usr/include/bits/floatn-common.h /usr/include/sys/types.h \
-  /usr/include/bits/stdint-intn.h /usr/include/endian.h \
-  /usr/include/bits/byteswap.h /usr/include/bits/uintn-identity.h \
-  /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
-  /usr/include/bits/stdlib-float.h /usr/include/signal.h \
-  /usr/include/bits/signum-generic.h /usr/include/bits/signum-arch.h \
-  /usr/include/bits/types/sig_atomic_t.h \
+  /usr/include/bits/libc-header-start.h \
+  /usr/lib/clang/18/include/__stddef_wchar_t.h \
+  /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
+  /usr/include/bits/floatn.h /usr/include/bits/floatn-common.h \
+  /usr/include/sys/types.h /usr/include/bits/stdint-intn.h \
+  /usr/include/endian.h /usr/include/bits/byteswap.h \
+  /usr/include/bits/uintn-identity.h /usr/include/alloca.h \
+  /usr/include/bits/stdlib-bsearch.h /usr/include/bits/stdlib-float.h \
+  /usr/include/signal.h /usr/include/bits/signum-generic.h \
+  /usr/include/bits/signum-arch.h /usr/include/bits/types/sig_atomic_t.h \
   /usr/include/bits/types/siginfo_t.h \
   /usr/include/bits/types/__sigval_t.h /usr/include/bits/siginfo-arch.h \
   /usr/include/bits/siginfo-consts.h \

@@ -1,9 +1,27 @@
 LastSave
 {
-	LastSaveName Save0 
+	LastSaveName 1
 }
 Save0
 {
-	LastShip Ships/Save0.sav 
-	Matter 0.000000 
+	EntityBackUpName PreMissionBackup
+	LastShip Save0 
+	Materials 720
+	lastEntityName 
+	storyint 1
+}
+ShipFileNames
+{
+	Bigboy 0
+	Cube 0
+	NoWeapons 339
+	Rotator 0
+	Save0 0
+	Save1 0
+	Spinner 0
+	ada 339
+	asd 382
+	huh 233
+	laser 357
+	sss 167
 }
