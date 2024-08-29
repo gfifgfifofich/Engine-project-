@@ -47,8 +47,10 @@ enum PART
 	ROCKETLAUNCHER =6,
 	MINIGUN =7,
 	RAILGUN =8,
-	STATICPOINT  =9,
-	CENTRALPART  =10,
+	STATICPOINT =9,
+	CENTRALPART =10,
+	AIAIM =11,
+	GLIDER =12,
 	LASTPART
 };
 
@@ -1482,8 +1484,8 @@ public:
 		{
 			targetrotpoint = vDataConnections[0].data;
 			glm::vec2 dif = body[1].position - mid;
-			if(dt<0.001f) // 10k fps probably unreachable with enough stability, shouldnt cause speed issues 
-				 dt = 0.001f;
+			if(dt<0.0001f) // 10k fps probably unreachable with enough stability, shouldnt cause speed issues 
+				 dt = 0.0001f;
 			glm::vec2 trgvel = (targetrotpoint - prevtrgpos) * (1.0f/dt); // probably 
 			glm::vec2 trgvec = targetrotpoint - mid;
 			glm::vec2 rotvec = Normalize(glm::vec2(-dif.y, dif.x)); // probably
@@ -1708,7 +1710,6 @@ public:
 class RocketEngine : public BodyComponent
 {
 public:
-	//HEAT related stuff
 	float HeatPerSecond = 4.0f;
 	float EngineHeat = 1.0f;
 
@@ -1846,19 +1847,6 @@ public:
 				{
 					throtle *= 2.5f;
 				}
-				//if (source == 0)
-				//{
-				//	//GenSoundSource();
-				//	SetSourceSound(&source, &RocketEngineSound);
-				//	SetSourceLooping(&source, true);
-				//}
-				//else if (!SourcePlaying(&source))
-				//	PlaySource(&source);
-				//SetSourcePitch(&source, freq);
-				//SetSourceGain(&source, throtle * 0.25f * (freq <= 0.001f ? 0.0f : 1.0f));
-				//
-				//SetSourceVelocity(&source, glm::vec3(body[0].velocity, 0.0f));
-				//SetSourcePosition(&source, glm::vec3((body[1].position + body[0].position) * 0.5f, 0.0f));
 				playsound(RocketEngineSound,(body[1].position + body[0].position) * 0.5f,
 				throtle * 0.25f * (freq <= 0.001f ? 0.0f : 1.0f),
 				freq,
@@ -1870,18 +1858,12 @@ public:
 			}
 			else
 			{
-				//SetSourceGain(&source, 0.0f);
-				//if (SourcePlaying(&source))
-				//	StopSource(&source);
 				body[1].Force = { 0.0f,0.0f };
 				body[0].Force = {0.0f,0.0f};
 			}
 		}
 		else
 		{
-			//SetSourceGain(&source, 0.0f);
-			//if (SourcePlaying(&source))
-			//	StopSource(&source);
 			body[1].Force = { 0.0f,0.0f };
 			body[0].Force = {0.0f,0.0f};
 
@@ -2354,9 +2336,8 @@ public:
 class CentralPart : public BodyComponent
 {
 public:
-	//HEAT related stuff
-	glm::vec2 midvel;
-
+	glm::vec2 midvel = {0.0f,0.0f};
+	float rotationvelocity = 0.0f;
 	const char* name = "Entity1";
 
 	float strutMaxLength = 15.0f;
@@ -2663,8 +2644,10 @@ public:
 	bool Alive = true;
 	bool destroyed = false;
 
-	ball* back;
-	ball* front;
+	ball* back = NULL;
+	ball* front = NULL;
+	glm::vec2 prevfrontpos = {0.0f,0.0f};
+	glm::vec2 prevbackpos = {0.0f,0.0f};
 
 	glm::vec2 direction = glm::vec2(0.0f, 1.0f);
 
@@ -2942,9 +2925,13 @@ public:
 			avgvel /= mass;
 			CenterOfMass /= mass;
 
+			if(dt<0.0001f)
+				dt = 0.0001f;
 
+			rotationvelocity = length(((front->position - prevfrontpos) - (back->position - prevbackpos)) * 0.5f) /dt; // roughly should do the trick
 			
-
+			prevfrontpos = front->position;
+			prevbackpos = back->position;
 
 
 			if (back != NULL && front != NULL)
@@ -2959,7 +2946,10 @@ public:
 				direction = (front->position - back->position)/len;
 
 				float aligment = DOT(Normalize(direction), Normalize(glm::vec2(-LookAt.y, LookAt.x)));
+
 				glm::vec2 dirTotrg = Normalize((trgPos - (body[0].position + body[1].position) * 0.5f));
+				
+				
 
 				for (int i = 0; i < Engines.size(); i++)
 				{
@@ -3135,7 +3125,413 @@ public:
 	void Clear();
 	void Destroy();
 };
+std::vector <CentralPart*> Entities;
 
+class AIAim : public BodyComponent
+{
+public:
+
+
+	AIAim()
+	{
+		partid = PART::AIAIM;
+		parttype = TYPE::STRUCTUREPART;
+		type = partid + NodeType::LASTNODE;
+		Name = "AIAim";
+
+		Health = PartsData.GetPropertyAsFloat("AIAim", "Health");
+		
+		CreateBody(1,0,1,1);
+		body[0].r = PARTSIZE;
+		body[0].position = position;
+
+		body[0].mass = 1.0f;
+
+		body[0].roughness = 0.0f;
+		body[0].bounciness = 0.0f;
+
+		BodyIdsWithCollision.push_back(0);
+		OnPartCreate();
+	}
+
+	void Create(glm::vec2 position, glm::vec2 direction, float size,float mass = 1.0f) override
+	{
+		Health = PartsData.GetPropertyAsFloat("AIAim", "Health");
+		
+		body[0].r = size;
+		body[0].position = position;
+
+		body[0].mass = mass;
+
+		body[0].roughness = 0.0f;
+		body[0].bounciness = 0.0f;
+		Cost.Matter = 5;
+
+	}
+	void ProcessConnections()
+	{
+		vDataConnections[0].name = "ClosestEnemy";
+		vDataConnections[0].source = true;
+
+		fDataConnections[0].name = "DistanceToClosestEnemy";
+		fDataConnections[0].source = true;
+	}
+	void MTProcess (float dt) override
+	{
+		ProcessConnections();
+		ProcessBody(dt);
+		body[0].color = color;
+		body[0].Process(dt);
+		mid = body[0].position;
+		body[0].Force = glm::vec2(0.0f);
+		glm::vec2 closestmid = {0.0f,0.0f};
+		float lastsqrlength = -1.0f;
+		bool first = true;
+		for(auto cp: Entities)
+		{
+			if(first)
+			{
+				closestmid = cp->mid;
+				lastsqrlength = sqrlength(mid - closestmid);
+			}
+			else if(lastsqrlength > sqrlength(mid - cp->mid))
+			{
+				closestmid = cp->mid;
+				lastsqrlength = sqrlength(mid - closestmid);				
+			}
+
+		}
+
+		vDataConnections[0].data = closestmid;
+		fDataConnections[0].data = sqrt(lastsqrlength);
+
+	}
+
+	void Process(float dt) override
+	{
+	}
+	void Draw() override
+	{
+		//DrawTexturedQuad(body[0].position, glm::vec2(body[0].r), BallBodyTexture, 0.0f, color, Z_Index + 1, BallBodyNormalMap);
+		DrawCircle(body[0].position, body[0].r, color, true, BallNormalMapTexture, Z_Index);
+
+	}
+
+	void DeletePart() override
+	{
+		Delete = true;
+		DeleteBody();
+	}
+	
+	void DrawPreview(glm::vec2 ui_position, glm::vec2 size) override
+	{
+		UI_DrawCircle(ui_position, size.x*0.25f, color, true, BallNormalMapTexture, Z_Index);
+	};
+};
+
+class Glider : public BodyComponent
+{
+	float diaglength = 0.0f;
+public:	
+	float HeatPerSecond = 1.0f;
+	float EngineHeat = 0.4f;
+
+	float throtles[4] = {0.0f,0.0f,0.0f,0.0f};
+
+	glm::vec2 Force = { 0.0f,0.0f };
+	
+	glm::vec2 OutForce = glm::vec2(0.0f);
+
+
+	float t = 0.0f;
+
+	Glider()
+	{
+		
+		partid = PART::GLIDER;
+		parttype = TYPE::STRUCTUREPART;
+		type = partid + NodeType::LASTNODE;
+		Name = "Glider";
+		
+		Health = PartsData.GetPropertyAsFloat("Glider", "Health");
+		HeatPerSecond = PartsData.GetPropertyAsFloat("Glider", "HeatPerSecond");
+		Power = PartsData.GetPropertyAsFloat("Glider", "Power");
+
+		CreateBody(4, 2, 0, 1);
+		float ang = 0.25f * pi;
+		body[0].position = position + Rotate({0.0f,1.0f}, ang);
+		body[0].r = PARTSIZE;
+		body[0].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[1].position = position + Rotate({0.0f,1.0f}, ang);
+		body[1].r = PARTSIZE;
+		body[1].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[2].position = position + Rotate({0.0f,1.0f}, ang);
+		body[2].r = PARTSIZE;
+		body[2].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[3].position = position + Rotate({0.0f,1.0f}, ang);
+		body[3].r = PARTSIZE;
+		body[3].mass = 1.0f;
+
+
+		deactivated = true;
+
+		diaglength = sqrt(body[0].r * 2.0f * body[0].r * 2.0f + body[0].r * 2.0f * body[0].r * 2.0f);
+		Cost.Matter = 25;
+
+		shutdownTemp = 15.0f;
+		ProcessConnections();
+		BodyIdsWithCollision.push_back(0);
+		BodyIdsWithCollision.push_back(1);
+		BodyIdsWithCollision.push_back(2);
+		BodyIdsWithCollision.push_back(3);
+		OnPartCreate();
+	}
+	void Create(glm::vec2 position, glm::vec2 direction, float size, float mass = 1.0f) override
+	{
+
+		Health = PartsData.GetPropertyAsFloat("Glider", "Health");
+		HeatPerSecond = PartsData.GetPropertyAsFloat("Glider", "HeatPerSecond");
+		Power = PartsData.GetPropertyAsFloat("Glider", "Power");
+
+		float ang = 0.25f * pi;
+		body[0].position = position + Rotate({0.0f,1.0f}, ang);
+		body[0].r = PARTSIZE;
+		body[0].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[1].position = position + Rotate({0.0f,1.0f}, ang);
+		body[1].r = PARTSIZE;
+		body[1].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[2].position = position + Rotate({0.0f,1.0f}, ang);
+		body[2].r = PARTSIZE;
+		body[2].mass = 1.0f;
+
+		ang += pi * 0.5;
+		body[3].position = position + Rotate({0.0f,1.0f}, ang);
+		body[3].r = PARTSIZE;
+		body[3].mass = 1.0f;
+
+
+		deactivated = true;
+
+		diaglength = sqrt(body[0].r * 2.0f * body[0].r * 2.0f + body[0].r * 2.0f * body[0].r * 2.0f);
+
+		shutdownTemp = 15.0f;
+		ProcessConnections();
+	}
+	void ProcessConnections()
+	{
+		bDataConnections[0].name = "Boost";
+		bDataConnections[1].name = "\"Heater\"";
+		vDataConnections[0].name = "AllignTo";
+
+		vDataConnections[0].source = false;
+		bDataConnections[1].source = false;
+		bDataConnections[0].source = false;
+	}
+	
+	void MTProcess(float dt) override
+	{
+		ProcessConnections();
+		ProcessBody(dt);
+
+		glm::vec2 avgvel = (body[0].velocity + body[1].velocity + body[2].velocity + body[3].velocity) * 0.25f;
+		mid = (body[0].position + body[1].position + body[2].position + body[3].position) * 0.25f;
+		if ((bDataConnections[1].connected && bDataConnections[1].data))
+			for(int i=0;i<4;i++)
+				throtles[i] = 1.0f;
+		glm::vec2 glidedir = {0.0f,0.0f};
+
+		if(vDataConnections[0].connected)
+		{
+			if(sqrlength(vDataConnections[0].data)>1.1f) //its not normalized
+			{
+				glidedir = Normalize(vDataConnections[0].data - mid);
+			}
+			else
+				glidedir= vDataConnections[0].data;
+		}
+		if (!debris  && vDataConnections[0].connected && !deactivated && sqrlength(avgvel) > 10.0f*10.0f && sqrlength(glidedir)>0.0f)
+		{
+			body[0].Force = Force;
+			body[1].Force = Force;
+			body[2].Force = Force;
+			body[3].Force = Force;
+
+			glm::vec2 veldir = Normalize (avgvel);
+			glm::vec2 norm = {glidedir.y,-glidedir.x};
+			glm::vec2 trustvec = DOT(norm, veldir) * norm;
+			if(sqrlength(avgvel) > 50.0f*50.0f)
+				trustvec -= veldir * 0.2f;
+			float forcemult = 1.0f;
+			if ((bDataConnections[0].connected && bDataConnections[0].data))
+			{
+				forcemult = 2.5f;
+			}
+			body[0].Force -= trustvec * Power * 1.0f * forcemult;
+			body[1].Force -= trustvec * Power * 1.0f * forcemult;
+			body[2].Force -= trustvec * Power * 1.0f * forcemult;
+			body[3].Force -= trustvec * Power * 1.0f * forcemult;
+
+			for(int i=0;i<4;i++)
+			{
+				glm::vec2 dir = Normalize (mid - body[i].position);
+				
+				throtles[i] =  DOT(dir,trustvec);
+				if(throtles[i] <0.0f)
+					throtles[i] = 0.0f;
+				if ((bDataConnections[0].connected && bDataConnections[0].data))
+				{
+					throtles[i] *= 2.5f;
+				}
+
+			}
+		}
+		else
+			for(int i=0;i<4;i++)
+				throtles[i] = 0.0f;
+
+
+		for(int i=0;i<4;i++)
+		{			
+			body[i].temperature += abs(throtles[i]) * HeatPerSecond * dt;
+		}
+		float change = (body[0].temperature - body[1].temperature);
+
+		body[0].temperature -= change* dt;
+		body[1].temperature += change* dt;
+		change = (body[1].temperature - body[2].temperature);
+		body[1].temperature -= change* dt;
+		body[2].temperature += change* dt;
+		change = (body[2].temperature - body[3].temperature);
+		body[2].temperature -= change* dt;
+		body[3].temperature += change* dt;
+		change = (body[3].temperature - body[0].temperature);
+		body[3].temperature -= change* dt;
+		body[0].temperature += change* dt;
+		
+
+		glm::vec2  velbuf = body[0].velocity;
+
+
+		body[0].Process(dt);
+		body[1].Process(dt);
+		body[2].Process(dt);
+		body[3].Process(dt);
+
+		body[1].Force = { 0.0f,0.0f };
+		body[0].Force = { 0.0f,0.0f };
+		body[2].Force = { 0.0f,0.0f };
+		body[3].Force = { 0.0f,0.0f };
+
+		Strut(&body[0], &body[1], body[0].r * 2.0f);
+		Strut(&body[1], &body[2], body[0].r * 2.0f);
+		Strut(&body[2], &body[3], body[0].r * 2.0f);
+		Strut(&body[0], &body[3], body[0].r * 2.0f);
+
+		Strut(&body[0], &body[2], diaglength);
+		Strut(&body[3], &body[1], diaglength);
+
+	
+	}
+	void Process(float dt) override
+	{
+		
+
+		if (!debris )
+		{
+			throtle = 0.0f;
+			for(int i=0;i<4;i++)
+			{
+				throtle += throtles[i];
+			}
+			if (abs(throtle) > 0.0f && !shutdown && !deactivated)
+			{
+			
+				playsound(RocketEngineSound,mid,
+				throtle * 0.25f * (freq <= 0.001f ? 0.0f : 1.0f),
+				freq,
+				body[0].velocity,
+				false);
+				
+
+
+			}
+			else
+			{
+				body[1].Force = { 0.0f,0.0f };
+				body[0].Force = {0.0f,0.0f};
+			}
+		}
+		else
+		{
+			body[1].Force = { 0.0f,0.0f };
+			body[0].Force = {0.0f,0.0f};
+
+		}
+	}
+
+	void Draw() override
+	{
+		
+
+		throtle = 0.0f;
+		for(int i=0;i<4;i++)
+		{
+			throtle += throtles[i];
+		}
+		t -= delta;
+		if (t <= 0.0f)
+		{
+			t = 0.016f;
+			for(int i=0;i<4;i++)
+				if (abs(throtles[i]) > 0.0f)
+				{
+					float Particleforce = throtles[i];
+					if ((bDataConnections[0].connected && bDataConnections[0].data))
+					{
+						Particleforce *= 0.65f;
+					}
+					glm::vec2 dir = body[i].position - mid;
+					for (int i = 0; i < 5; i++)
+						EngineSmoke.Spawn(body[i].position,
+							dir * 5000.0f * Particleforce * 0.025f, 1,
+							EngineSmoke.lifetime * abs(Particleforce) * (rand() % 1000 * 0.0005f + 0.5f));
+					
+				}
+		}
+		glm::vec2 lp = (mid);
+		if ((bDataConnections[0].connected && bDataConnections[0].data))
+			DrawLight(glm::vec3(lp.x,lp.y, EngineLightHeight), glm::vec2( 800 * abs(throtle*0.65f)*0.025f), glm::vec4(4.0f, 0.8f, 0.4f, abs(0.5f + abs(throtle*0.65f) + (rand() % 100 - 50) * 0.01f)), 0.0f);
+		else
+			DrawLight(glm::vec3(lp.x,lp.y, EngineLightHeight), glm::vec2( 800 * abs(throtle)*0.025f), glm::vec4(4.0f, 0.8f, 0.4f, abs(0.5f + abs(throtle) + (rand() % 100 - 50) * 0.01f)), 0.0f);
+		
+
+		glm::vec2 mid2 = (body[1].position + mid) * 0.5f;
+		DrawTexturedQuad(mid, glm::vec2(body[0].r * 2.0f), GunBaseTexture, get_angle_between_points(body[0].position, body[3].position) , color, Z_Index + 1, GunBaseNormalMap,false);
+
+	}
+
+	void DeletePart() override
+	{
+		Delete = true;
+		DeleteBody();
+	}
+
+	void DrawPreview(glm::vec2 ui_position, glm::vec2 size) override
+	{
+	
+		
+	};
+};
 
 
 std::vector<int> PurchasableParts;
@@ -3152,6 +3548,8 @@ void InitParts()
 	PurchasableParts.push_back(PART::ROTOR);
 	PurchasableParts.push_back(PART::ROCKETLAUNCHER);
 	PurchasableParts.push_back(PART::MINIGUN);
+	PurchasableParts.push_back(PART::AIAIM);
+	PurchasableParts.push_back(PART::GLIDER);
 
 	NodeConstructors.insert({NodeType::LASTNODE + PART::BALLBODY,[](){return (Node*)new BallBody();}});
 	NodeConstructorNames.insert({NodeType::LASTNODE + PART::BALLBODY,"BallBody"});
@@ -3171,6 +3569,10 @@ void InitParts()
 	NodeConstructorNames.insert({NodeType::LASTNODE + PART::RAILGUN,"MiniGun"});
 	NodeConstructors.insert({NodeType::LASTNODE + PART::CENTRALPART,[](){return (Node*)new CentralPart();}});
 	NodeConstructorNames.insert({NodeType::LASTNODE + PART::CENTRALPART,"CentralPart"});
+	NodeConstructors.insert({NodeType::LASTNODE + PART::AIAIM,[](){return (Node*)new AIAim();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::AIAIM,"AIAim"});
+	NodeConstructors.insert({NodeType::LASTNODE + PART::GLIDER,[](){return (Node*)new Glider();}});
+	NodeConstructorNames.insert({NodeType::LASTNODE + PART::GLIDER,"Glider"});
 
 	//BodyComponent* b = NULL;
 	//for (int i = 0; i < SpawnablePartAmount; i++)

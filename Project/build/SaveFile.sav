@@ -6,9 +6,9 @@ Save0
 {
 	EntityBackUpName PreMissionBackup
 	LastShip Save0 
-	Materials 500
+	Materials 179594
 	lastEntityName 
-	storyint 2
+	storyint 1
 }
 ShipFileNames
 {

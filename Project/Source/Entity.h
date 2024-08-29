@@ -130,7 +130,6 @@ void PartsPile::SpawnRandomPart( glm::vec2 position, float size)
 }
 
 
-std::vector <CentralPart*> Entities;
 
 
 void CentralPart::DeletePart() 

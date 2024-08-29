@@ -79,6 +79,7 @@
         "valarray": "cpp",
         "variant": "cpp",
         "latch": "cpp",
-        "barrier": "cpp"
+        "barrier": "cpp",
+        "regex": "cpp"
     }
 }

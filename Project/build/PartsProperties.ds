@@ -1,3 +1,7 @@
+AIAim
+{
+	Health 15 
+}
 BallBody
 {
 	Health 15 
@@ -5,6 +9,12 @@ BallBody
 CentralPart
 {
 	Health 25 
+}
+Glider
+{
+	Health 15 
+	HeatPerSecond 3 
+	Power 1000 
 }
 Gun
 {
