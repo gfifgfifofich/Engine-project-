@@ -18,11 +18,13 @@ class Mission
 	std::vector<float> timers;
 	std::map<std::string,bool> flags;
 	bool story_mission = false;
-
+	bool exiting = false;
 	std::vector<glm::vec4> TakenAreas;
+	std::vector<std::vector<CentralPart*>> Bots;
 
 	//Shit for missions
 	glm::vec2 planetpos = {0.0f,0.0f};
+
 	
 	void Start()
 	{
@@ -32,6 +34,7 @@ class Mission
 		TakenAreas.push_back({0,0,50,50});
 		AIShips.clear();
 		flags.clear();
+		Bots.clear();
 		if(Entities.size()>0)
 			Entities[0]->SaveTo(EntityBackUpName);
 		//ClearMap
@@ -72,8 +75,6 @@ class Mission
 			}
 
 		
-		//Create random stuff;
-
 			switch (type)
 			{
 			case MissionType::mining:
@@ -115,17 +116,15 @@ class Mission
 			default:
 				break;
 			}
-		}else
-			switch (storyint)
+		}
+		else switch (storyint)
 			{
 			case 0: // tutorial
 			{
 				AmbientLight=  0.0f;
 				Background.LoadFrom("Scenes/Sun.sav");
 				ChangeMap("Scenes/tutorial.sav",false);
-				SpawnPlayer("No");
-				Entities[0]->body[0].position = {15.0f,0.0f};
-				Entities[0]->body[1].position = {15.0f,2.0f};
+				SpawnPlayer();
 				timers.push_back(2.0f);
 				timers.push_back(0.0f);
 				timers.push_back(0.0f);
@@ -142,14 +141,31 @@ class Mission
 				pos = { 30.0f,200.0f};
 				Debris.SpawnPart(PART::GUN,pos,PARTSIZE);
 
-				for(int i=0;i<GameScene->Nodes.size();i++)
-				{
-					if(GameScene->Nodes[i]->id == 5)// first corner
-					{
-						break;
-					}
-				}
 
+
+			}break;
+			case 1:
+			{
+				AmbientLight=  0.0f;
+				Background.LoadFrom("Scenes/SunDestroyed.sav");
+				ChangeMap("Scenes/Gun.sav",false);
+				SpawnPlayer(glm::vec2(100.0f,-300.0f));
+				timers.push_back(5.0f);
+				timers.push_back(5.0f);
+				timers.push_back(5.0f);
+				flags["Ending"] = false;
+				flags["Spawned"] = false;
+				AqueredCameraScale = {2.0f,2.0f};
+				std::vector<CentralPart*> arrr;
+				Bots.push_back(arrr);
+				Bots[0].push_back(SpawnAiShip({-150.0f,400.0f},"drone"));
+				Bots[0].push_back(SpawnAiShip({-150.0f,380.0f},"drone"));
+				Bots[0].push_back(SpawnAiShip({-170.0f,400.0f},"drone"));
+
+				for(auto e : Bots[0])
+				{
+					e->AIState = 0;
+				}
 
 			}break;
 			default:
@@ -172,8 +188,8 @@ class Mission
 	}
 	void Process(float dt)
 	{
-		
-		
+		if(exiting)
+			exitMission(true);
 		
 		for(int i=0;i<timers.size();i++)
 		{
@@ -331,7 +347,16 @@ class Mission
 				}
 				if(!flags["Spawned"] || Entities.size()>1)
 					timers[3] = 0.5f;
-				if(!flags["Spawned"])
+				bool hasgun = false;
+				if(Entities.size()>0)
+					for(auto p : Entities[0]->Parts)
+						if(p->parttype == TYPE::WEAPON)
+						{
+							hasgun = true;
+							break;
+						}
+				
+				if(!flags["Spawned"] && hasgun)
 					timers[4] = 0.5f;
 				
 				for(int i=0;i<GameScene->Nodes.size();i++)
@@ -415,7 +440,7 @@ class Mission
 								if(!flags["Spawned"] && sqrlength(Entities[0]->mid - pos) < 10000)
 								{
 									flags["Spawned"] = true;
-									SpawnAiShip(pos,"No");
+									SpawnAiShip(pos,"bot");
 								}
 							}
 						}
@@ -425,6 +450,42 @@ class Mission
 				if(flags["Explode"])
 				{	
 					DrawLight(glm::vec3(CameraPosition - glm::vec2(100.0f,50.0f),-0.05f), {1000.0f,1000.0f,5.0f},glm::vec4(10.0f * timers[1]*0.5f,2.0f * timers[1]*0.5f,1.0f * timers[1]*0.5f,2.0f  * timers[1]*0.5f));
+					
+					ConsoleTexts.clear();	
+					if(timers[2]<10.0f)
+					{
+					GetWindow(BackgroundWindowID)->w_DirectionalLight = timers[2]/10.0f;
+					ConsoleTexts.push_back("Major threat detected");
+					ConsoleTexts.push_back("No operators available");
+					ConsoleTexts.push_back("attempt at connection to ground facilities...");
+					if(timers[2]<9.0f)
+					{
+					ConsoleTexts.push_back("failed");
+					ConsoleTexts.push_back("attempt at connection to ground facilities...");
+					if(timers[2]<8.0f)
+					{
+					ConsoleTexts.push_back("failed");
+					ConsoleTexts.push_back("attempt at connection to ground facilities...");
+					if(timers[2]<7.0f)
+					{
+					ConsoleTexts.push_back("failed");
+					ConsoleTexts.push_back("No ground facility found");
+					ConsoleTexts.push_back("objective priority critical, autonomus controll available. Switch to fully autonomous controlls: y/n?");
+					if(timers[2]<6.5f)
+					{
+					ConsoleTexts.push_back("transfering to fully autonomus controll...");
+					if(timers[2]<5.0f)
+					{
+					ConsoleTexts.push_back("analyzing data from last operator training session...");
+					if(timers[2]<3.0f)
+					{
+					ConsoleTexts.push_back("syntezising of new control unit...");
+					if(timers[2]<1.0f)
+					{
+					ConsoleTexts.push_back("connecting AI controller to the unit...");
+					}}}}}}}}
+
+					
 					if(timers[0]<=0.0f)
 					{
 						float stage = (timers[1])*0.1666f;
@@ -435,7 +496,10 @@ class Mission
 						AqueredCameraScale = {val,val};
 						camerapos -= glm::vec2(300.0f,300.0f) * dt * antstage;
 						if(timers[1]>0.1f)
+						{
 							ScreenShake = 0.01f + antstage * 0.02f;
+							ChromaticAbberation = 10.00f + antstage * 10.00f;
+						}
 						if(Entities.size()>0  && !Entities[0]->dead && !Entities[0]->destroyed)
 						{
 							Entities[0]->SaveTo("PreMissionBackup");
@@ -444,19 +508,226 @@ class Mission
 						}
 
 					}
-					if(timers[2]<=0.1f && Exposure >0.8f)
+					if (timers[2]<0.1f)
 					{
-						Exposure = -0.85f;
-					}
-					if (Exposure > 0.0f && timers[2]<0.1f)
-					{
-						camerapos = {0.0f,0.0f};
 						ScreenShake = 0.0f;
-						storyint +=1;
-						Materials = 250;
+						storyint =1;
+						Materials = 500;
+
+						GetWindow(BackgroundWindowID)->w_DirectionalLight = 1.0f;
 						exitMission(false);
 					}
 					
+				}
+			}break;
+			case 1:
+			{
+				if(flags["Ending"])
+				{	
+					ConsoleTexts.clear();
+					
+					if(timers[2]<14.0f)
+						ConsoleTexts.push_back("Analizyng blackboxes...");
+					if(timers[2]<12.3f)
+					{
+						ConsoleTexts.push_back("    \"...So, they asked you to just stay around a station that just deleted a planet,");
+						ConsoleTexts.push_back("when its cloacking failed right in the middle of the shot, offered you an insane pay check");
+						ConsoleTexts.push_back("and you aggreed? Its a suicide mission. \"");
+						ConsoleTexts.push_back("    \" Listen, no one with a clear mind will get even close to a thing that kiled a planet");
+						ConsoleTexts.push_back("and we only need to be here for a few more hours. And for a day i've been here i only");
+						ConsoleTexts.push_back("saw a few madmans on a small ships.\"");
+						ConsoleTexts.push_back("    \" Oh, look, here is another one\"");
+					}
+					if(timers[2]<8.0f)
+						ConsoleTexts.push_back("Saving the \"Employer\" location as a \"Target\"...");
+					if(timers[2]<7.3f)
+						ConsoleTexts.push_back("Continuing analizyng blackboxes...");
+					if(timers[2]<5.0f)
+						ConsoleTexts.push_back("Last ship got here only becouse of high heat radiation after hull collaps");
+					if(timers[2]<4.5f)
+						ConsoleTexts.push_back("Saving note: High heat radiatoin will attract more pirates");
+					if(timers[2]<1.5f)
+						ConsoleTexts.push_back("Initiaing extraction");
+						
+
+					if(timers[2]<=0.0f)
+					{
+
+						storyint =2;
+						exitMission(true);
+					}
+					return;
+				}
+				glm::vec2 Breachpos = {0.0f,0.0f};
+				glm::vec2 Corepos = {135.0f,150.0f};
+				for(int i=0;i<GameScene->Nodes.size();i++)
+				{
+					if(GameScene->Nodes[i]->Name == "wCO_Cube")
+					{
+						CO_Cube* cc = (CO_Cube*)GameScene->Nodes[i];
+						if(flags["Explode"])
+						{
+							glm::vec2 dif = Corepos - cc->position;
+							if(sqrlength(dif)>100.0f)
+							{
+								cc->position += Normalize(dif) * (10.0f - timers[0])*0.2f;
+							}
+						}
+					}
+					if(GameScene->Nodes[i]->Name == "CO_Cube")
+					{
+						CO_Cube* cc = (CO_Cube*)GameScene->Nodes[i];
+						if(flags["Explode"] && timers[0]<6.0f)
+						{
+							glm::vec2 dif = Corepos - cc->position;
+							if(sqrlength(dif)>100.0f)
+							{
+								cc->position += Normalize(dif) * (8.0f - timers[0])*0.2f;
+							}
+						}
+					}
+					if(GameScene->Nodes[i]->Name == "CO_Ball")
+					{
+						CO_Ball* cc = (CO_Ball*)GameScene->Nodes[i];
+						if(flags["Explode"] && timers[0]<6.0f)
+						{
+							cc->b.r = 40 + 40.0f * (6.0f - timers[0])/6.0f;
+							cc->Scale = {40 + 40.0f * (6.0f - timers[0])/6.0f,40 + 40.0f * (6.0f - timers[0])/6.0f};
+						}
+					}
+					if(GameScene->Nodes[i]->Name == "Object")
+					{
+						if(flags["Explode"])
+						{
+							GameScene->Nodes[i]->Delete = true;
+						}
+					}
+					if(GameScene->Nodes[i]->Name == "rodlight")
+					{
+						LightSourceObject* ls = (LightSourceObject*)GameScene->Nodes[i];
+						if(flags["Explode"]&& timers[0]<6.5f)
+						{
+							ls->Color.a=0.0f;
+						}
+					}
+					if(GameScene->Nodes[i]->Name == "fe1")
+					{
+						ParticleObject* cc = (ParticleObject*)GameScene->Nodes[i];
+						if(flags["Explode"] && timers[0]<6.0f)
+						{
+							cc->r = 40 + 40.0f * (6.0f - timers[0])/6.0f;
+						}
+					}
+					if(GameScene->Nodes[i]->Name == "fa1")
+					{
+						ParticleObject* cc = (ParticleObject*)GameScene->Nodes[i];
+						if(flags["Explode"] && timers[0]<6.0f)
+						{
+							cc->r = 40 + 40.0f * (6.0f - timers[0])/6.0f;
+						}
+					}
+					if(GameScene->Nodes[i]->Name == "CrackLight")
+					{
+						Breachpos = GameScene->Nodes[i]->position;
+						LightSourceObject* ls = (LightSourceObject*)GameScene->Nodes[i];
+						if(flags["Explode"])
+						{
+							ls->Color.a = (timers[0] - 9.0f);
+							if(ls->Color.a<0.0f)
+								ls->Color.a = 0.0f;
+						}
+					}
+					if(GameScene->Nodes[i]->Name == "CoreLight")
+					{
+						LightSourceObject* ls = (LightSourceObject*)GameScene->Nodes[i];
+						if(flags["Explode"])
+						{
+							ls->Color.a = (1.0f - (timers[0] - 9.0f));
+							if(ls->Color.a>1.0f)
+								ls->Color.a = 1.0f;
+						}
+						if(flags["Explode"] && timers[0]<6.0f)
+						{
+							ls->Scale = {270.0f + 270.0f * (6.0f - timers[0])/2.0f,270.0f + 270.0f * (6.0f - timers[0])/2.0f};
+						}
+					}
+
+				}
+
+
+
+				if(timers[0] <7.0f && flags["Explode"]&& ConsoleTexts.size()==1)
+				{
+					ConsoleTexts.push_back("Incoming transmition, source unknown");
+				
+				}
+				if(timers[0] <6.5f && flags["Explode"]&& ConsoleTexts.size()==2)
+				{
+					ConsoleTexts.push_back("Warning, Hull integrity critical, Station collaps imminent");
+
+					ScreenShake = 1.0f;
+				}
+				if(timers[0] <2.0f && flags["Explode"]&& ConsoleTexts.size()>0)
+				{
+					ConsoleTexts.clear();
+					for(int i=0;i<GameScene->Nodes.size();i++)
+					{
+						if(GameScene->Nodes[i]->Name == "CO_Ball")
+						{
+							CO_Ball* cc = (CO_Ball*)GameScene->Nodes[i];
+							if(flags["Explode"] && timers[0]<6.0f)
+							{
+								cc->Color = {10.0f,2.0f,2.0f,1.0f};
+							}
+						}
+						if(GameScene->Nodes[i]->Name == "fe1")
+						{
+							ParticleObject* cc = (ParticleObject*)GameScene->Nodes[i];
+							if(flags["Explode"] && timers[0]<6.0f)
+							{
+								cc->amount = 0;
+							}
+						}
+					}
+				}
+				if(timers[0] <=0.0f && flags["Explode"] && !flags["Spawned"])
+				{
+					CentralPart* s =  SpawnAiShip({-300.0f,700.0f},"Bigboy");	
+					s->AIState = 1;			
+					flags["Spawned"] = true;
+				}
+				if(!flags["Ending"] && flags["Spawned"] && Entities.size()==1)
+				{
+					flags["Ending"] = true;
+					timers[2] = 15.0f;
+				}
+			
+
+				if(Entities.size()>0)
+				{
+					if(sqrlength(Entities[0]->mid - Breachpos) < 400 * 400)
+						for(auto e : Bots[0])
+						{
+							e->AIState = 1;
+						}
+
+					if(sqrlength(Entities[0]->mid - Breachpos) < 100 * 100 && !flags["Explode"] && Entities.size() == 1)
+					{
+						flags["Explode"] = true;
+						timers[0] = 10.0f;
+						ConsoleTexts.push_back("Hull breach succesfull");
+						ScreenShake = 0.2f;
+						for(int i=0;i<GameScene->Nodes.size();i++)
+						{
+							if(GameScene->Nodes[i]->Name == "wCO_Cube")
+							{
+								CO_Cube* cc = (CO_Cube*)GameScene->Nodes[i];
+
+								for(auto a : AvailableParticleAssets)
+									if(a->Name == "sparks")a->pe.SpawnInCircle(cc->position,20.0f,10,{-10.0f,10.0f});
+							}
+						}
+					}
 				}
 			}break;
 			default:
@@ -466,22 +737,31 @@ class Mission
 	}
 	void exitMission(bool extracted = false)
 	{
-		std::cout<<"exiting mission " <<"\n";
-		if(extracted)
+		exiting = true;
+		if(Exposure >0.8f)
 		{
-			Materials += materialReward;
-			if(Entities.size()>0 && !Entities[0]->dead && !Entities[0]->destroyed)
-			{
-				Materials += GetShipCost(Entities[0]);
-				Entities[0]->SaveTo(EntityBackUpName);
-				
-			}
+			Exposure = -0.85f;
 		}
-		exitedmission = true;
-		inbase = true;
-		AmbientLight = 0.0f;
-		ChangeMap("Scenes/base.sav", false);
-		SpawnPlayer(EntityBackUpName);
+		if (Exposure > 0.0f)
+		{
+			if(extracted)
+			{
+				Materials += materialReward;
+				if(Entities.size()>0 && !Entities[0]->dead && !Entities[0]->destroyed)
+				{
+					Materials += GetShipCost(Entities[0]);
+					Entities[0]->SaveTo(EntityBackUpName);
+
+				}
+			}
+			exitedmission = true;
+			inbase = true;
+			AmbientLight = 0.0f;
+			exiting = false;
+			GetWindow(BackgroundWindowID)->w_DirectionalLight = 1.0f;
+			ChangeMap("Scenes/base.sav", false);
+			SpawnPlayer(EntityBackUpName);
+		}
 	}
 };
 

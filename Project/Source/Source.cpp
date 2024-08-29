@@ -4,45 +4,57 @@ TODO:
 
 	Story
 	{ 
+
+		add turrets?
+		&make a propper gods damn disdoc
+
 		Under implementation
 		[
+			Console layer
 
-			tutorial (as a first human pilot, death afet tutorial)
-			[
-				Spawn starter shit at Node(id = 5)
-				Spawn dude at node id = 6
-				Movement guide at node id = 7
-
-				start in corridor, entrance
-				assemble first ship ( engines, gun) {empty debris}
-				small flight cource
-				destroy droid, attach its parts {empty debris}
-				heat manipulation tablet/manual/popup?
-				
-				// show planet, delete planet, delete operator
-
-			]
-
-
-			planet destruction sequence
-
-
-			//planetary defence platform, ai only
-			// parts database empty, pirate parts only, player is the ai
+			Swarm factory separated/lost controll, player is just a research lab
+			Change screen/cutscene about loss of first objective, new objective - destroy the laser guy // yeeeeee
+			0 operators available
+			attempt at connection to ground facilities...
+			failed
+			attempt at connection to ground facilities...
+			failed
+			attempt at connection to ground facilities...
+			failed
+			No ground facility found
+			objective priority critical, autonomus controll available. Switch to fully autonomous controlls: y/n?
+			y
+			transfering to fully autonomus controll...
+			optimal solution - make autonomus unit...
+			researching data from last operator training session...
+			syntezising of new control unit...
+			connection of new AI controller to the unit...
+			// Screen pops back, base scene, 1 available mission
+			
 		]
+		
 
 		subject of change
 		[
-			make triangulation module with pirate parts? // from pirate boss?
-			(maybe something here)
-			gather data from 3 sattelites
-			(maybe something here)
-			go to the evil thingy, kill evil thingy
-			final(cold death) / endgame (clear missions forewer) // better do both
+			// todo: add some barriers to base, breachable by new modules/tech &shit
+
+			// swarms only instruction - defend humans &shit
+			// players target - kill the thing that exploded planet
+			go to remains of dabiggun, meet swarmers, kill few lowlevel pirates, kill swarmers, get pirate blackboxes, find their head
+			// pirate side missions unlocked			
+			killall at the base, more swarmers, recruiter is research lab
+			// lil bit of swarm AI degradation/mutation
+			// swarmers destroy all base to delete player, failed, many people dead
+			goto lab, killall at lab, +swarmers, recruiter is main bad guy
+			goto bad guy, killall bad guy, +swarmers
+			// last issue - swarm
+			goto swarm, killall swarm, read log, realise &shit, sadge etc.
+			
 		]
 
 
 	}
+	tutorial // add introduction and done
 
 
 	proper building mode // mostly done
@@ -142,6 +154,7 @@ CentralPart == Entity;
 
 */
 
+
 #include "engine/Components/Redactor.h"
 #include "engine/Components/Include/sounds.h"
 
@@ -151,6 +164,8 @@ int storyint = 0;
 std::string lastEntityName = "Save0.sav";
 std::string EntityBackUpName = "PreMissionBackup";
 std::string GameSaveName = "Save0";
+std::vector<std::string> ConsoleTexts;
+
 struct shipInfo
 {
 	std::string filename = "";
@@ -207,8 +222,9 @@ public:
 
 int BackgroundWindowID = -1;
 int ForeWindowID = -1;
-glm::vec2 foregroundMousePosition = {0.0f,0.0f};
+int TerminalWindowID = -1;
 int MenuWindowID = -1;
+glm::vec2 foregroundMousePosition = {0.0f,0.0f};
 
 float TextSize = 1.0f;
 float UISize = 18.0f;
@@ -584,6 +600,7 @@ void ChangeMap(std::string FilePath, bool scaleDown = true)
 {
 	std::cout<<"changing map to: " <<FilePath<<"\n";
 	
+	ConsoleTexts.clear();	
 	MainMenu = false;
 	for(int i=0;i<Entities.size();i++)
 		Entities[i]->Destroy();
@@ -640,6 +657,14 @@ void SpawnPlayer(std::string filename = "PreMissionBackup")
 {
 
 	glm::vec2 position = glm::vec2(-10, 0.0f);
+	glm::vec2 Scale = glm::vec2(0.5f, 0.5f);
+	Entities.push_back(new CentralPart);
+	Entities[0]->Create(glm::vec2(0.0f, 0.0f) * Scale + position, { 0.0f,1.0f }, PARTSIZE);
+	Entities[0]->LoadFrom(filename);
+	std::cout<<"\nPlayer Spawned";
+}
+void SpawnPlayer(glm::vec2 position,std::string filename = "PreMissionBackup")
+{
 	glm::vec2 Scale = glm::vec2(0.5f, 0.5f);
 	Entities.push_back(new CentralPart);
 	Entities[0]->Create(glm::vec2(0.0f, 0.0f) * Scale + position, { 0.0f,1.0f }, PARTSIZE);
@@ -838,34 +863,49 @@ public:
 			}
 			if(erroutputstring.size()>0)
 			Corner.y += UI_DrawText(erroutputstring,Corner,0.35f,{4.0f,0.0f,0.0f,1.0f}).y*-1.0f - step;
-			Corner.y +=UI_DrawText("Missions:",Corner,0.45f).y * -1.0f;
 			if(cango)
-			for(int i=0;i<missions.size();i++)
 			{
+				Corner.y +=UI_DrawText("Main missions:",Corner,0.45f).y * -1.0f;
 				b = false;
-				std::string namestr = "";
-				if(missions[i].type == MissionType::pirates) namestr = "Pirates ";
-				if(missions[i].type == MissionType::mining) namestr = "Mining ";
-				if(missions[i].type == MissionType::infestation) namestr = "Infestation ";
-				if(missions[i].type == MissionType::retrival) namestr = "Retrival ";
-
-				namestr += "Size: ";
-				namestr += std::to_string(missions[i].size);
-				namestr += "  Difficulty: ";
-				namestr += std::to_string(missions[i].dificulty);
-				namestr += "  Reward: ";
-				namestr += std::to_string(missions[i].materialReward);
-				
-
-				UI_DrawText(namestr.c_str(),Corner - glm::vec2(0.0f,5.0f),0.35f);
-				UI_DrawCube(Corner + glm::vec2(250*0.5f,0.0f), glm::vec2(250.0f,20.0f) * 0.5f, 0.0f, glm::vec4(0.07f));
-				Corner.y += UI_button(&b, "", Corner,{250,20},0.35f,glm::vec4(0.0f),glm::vec4(0.5f),glm::vec4(0.0f)).y * -1.0f - 0;
-			
+				Corner.y += UI_button(&b, "The story mission with wery cool name", Corner,{250,20},0.35f,glm::vec4(0.0f),glm::vec4(0.5f),glm::vec4(0.0f)).y * -1.0f - 0;
 				if(b)
 				{
-					CurrnetMission = missions[i];
-					CurrnetMission.Start();
+					CurrnetMission.story_mission = true;
+					CurrnetMission.Start();	
+					inbase = false;
+					switchScene = false;
+					OpenMenu = false;
+				}
 
+				Corner.y +=UI_DrawText("Missions:",Corner,0.45f).y * -1.0f;
+
+				for(int i=0;i<missions.size();i++)
+				{
+					b = false;
+					std::string namestr = "";
+					if(missions[i].type == MissionType::pirates) namestr = "Pirates ";
+					if(missions[i].type == MissionType::mining) namestr = "Mining ";
+					if(missions[i].type == MissionType::infestation) namestr = "Infestation ";
+					if(missions[i].type == MissionType::retrival) namestr = "Retrival ";
+
+					namestr += "Size: ";
+					namestr += std::to_string(missions[i].size);
+					namestr += "  Difficulty: ";
+					namestr += std::to_string(missions[i].dificulty);
+					namestr += "  Reward: ";
+					namestr += std::to_string(missions[i].materialReward);
+
+
+					UI_DrawText(namestr.c_str(),Corner - glm::vec2(0.0f,5.0f),0.35f);
+					UI_DrawCube(Corner + glm::vec2(250*0.5f,0.0f), glm::vec2(250.0f,20.0f) * 0.5f, 0.0f, glm::vec4(0.07f));
+					Corner.y += UI_button(&b, "", Corner,{250,20},0.35f,glm::vec4(0.0f),glm::vec4(0.5f),glm::vec4(0.0f)).y * -1.0f - 0;
+
+					if(b)
+					{
+						CurrnetMission = missions[i];
+						CurrnetMission.Start();
+
+					}
 				}
 			}
 
@@ -1850,7 +1890,7 @@ void Ready()
 
 	//SpawnPlayer();
 
-
+	substeps = 20;
 	listenerPos.z = 2.0f;
 
 	
@@ -1862,30 +1902,39 @@ void Ready()
 	ForeWindowID = CreateWindow();
 	BackgroundWindowID = CreateWindow();
 	MenuWindowID = CreateWindow();
+	TerminalWindowID= CreateWindow();
 
-	Window* sw = GetWindow(ForeWindowID);
 	Window* bw = GetWindow(BackgroundWindowID);
+	Window* sw = GetWindow(ForeWindowID);
+	Window* cw = GetWindow(TerminalWindowID);
 	Window* mw = GetWindow(MenuWindowID);
 
 
 	sw->AutoActive = false;
 	bw->AutoActive = false;
+	cw->AutoActive = false;
 	mw->AutoActive = false;
 
 	sw->hdr = true;
 
 	sw->Init(GetWindow(SceneWindowID)->ViewportSize);
 	bw->Init(GetWindow(SceneWindowID)->ViewportSize);
+	cw->Init(GetWindow(SceneWindowID)->ViewportSize);
 	mw->Init(GetWindow(SceneWindowID)->ViewportSize);
 
 
     sw->backgroundColor = { 0.0f,0.0f,0.0f,0.0f };
     bw->backgroundColor = { 0.0f,0.0f,0.0f,0.0f };
+	cw->backgroundColor = { 0.0f,0.0f,0.0f,0.0f };
 	mw->backgroundColor = { 0.0f,0.0f,0.0f,0.0f };
 	EditorColor = {0.0f,0.0f,0.0f,1.0f};
 	sw->w_AmbientLight = 0.4f;
 	bw->w_AmbientLight = 0.1f;
+	cw->w_AmbientLight = 1.4f;
 	sw->w_DirectionalLight = 2.0f;
+
+	
+
 
 	for (int i = 0; i < StarsAmount; i++)
 	{
@@ -1919,6 +1968,7 @@ void Ready()
 	//150 sources used
 	MissionSelectMenu.GenerateNewMissions();
 	SetupInstances();
+	VSync = 1;
 }
 void SubSteppedProcess(float dt, int SubStep)
 {
@@ -1954,6 +2004,7 @@ void Process(float dt)
 
 	Window* sw = GetWindow(ForeWindowID);
 	Window* bw = GetWindow(BackgroundWindowID);
+	Window* cw = GetWindow(TerminalWindowID);
 	Window* mw = GetWindow(MenuWindowID);
 
 	sw->active = true;
@@ -2218,13 +2269,34 @@ void Process(float dt)
 	
 	bw->End();
 
+	cw->Use();
+	
+	
+	float ConsoleYStep = 15.0f;
+	float ConsoleTextSize = 0.4f;
+	glm::vec4 consoleTextColor = glm::vec4(1.0f,1.0f,1.0f,1.0f);
+
+	float posy = HEIGHT * 0.5f - ConsoleYStep * 4.0f;
+	float posx = WIDTH * -0.5f + ConsoleYStep * 2.0f;
+	for(int i=0;i<ConsoleTexts.size();i++)
+	{
+		DrawText(ConsoleTexts[i],{posx,posy},ConsoleTextSize,consoleTextColor);
+		posy-=ConsoleYStep;
+	}
+	
+
+	cw->End();
+	
+
     UseWindow(SceneWindowID);
 	AmbientLight = 1.0f;
     bw->Draw(0);
 
     sw->Draw(1);
 
-    mw->Draw(2);
+    cw->Draw(2);
+
+    mw->Draw(3);
 	
 
 }

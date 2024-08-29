@@ -470,7 +470,6 @@ public:
 	UI_DataPack GetUIDataCO_Ball();
 	virtual std::vector<UI_DataPack> GetUIData() override;
 	
-	virtual void Draw() override;
 	virtual void DebugDraw() override;
 	virtual bool SelectionCheck(glm::vec2 point) override;
 };

@@ -145,7 +145,8 @@ glm::vec2 Corner = { 0.0f,0.0f };
 glm::ivec3 tmpIndex = glm::ivec3(-1);
 int indexCreationState = 0;
 float Simulation_speed = 1.0f;
-
+bool grid = true;
+float grid_step = 15.0f;
 
 int NewObjectId = 0;
 int NewAssetId = 1;
@@ -1506,7 +1507,7 @@ void ProcessScene(Scene* scn,bool mt,bool mainScene)
 				if(!_ScenethreadsStates[thr].load())
 					wait = true;
 			}
-			if(glfwGetTime() - startWaittime  > delta*10.0f) // something happend with threads
+			if(glfwGetTime() - startWaittime  > delta*3.0f) // something happend with threads
 			{
 				std::cout<<"something happend with threads\n";
 				for(int thr = 0;thr<threadcount;thr++)
@@ -1554,7 +1555,7 @@ void ProcessScene(Scene* scn,bool mt,bool mainScene)
 					if(!_ScenethreadsStates[thr].load())
 						wait = true;
 				}
-				if(glfwGetTime() - startWaittime > delta*10.0f) // something happend with threads
+				if(glfwGetTime() - startWaittime > delta*3.0f) // something happend with threads
 				{
 					std::cout<<"\nsomething happend with threads";
 					for(int thr = 0;thr<threadcount;thr++)
@@ -2212,8 +2213,15 @@ void On_Update()
 			AqueredCameraScale = { 1.0f,1.0f };
 		}
 
+		
+		b = false;
+		Corner.y += UI_button(&b, "VSync", Corner).y * -1.0f - step;
 
-
+		if(b) 
+		{
+			VSync = !VSync;
+			glfwSwapInterval(VSync);
+		}
 		Corner.y += UI_DrawText("Save file:", Corner, 0.35f).y * -1.0f - step;
 		Corner.y += UI_TextBox(&MapFileName, Corner,128).y * -1.0f - step;
 		b = false;
@@ -2236,7 +2244,12 @@ void On_Update()
 		}
 
 		
-		
+		Corner.y += UI_CheckBox(&grid, "Grid", Corner).y * -1.0f - step;
+		if(grid)
+		{
+			
+			Corner.y += UI_Drag(&grid_step, "Gtid step", Corner , 1.0f).y * -1.0f - step;
+		}
 
 		
 
@@ -2442,7 +2455,22 @@ void On_Update()
 		if(GrabbedNode != NULL && grabbed && PrevMousePosition != MousePosition && keys[GLFW_KEY_LEFT_CONTROL])
 		{
 			GrabbedNode->position -=PrevDifference;
+			
 			PrevDifference = (MousePosition - PrevMousePosition);
+
+			if(grid)
+			{
+				glm::vec2 steppedpos = GrabbedNode->position / grid_step;
+				steppedpos.x = roundf(steppedpos.x);
+				steppedpos.y = roundf(steppedpos.y);
+				GrabbedNode->position = steppedpos * grid_step;
+
+				glm::vec2 steppedPrevDifference = PrevDifference/ grid_step;
+				steppedPrevDifference.x = roundf(steppedPrevDifference.x);
+				steppedPrevDifference.y = roundf(steppedPrevDifference.y);
+				PrevDifference = steppedPrevDifference * grid_step;
+			}
+
 			GrabbedNode->position +=PrevDifference;
 
 		}

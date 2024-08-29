@@ -135,9 +135,9 @@ public:
 	glm::vec4 ColdColor = glm::vec4(0.04f,2.0f,10.0f,0.0f);
 	glm::vec4 color = glm::vec4(1.0f);
 
-	glm::vec2 targetrotpoint;
+	glm::vec2 targetrotpoint = {0.0f,0.0f};
 	glm::vec2 dir = {0.0f,1.0f};
-	glm::vec2 mid;
+	glm::vec2 mid = {0.0f,0.0f};
 
 
 	CostMaterial Cost;
@@ -1332,7 +1332,7 @@ public:
 	float BulletHeat = 0.5f;
 
 
-	glm::vec2 prevtrgpos;
+	glm::vec2 prevtrgpos = {0.0f,0.0f};
 	float speed = 500.0f;
 
 
@@ -1395,7 +1395,6 @@ public:
 		deactivated = true;
 
 		diaglength = sqrt(body[0].r * 2.0f * body[0].r * 2.0f + body[0].r * 2.0f * body[0].r * 2.0f);
-
 		Cost.Matter = 75;
 
 		shutdownTemp = 15.0f;
@@ -1477,25 +1476,38 @@ public:
 		if (body[1].temperature <= 0.25f)
 			overheated = false;
 		mid = (body[0].position + body[2].position + body[3].position + body[4].position) * 0.25f;
+		
+		// causes an {-nan,-nan} 
 		if (!debris && !deactivated && !overheated)
 		{
 			targetrotpoint = vDataConnections[0].data;
 			glm::vec2 dif = body[1].position - mid;
-			glm::vec2 trgvel = (targetrotpoint - prevtrgpos) *(1.0f/dt);
+			if(dt<0.001f) // 10k fps probably unreachable with enough stability, shouldnt cause speed issues 
+				 dt = 0.001f;
+			glm::vec2 trgvel = (targetrotpoint - prevtrgpos) * (1.0f/dt); // probably 
 			glm::vec2 trgvec = targetrotpoint - mid;
-			glm::vec2 rotvec = Normalize(glm::vec2(-dif.y, dif.x));
+			glm::vec2 rotvec = Normalize(glm::vec2(-dif.y, dif.x)); // probably
 
+			
 			float D = length(trgvec);
+			if(D<1.0f)
+				D = 1.0f;
+			if(bulletSpeed<1.0f)
+				bulletSpeed = 1.0f;
 			float T = D / bulletSpeed;
 			float lastT = 0;
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 6; i++)
 			{
 				targetrotpoint += trgvel * (T- lastT) ;
 				lastT = T;
 				trgvec = targetrotpoint - mid;
-				D = length(trgvec);
+				D = length(trgvec); 
+				if(D<1.0f)
+					D = 1.0f;
 				T = D / bulletSpeed;
 			}
+			if(D<1.0f)
+				D = 1.0f;
 			trgvec = trgvec / D;
 			body[1].velocity -= dt * RotationalFriction * DOT(body[1].velocity - body[0].velocity, rotvec) * rotvec;
 
@@ -1503,6 +1515,8 @@ public:
 			prevtrgpos = vDataConnections[0].data;
 
 		}
+		// end of cause of {-nan,-nan} 
+
 		BarrelRotation += RotationSpeed * dt;
 		RotationSpeed -= 60.0f*dt;
 		if (RotationSpeed <= 0.0f)
@@ -1511,8 +1525,13 @@ public:
 			BarrelRotation = 0.0f;
 		glm::vec2 posdif = body[1].position - mid;
 
-		dir = Normalize(posdif);
+		float l = length(posdif); 
 
+		if(l>0.0001f)
+			dir = posdif/l;
+		else 
+			dir = {0.0,1.0f};
+	
 		glm::vec2 Difference = posdif - dir * body[0].r * 3.0f;
 
 
@@ -1563,7 +1582,7 @@ public:
 		if (!debris && !deactivated && !overheated)
 		{
 			if (shot)
-				playsound(MiniGunSound,body[1].position,1.0f,freq + (((rand() % 100) * 0.01f) - 0.5f) * 0.3f + 0.02f*body[1].temperature,body[0].velocity);
+				playsound(MiniGunSound,body[1].position,1.0f,freq + 0.25f + (((rand() % 100) * 0.01f) - 0.5f) * 0.5f + 0.02f*body[1].temperature,body[0].velocity);
 
 			t -= dt;
 			if (shot && t <= 0)
@@ -2671,6 +2690,9 @@ public:
 	float ForceToThrustDirection = 0.0f;
 	float maxVelocity = 0.0f;
 	glm::vec2 trgPos = { 0.0f,0.0f };
+	glm::vec2 Playerpos = { 0.0f,0.0f };
+	// 0 stay, 1 dirrect attack
+	int AIState = 0;
 	bool autocontrol = false;
 
 	std::vector<Connection> Connections;
@@ -2959,8 +2981,13 @@ public:
 			float friction = 0.0f;
 			if (autocontrol)
 			{
-				
-
+				if(Parts.size()<5)
+					Health-=0.2f;
+				if(AIState == 1)
+				{
+					GunsTargetrotPoint = Playerpos;
+					trgPos = Playerpos + Normalize(mid - Playerpos) * (maxR + 30.0f);
+				}
 				glm::vec2 dir = ((trgPos - (body[0].position + body[1].position) * 0.5f) / distance);
 				if (distance < 2)
 				{
@@ -3000,17 +3027,21 @@ public:
 
 				for (int i = 0; i < bDCsize; i++)
 				{
-					if (bDataConnections[i].name == "LMB") bDataConnections[i].data = distance<200;
-					if (bDataConnections[i].name == "RMB") bDataConnections[i].data = distance < 200;
-					if (bDataConnections[i].name == "MMB") bDataConnections[i].data = distance < 200;
-					if (bDataConnections[i].name == "Shift") bDataConnections[i].data = distance > 200; // MB implement a dodge for bots
-					if (bDataConnections[i].name == "Space") bDataConnections[i].data = false; 
-					if (bDataConnections[i].name == "W") bDataConnections[i].data = ThrustDirection.y > 0.0f;
-					if (bDataConnections[i].name == "A") bDataConnections[i].data = ThrustDirection.x < 0.0f;
-					if (bDataConnections[i].name == "S") bDataConnections[i].data = ThrustDirection.y < 0.0f;
-					if (bDataConnections[i].name == "D") bDataConnections[i].data = ThrustDirection.x > 0.0f;
+					if(AIState == 1)
+					{
+						if (bDataConnections[i].name == "LMB") bDataConnections[i].data = distance<200;
+						if (bDataConnections[i].name == "RMB") bDataConnections[i].data = distance < 200;
+						if (bDataConnections[i].name == "MMB") bDataConnections[i].data = distance < 200;
+						if (bDataConnections[i].name == "Shift") bDataConnections[i].data = distance > 200; // MB implement a dodge for bots
+						if (bDataConnections[i].name == "Space") bDataConnections[i].data = false; 
+						if (bDataConnections[i].name == "W") bDataConnections[i].data = ThrustDirection.y > 0.0f;
+						if (bDataConnections[i].name == "A") bDataConnections[i].data = ThrustDirection.x < 0.0f;
+						if (bDataConnections[i].name == "S") bDataConnections[i].data = ThrustDirection.y < 0.0f;
+						if (bDataConnections[i].name == "D") bDataConnections[i].data = ThrustDirection.x > 0.0f;
+					}
 				}
-				if (vDataConnections[0].name == "MousePosition") vDataConnections[0].data = GunsTargetrotPoint;
+				if(AIState == 1)
+					if (vDataConnections[0].name == "MousePosition") vDataConnections[0].data = GunsTargetrotPoint;
 
 			}
 			ForceToThrustDirection = 0.0f;

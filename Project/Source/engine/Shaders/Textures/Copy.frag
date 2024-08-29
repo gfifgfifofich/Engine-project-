@@ -26,7 +26,7 @@ void main()
     }
     else if (mode == 4)//(a,a,a,1.0f)  
     {
-	    FragColor =  vec4(t1.a,t1.a,t1.a,1.0f);
+	    FragColor =  vec4(t1.r,t1.g,t1.b,1.0f);
     }
     else if (mode == 5)//(-a * 0.1f,a * 0.1f,1.0f,1.0f) // better heightmap look   
     {

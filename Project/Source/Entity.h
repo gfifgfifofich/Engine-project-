@@ -858,8 +858,7 @@ void ProcessEntities(float dt,int s)
 
 			if (Entities[i]->autocontrol && i != 0)
 			{
-				Entities[i]->GunsTargetrotPoint = Entities[0]->mid;
-				Entities[i]->trgPos = Entities[0]->mid + Normalize(Entities[i]->mid - Entities[0]->mid) * (Entities[i]->maxR + 30.0f);
+				Entities[i]->Playerpos = Entities[0]->mid;
 
 			}
 		}

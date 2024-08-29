@@ -861,8 +861,8 @@ void CO_Ball::MTPreProcess()
 {
 	ObjectUpdateMaterial();
 	b.position = position;
-	b.bounciness = 0.0f;
-	b.roughness = 0.0f;
+	b.roughness = roughness;
+	b.bounciness = bounciness;
 }
 UI_DataPack CO_Ball::GetUIDataCO_Ball()
 {
@@ -880,21 +880,6 @@ std::vector<UI_DataPack> CO_Ball::GetUIData()
 	data.push_back(GetUIDataCollisionObject());
 	data.push_back(GetUIDataCO_Ball());
 	return data;
-};
-void CO_Ball::Draw() 
-{
-	Material m;
-	if(Mater !=NULL)
-	{
-		m = Mater->mater;
-	}
-	m.flipX = invertX;
-	m.flipY = invertY;
-	if(m.Texture == NULL)
-		m.Texture = FlatColorCircleTexture;
-	if(m.NormalMap == NULL)
-		m.NormalMap = NULL;
-	DrawQuadWithMaterial(position,Scale,m,rotation,Color,Z_Index,Additive);
 };
 void CO_Ball::DebugDraw()
 {
