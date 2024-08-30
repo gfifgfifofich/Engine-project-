@@ -1,0 +1,7 @@
+Project/dependencies/** linguist-vendored
+Project/Source/engine/Components/Include/AL/** linguist-vendored
+Project/build/** linguist-vendored
+* linguist-vendored
+*.h linguist-vendored=false
+*.cpp linguist-vendored=false
+*.h linguist-language=cpp
