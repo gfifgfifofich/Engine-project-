@@ -1,0 +1,135 @@
+CentralPart_0000000000
+{
+	Class 10010
+	ID 0
+	Name CentralPart
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+MiniGun_0000000009
+{
+	Class 10007
+	ID 0
+	Name MiniGun
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+Radiator_0000000007
+{
+	Class 10004
+	ID 0
+	Name Radiator
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+Radiator_0000000010
+{
+	Class 10004
+	ID 0
+	Name Radiator
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+Radiator_0000000011
+{
+	Class 10004
+	ID 0
+	Name Radiator
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000001
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000002
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000003
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000004
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000005
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000006
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000008
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000012
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000013
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000014
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
