@@ -2699,7 +2699,7 @@ public:
 		type = partid + NodeType::LASTNODE;
 		Name = "CentralPart";
 		Health = PartsData.GetPropertyAsFloat("CentralPart", "Health");
-		CreateBody(2,9,0,1);
+		CreateBody(2,9,0,3);
 		BodyIdsWithCollision.push_back(0);
 		BodyIdsWithCollision.push_back(1);
 		body[0].position = position + Normalize({0.0f,1.0f}) * PARTSIZE;
@@ -2743,6 +2743,8 @@ public:
 		bDataConnections[7].name = "S";
 		bDataConnections[8].name = "D";
 		vDataConnections[0].name = "MousePosition";
+		vDataConnections[1].name = "Forward";
+		vDataConnections[2].name = "Back";
 
 		bDataConnections[0].source = true;
 		bDataConnections[1].source = true;
@@ -2755,6 +2757,8 @@ public:
 		bDataConnections[8].source = true;
 
 		vDataConnections[0].source = true;
+		vDataConnections[1].source = true;
+		vDataConnections[2].source = true;
 	}
 	void MTProcess (float dt) override
 	{
@@ -2803,6 +2807,8 @@ public:
 
 			}
 		}
+		vDataConnections[1].data = -dir;
+		vDataConnections[2].data = dir;
 		
 		Engines.clear();
 		Balls.clear();
@@ -3187,16 +3193,18 @@ public:
 		glm::vec2 closestmid = {0.0f,0.0f};
 		float lastsqrlength = -1.0f;
 		bool first = true;
-		for(auto cp: Entities)
+		for(int i =1; i<Entities.size();i++)
 		{
+
 			if(first)
 			{
-				closestmid = cp->mid;
+				closestmid = Entities[i]->mid;
 				lastsqrlength = sqrlength(mid - closestmid);
+				first = false;
 			}
-			else if(lastsqrlength > sqrlength(mid - cp->mid))
+			else if(lastsqrlength > sqrlength(mid - Entities[i]->mid))
 			{
-				closestmid = cp->mid;
+				closestmid = Entities[i]->mid;
 				lastsqrlength = sqrlength(mid - closestmid);				
 			}
 
@@ -3359,7 +3367,8 @@ public:
 			else
 				glidedir= vDataConnections[0].data;
 		}
-		if (!debris  && vDataConnections[0].connected && !deactivated && sqrlength(avgvel) > 10.0f*10.0f && sqrlength(glidedir)>0.0f)
+		if (!debris  && vDataConnections[0].connected && !deactivated && sqrlength(avgvel) > 10.0f*10.0f && sqrlength(glidedir)>0.0f
+		)
 		{
 			body[0].Force = Force;
 			body[1].Force = Force;
@@ -3367,10 +3376,9 @@ public:
 			body[3].Force = Force;
 
 			glm::vec2 veldir = Normalize (avgvel);
-			glm::vec2 norm = {glidedir.y,-glidedir.x};
-			glm::vec2 trustvec = DOT(norm, veldir) * norm;
-			if(sqrlength(avgvel) > 50.0f*50.0f)
-				trustvec -= veldir * 0.2f;
+			glm::vec2 norm = {-veldir.y,veldir.x};
+			glm::vec2 trustvec = DOT(norm, -glidedir) * norm;
+			
 			float forcemult = 1.0f;
 			if ((bDataConnections[0].connected && bDataConnections[0].data))
 			{
@@ -3383,9 +3391,9 @@ public:
 
 			for(int i=0;i<4;i++)
 			{
-				glm::vec2 dir = Normalize (mid - body[i].position);
+				glm::vec2 dir = Normalize (body[i].position - mid);
 				
-				throtles[i] =  DOT(dir,trustvec);
+				throtles[i] =  DOT(dir,trustvec) * 2.0f;
 				if(throtles[i] <0.0f)
 					throtles[i] = 0.0f;
 				if ((bDataConnections[0].connected && bDataConnections[0].data))
@@ -3501,7 +3509,7 @@ public:
 						Particleforce *= 0.65f;
 					}
 					glm::vec2 dir = body[i].position - mid;
-					for (int i = 0; i < 5; i++)
+					for (int a = 0; a < 5; a++)
 						EngineSmoke.Spawn(body[i].position,
 							dir * 5000.0f * Particleforce * 0.025f, 1,
 							EngineSmoke.lifetime * abs(Particleforce) * (rand() % 1000 * 0.0005f + 0.5f));

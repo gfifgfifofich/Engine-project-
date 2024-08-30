@@ -14,7 +14,7 @@ Glider
 {
 	Health 15 
 	HeatPerSecond 3 
-	Power 1000 
+	Power 500 
 }
 Gun
 {
