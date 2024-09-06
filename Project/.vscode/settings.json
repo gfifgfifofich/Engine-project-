@@ -80,6 +80,8 @@
         "variant": "cpp",
         "latch": "cpp",
         "barrier": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "shared_mutex": "cpp",
+        "cfenv": "cpp"
     }
 }

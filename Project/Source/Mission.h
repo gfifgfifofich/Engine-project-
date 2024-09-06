@@ -21,6 +21,7 @@ class Mission
 	bool exiting = false;
 	std::vector<glm::vec4> TakenAreas;
 	std::vector<std::vector<CentralPart*>> Bots;
+	std::vector<std::vector<Node*>> NodeHandles;
 
 	//Shit for missions
 	glm::vec2 planetpos = {0.0f,0.0f};
@@ -168,6 +169,51 @@ class Mission
 				}
 
 			}break;
+			case 2:
+			{
+				AmbientLight=  0.0f;
+				Background.LoadFrom("Scenes/SunDestroyed.sav");
+				ChangeMap("Scenes/pstation.sav",false);
+				SpawnPlayer(glm::vec2(100.0f,-300.0f));
+				timers.push_back(5.0f);
+				timers.push_back(5.0f);
+				timers.push_back(5.0f);
+				flags["Ending"] = false;
+				flags["Spawned"] = false;
+				AqueredCameraScale = {2.0f,2.0f};
+				std::vector<CentralPart*> arrr;
+				Bots.push_back(arrr);
+				
+				std::vector<Node*> Cooolernv;
+				NodeHandles.push_back(Cooolernv);
+				std::vector<Node*> nv;
+				NodeHandles.push_back(nv);
+				for(int i=0;i<GameScene->Nodes.size();i++)
+				{
+					if(GameScene->Nodes[i]->id == 1 && GameScene->Nodes[i]->type == NodeType::NODE)
+					{
+						Bots[0].push_back(SpawnAiShip(GameScene->Nodes[i]->position,GameScene->Nodes[i]->Name));
+
+					}
+					if(GameScene->Nodes[i]->Name == "Core")
+					{
+						NodeHandles[1].push_back(GameScene->Nodes[i]);
+					}
+					if(GameScene->Nodes[i]->Name == "Cooler")
+					{
+						NodeHandles[0].push_back(GameScene->Nodes[i]);
+					}
+				}
+				//Bots[0].push_back(SpawnAiShip({-150.0f,400.0f},"drone"));
+				//Bots[0].push_back(SpawnAiShip({-150.0f,380.0f},"drone"));
+				//Bots[0].push_back(SpawnAiShip({-170.0f,400.0f},"drone"));
+				//
+				//for(auto e : Bots[0])
+				//{
+				//	e->AIState = 0;
+				//}
+
+			}break;
 			default:
 				break;
 			}
@@ -197,6 +243,21 @@ class Mission
 			if(timers[i]<0.0f)
 				timers[i]=0.0f;
 			
+		}
+
+		for(int i=0;i<NodeHandles.size();i++)
+		{
+			int a =0;
+			while(a < NodeHandles[i].size())
+			{
+				if(NodeHandles[i][a] == NULL || NodeHandles[i][a]->Delete)
+				{
+					NodeHandles[i][a] = NodeHandles[i][NodeHandles[i].size()-1];
+					NodeHandles[i].pop_back();
+				}
+				else
+					a++;
+			}
 		}
 		if(!story_mission)
 			switch (type)
@@ -729,6 +790,25 @@ class Mission
 						}
 					}
 				}
+			}break;
+			case 2:
+			{
+				DestructableStaticBall* Core = NULL;
+				if(NodeHandles.size()>=2 && NodeHandles[1].size()>0)
+					Core = (DestructableStaticBall*)NodeHandles[1][0];		
+				if(Core!=NULL)
+				{
+					Core->passiveCooling = 10.0f;
+					if(NodeHandles.size()>0 && NodeHandles[0].size()>0)
+					{
+						for(int a=0;a<NodeHandles[0].size();a++)
+						{
+							Core->passiveCooling += 10.0f;
+						}
+					}
+				}
+
+
 			}break;
 			default:
 				break;

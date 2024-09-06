@@ -12,7 +12,7 @@ public:
 	float dyingtime = 1.5f;
 	float lifetime = 3.0f;
 	bool wasdead = false;
-
+	bool forcedeath=  false;
 	ball ball;
 	float t = 0.0f;
 	void Process(float dt)
@@ -20,7 +20,7 @@ public:
 		lifetime -= dt;
 		if (lifetime <= 0.0f)
 			Dead();
-		if (body.dead && !wasdead)
+		if (body.dead || forcedeath)
 			Dead();
 		if (!body.dead)
 		{
@@ -40,12 +40,21 @@ public:
 		for (int a = 0; a < GameScene->Collision_cubes.size(); a++)
 			if (!body.dead)
 				if (GameScene->Collision_cubes[a]->id==-1 && BtCCollisionCheck(body.body, *GameScene->Collision_cubes[a]))
-					Dead();
-
+					{
+						body.infinite =false;
+						body.singleHit =true;
+						body.timeLeft = 0.0f;
+						forcedeath = true;
+					}
 		for (int a = 0; a < GameScene->Collision_balls.size(); a++)
 			if (!body.dead)
 				if (GameScene->Collision_balls[a]->id == -1 && BtBCollisionCheck(body.body, *GameScene->Collision_balls[a]))
-					Dead();
+					{
+						body.infinite =false;
+						body.singleHit =true;
+						body.timeLeft = 0.0f;
+						forcedeath = true;
+					}
 
 	}
 

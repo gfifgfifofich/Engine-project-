@@ -13,7 +13,7 @@ CentralPart
 Glider
 {
 	Health 15 
-	HeatPerSecond 3 
+	HeatPerSecond 5.5 
 	Power 500 
 }
 Gun

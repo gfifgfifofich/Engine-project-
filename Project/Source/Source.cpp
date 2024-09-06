@@ -489,6 +489,8 @@ float CentralLightHeight = 0.001f;
 ParticleEmiter Sparks;
 unsigned int noize = NULL;
 Scene Background;
+
+void SpawnExplodion(glm::vec2 position, float r, float dmg, float lifetime, float recoil = 40.0f);
 #include "DamageSphere.h"
 #include "Explodion.h"
 
@@ -1249,8 +1251,6 @@ void ProcessPlayerControls()
 		DataconnectionData[0] = 0;
 
 		Entities[0]->GunsTargetrotPoint = MousePosition;
-		if (in_UI <= 0)
-			Entities[0]->FireGuns = buttons[GLFW_MOUSE_BUTTON_1];
 		BackgroundColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 		/*if (buttons[GLFW_MOUSE_BUTTON_2])
 		{
@@ -2369,7 +2369,11 @@ void SceneEnd()
 	CurrnetMission.TakenAreas.clear();
 	CurrnetMission.TakenAreas.push_back({0,0,50,50});
 	CurrnetMission.AIShips.clear();
-
+	BuildingMode = false;
+	vLogicMode = false;
+	bLogicMode = false;
+	fLogicMode = false;
+	MainMenu = true;
 }
 void Rescale(int newWindth,int newHeight)
 {

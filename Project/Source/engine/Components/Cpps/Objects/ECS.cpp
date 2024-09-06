@@ -8,6 +8,7 @@
 #include "../../Include/Collisions.h"
 #include "../../Include/sounds.h"
 #include "../../Include/Objects/ECS.h"
+#include "../../Include/SaveToFile.h";
 #include "../../Include/Objects/Scene.h"
 
 
@@ -864,6 +865,10 @@ void CO_Ball::MTPreProcess()
 	b.roughness = roughness;
 	b.bounciness = bounciness;
 }
+void CO_Ball::PreProcess()
+{
+	SceneInProcess->Collision_balls.push_back(&b);	
+}
 UI_DataPack CO_Ball::GetUIDataCO_Ball()
 {
 	UI_DataPack uidp;
@@ -899,6 +904,10 @@ void CO_Cube::MTPreProcess()
 {
 	ObjectUpdateMaterial();
 	c.position = position;
+}
+void CO_Cube::PreProcess()
+{
+	SceneInProcess->Collision_cubes.push_back(&c);	
 }
 UI_DataPack CO_Cube::GetUIDataCO_Cube()
 {

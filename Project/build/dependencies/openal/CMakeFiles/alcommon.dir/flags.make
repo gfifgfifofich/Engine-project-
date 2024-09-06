@@ -6,5 +6,5 @@ CXX_DEFINES = -DRESTRICT=__restrict
 
 CXX_INCLUDES = -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/src -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/openal -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/openal/include -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/openal/common
 
-CXX_FLAGS = -Wall -Wextra -O1 -std=gnu++17 -fPIC -fvisibility=hidden -Winline -Wunused -Wall -Wextra -Wshadow -Wconversion -Wcast-align -Wpedantic -Wold-style-cast -Wnon-virtual-dtor -Woverloaded-virtual -Wno-c++20-attribute-extensions -fno-math-errno -pthread
+CXX_FLAGS = -Wno-everything -O3 -std=gnu++17 -fPIC -fvisibility=hidden -Winline -Wunused -Wall -Wextra -Wshadow -Wconversion -Wcast-align -Wpedantic -Wold-style-cast -Wnon-virtual-dtor -Woverloaded-virtual -Wno-c++20-attribute-extensions -fno-math-errno -pthread
 

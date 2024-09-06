@@ -25,7 +25,7 @@ Explodion NewExplodion(glm::vec2 position, float r, float dmg, float lifetime,fl
 	e.DS.recoil = recoil;
 	e.DS.Heat = r *0.005f;
 	e.DS.singleHit = false;
-	e.DS.timeLeft = 0.01f;
+	e.DS.timeLeft = 0.001f;
 
 	e.timeLeft = lifetime;
 	e.lifet = lifetime;
@@ -34,7 +34,7 @@ Explodion NewExplodion(glm::vec2 position, float r, float dmg, float lifetime,fl
 	DamageSpheresArray.push_back(e.DS);
 	return e;
 }
-void SpawnExplodion(glm::vec2 position, float r, float dmg, float lifetime, float recoil = 40.0f)
+void SpawnExplodion(glm::vec2 position, float r, float dmg, float lifetime, float recoil)
 {
 	ExplodionArray.push_back(NewExplodion(position, r, dmg, lifetime, recoil));
 }

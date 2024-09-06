@@ -40,8 +40,12 @@ void Window::RecalculateSize()
 	w_ScreenDivisorX = 1.0f / w_ScreenDivisorX;
 	w_ScreenDivisorY = 1.0f / w_ScreenDivisorY;
 	w_ScaleMultiplyer = 1.0f / ViewportSize.y * 2.0f;
-
+	
+	if(framebuffer !=NULL)
+		glDeleteFramebuffers(1,&framebuffer);
 	glGenFramebuffers(1, &framebuffer);
+	if(Texture !=NULL)
+		glDeleteTextures(1,&Texture);
 	glGenTextures(1, &Texture);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, this->framebuffer);
@@ -57,8 +61,12 @@ void Window::RecalculateSize()
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, Texture, 0);
 
+	if(NormalMapFBO !=NULL)
+		glDeleteFramebuffers(1,&NormalMapFBO);
 	glGenFramebuffers(1, &NormalMapFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, NormalMapFBO);
+	if(NormalMapColorBuffer !=NULL)
+		glDeleteTextures(1,&NormalMapColorBuffer);
 	glGenTextures(1, &NormalMapColorBuffer);
 	glBindTexture(GL_TEXTURE_2D, NormalMapColorBuffer);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, ViewportSize.x, ViewportSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
@@ -70,6 +78,10 @@ void Window::RecalculateSize()
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, NormalMapColorBuffer, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	if(LightColorFBO !=NULL)
+		glDeleteFramebuffers(1,&LightColorFBO);
+	if(LightColorBuffer !=NULL)
+		glDeleteTextures(1,&LightColorBuffer);
 	glGenFramebuffers(1, &LightColorFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, LightColorFBO);
 	glGenTextures(1, &LightColorBuffer);
@@ -1365,6 +1377,8 @@ void LoadTexture(const char* filename, unsigned int* texture, int chanelsAmount)
 		glDeleteTextures(1, texture);
 		*texture = NULL;
 	}
+	if(strlen(filename)<=0)
+		return;
 	glGenTextures(1, texture);
 	glBindTexture(GL_TEXTURE_2D, *texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

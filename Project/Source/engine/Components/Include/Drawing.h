@@ -5,7 +5,6 @@
 #include "Objects/Quad.h"
 #include "Objects/Polygon.h"
 
-#include <map>
 
 
 
@@ -125,9 +124,9 @@ class Texture
 {
 public:
 	int id = 0;//meaningless number
-	std::string FileName;
+	std::string FileName = "";
 	int Type = 0;// 0-Texture, 1-ROUNDNOIZE, 2-SQUERENOIZE, 3-SMOOTH_EDGENOIZE;
-	unsigned int texture;
+	unsigned int texture = NULL;
 
 	float Noize_Frequency = 10;
 	int Noize_Layers = 3;

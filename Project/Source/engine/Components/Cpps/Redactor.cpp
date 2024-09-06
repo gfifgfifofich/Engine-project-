@@ -49,7 +49,6 @@ inline std::thread* _Scenethreads;
 inline std::condition_variable* _SceneConVars;
 inline std::mutex* _SceneMutexes;
 static inline std::atomic<bool>* _ScenethreadsStates;// 1 waiting | 0 working | -1 done/broken
-   
 
 void _Scenethead_Process(int thr);
 void _StartScenethread(int t);
@@ -137,7 +136,6 @@ unsigned int HeightMapScreen = 0;
 Texture tex;
 
 std::string TexturePath;
-
 
 glm::vec2 PrevDifference = { 0.0f,0.0f };
 glm::vec2 Corner = { 0.0f,0.0f };
@@ -1464,15 +1462,21 @@ bool grabbedWindow[3];// bools for window resizing
 bool grabbedAnyWindow = false;// bools for window resizing
 glm::vec2 GrabStartMousePos = { 0.0f,0.0f };
 bool initialsizecalc = true;
-std::string sTest[10];
 
-
+// Undo implementation:
+// any action == +new item in list, clear all steps forward (no redo options)
+// undo == load map 1 step before
+// redo == load map 1 step above if possible
+// on undo/redo, save();load();
+// Normal implementation would be a text comparison like in github, because there is already a DataStorage, which is a txt save. 
+std::vector<DataStorage> UndoLine;
+bool ActionDoneThisFrame = false;
 
 void ProcessScene(Scene* scn,bool mt,bool mainScene)
 {
 	GameScene = scn;
 	scn->dt = delta * Simulation_speed /substeps;
-
+	
 	
 	//listenerVel = { Entities[0]->CP.midvel.x ,Entities[0]->CP.midvel.y ,1.0f };
 	listenerPos.z = 1.0f / (CameraScale.x);
@@ -2024,36 +2028,6 @@ void On_Update()
 	if(SelectedAsset!=NULL || SelectedNode!=NULL)
 		ProcessSelectedNodeUI();
 
-	// if (CurrentTexture != NULL)
-	// 	ShowRedactorWindow(CurrentTexture);
-
-
-	// if (CurrentParticleEmiter != NULL)
-	// 	ShowRedactorWindow(CurrentParticleEmiter);
-
-	// if (SelectedBall != NULL)
-	// 	ShowRedactorWindow(SelectedBall);
-
-	// if (SelectedCube != NULL)
-	// 	ShowRedactorWindow(SelectedCube);
-
-
-	// if (SelectedPoint != NULL)
-	// 	ShowRedactorWindow(SelectedPoint);
-
-	// if (CurrentLightSource != NULL)
-	// 	ShowRedactorWindow(CurrentLightSource);
-
-	// if (CurrentShader != NULL)
-	// 	ShowRedactorWindow(CurrentShader);
-
-	// if (SelectedPolygon != NULL)
-	// 	ShowRedactorWindow(SelectedPolygon);
-
-	// if (SelectedMesh != NULL)
-	// 	ShowRedactorWindow(SelectedMesh);
-
-
 	if (HEIGHT * 0.5f < abs(Corner.y + CameraPosition.y))
 	{
 		if (InspectorWindowScroll > 0.0f)
@@ -2240,6 +2214,7 @@ void On_Update()
 			SelectedNodeID = -1;
 			SelectedAsset =NULL;
 			SelectedAssetID=-1;
+			UndoLine.clear();
 			
 		}
 
@@ -2252,7 +2227,9 @@ void On_Update()
 		}
 
 		
-
+		std::string ulinesizestr = "Undo buffer size: ";
+		ulinesizestr += std::to_string(UndoLine.size());
+		Corner.y += UI_DrawText(ulinesizestr, Corner , 0.35f).y * -1.0f - step;
 		
 		Corner.y += UI_DrawText("EditorColor", Corner , 0.35f).y * -1.0f - step;
 		float xsize = 0.0f;
@@ -2278,10 +2255,10 @@ void On_Update()
 	default:
 		break;
 	}
-	
-	iw->backgroundColor = { EditorColor.r * 0.3f,EditorColor.g * 0.3f,EditorColor.b * 0.3f,1.0f };
-	pw->backgroundColor = { EditorColor.r * 0.3f,EditorColor.g * 0.3f,EditorColor.b * 0.3f,1.0f };
-	cw->backgroundColor = { EditorColor.r * 0.3f,EditorColor.g * 0.3f,EditorColor.b * 0.3f,1.0f };
+	float constcolorwhiteaddition = 0.008f;
+	iw->backgroundColor = { EditorColor.r * 0.3f + constcolorwhiteaddition,EditorColor.g * 0.3f + constcolorwhiteaddition,EditorColor.b * 0.3f + constcolorwhiteaddition,1.0f };
+	pw->backgroundColor = { EditorColor.r * 0.3f + constcolorwhiteaddition,EditorColor.g * 0.3f + constcolorwhiteaddition,EditorColor.b * 0.3f + constcolorwhiteaddition,1.0f };
+	cw->backgroundColor = { EditorColor.r * 0.3f + constcolorwhiteaddition,EditorColor.g * 0.3f + constcolorwhiteaddition,EditorColor.b * 0.3f + constcolorwhiteaddition,1.0f };
 	w->backgroundColor = SceneBackgroundColor;
 	GetWindow(0)->backgroundColor = EditorColor;
 	//Nodes of Scene
@@ -2426,6 +2403,8 @@ void On_Update()
 			
 			for (int i = 0; i < Map.Nodes.size(); i++)
 			{
+				if(Map.Nodes[i]->Delete)
+					continue;
 				bool mousetouched = Map.Nodes[i]->SelectionCheck(MousePosition);
 				
 
@@ -2553,7 +2532,14 @@ void On_Update()
 
 
 	GetWindow(SceneWindowID)->End();
-
+	if(JustPressedkey[GLFW_KEY_DELETE] && SelectedNode !=NULL)
+	{
+		SelectedNode->Delete = true;
+		SelectedNode = NULL;
+		SelectedNodeID = -1;
+		GrabbedNode= NULL;
+		GrabbedNodeID = -1;
+	}
 	if(cleanSelection)
 	{
 		SelectedNode = NULL;
@@ -2561,6 +2547,52 @@ void On_Update()
 		SelectedAsset =NULL;
 		SelectedAssetID=-1;
 	}
+	if(keys[GLFW_KEY_LEFT_CONTROL] && bJustPressedkey[GLFW_KEY_Z] && UndoLine.size()>1)
+	{
+		UndoLine.pop_back();
+		Map.LoadFromds(UndoLine.back());
+		SelectedNode = NULL;
+		SelectedNodeID = -1;
+		SelectedAsset =NULL;
+		SelectedAssetID=-1;
+		ActionDoneThisFrame = false;
+	}
+	else
+	{
+		bool actiondone = false;
+		for(int i=0;i<1024;i++)
+		{
+			if(keys[i] && i !=GLFW_KEY_LEFT_CONTROL && i !=GLFW_KEY_Z)
+			{
+				actiondone = true;
+				break;
+			}
+		}
+		if(!actiondone)
+			for(int i=0;i<64;i++)
+			{
+				if(buttons[i])
+				{
+					actiondone = true;
+					break;
+				}
+			}
+
+
+		if(actiondone)
+		{
+			DataStorage tmpds = Map.SaveAsds();
+			if(UndoLine.size()==0)
+				UndoLine.push_back(tmpds);
+			else
+			{
+				if(!buttons[GLFW_MOUSE_BUTTON_1])
+				if(UndoLine.back().ToString() != tmpds.ToString())
+					UndoLine.push_back(tmpds);
+			}
+		}
+	}
+	
 	//for (int i = 0; i < Windows.size(); i++)
 	//	std::cout<<"\ni "<<i<<" ls = "<<Windows[i].w_LightSources.size();
 }

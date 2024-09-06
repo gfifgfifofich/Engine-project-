@@ -201,6 +201,13 @@ CMakeFiles/Engine.dir/Source/engine/Components/Cpps/Objects/Scene.cpp.o: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/stl_vector.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/stl_bvector.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/vector.tcc \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/map \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/stl_tree.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/ext/aligned_buffer.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/node_handle.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/stl_map.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/stl_multimap.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/erase_if.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/glm/../glm/glm.hpp \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/glm/../glm/detail/_fixes.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/cmath \
@@ -542,13 +549,6 @@ CMakeFiles/Engine.dir/Source/engine/Components/Cpps/Objects/Scene.cpp.o: \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/Objects/../Collisions/../Objects/VerletObject.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/Objects/../Collisions/../Objects/NeuralNetwork.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/Objects/../Collisions/BallToBall.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/map \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/stl_tree.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/ext/aligned_buffer.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/node_handle.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/stl_map.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/stl_multimap.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/erase_if.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/Objects.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/Objects/Particle.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/thread \
@@ -781,45 +781,5 @@ CMakeFiles/Engine.dir/Source/engine/Components/Cpps/Objects/Scene.cpp.o: \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/Collisions/QuadToQuad.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/Collisions/RayCastToShapes.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/Objects/ECS.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/Objects/Scene.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/SaveToFile.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Engine.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Helper.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Shader.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Drawing.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Objects.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Collisions.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Physics.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Physics/Rope.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Physics/Spring.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Physics/Strut.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Text.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/glm/../ft2build.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/config/ftheader.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/freetype.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/freetype/include/freetype/config/ftconfig.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/freetype/include/freetype/config/ftoption.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/config/ftstdlib.h \
-  /usr/include/setjmp.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/config/integer-types.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/config/public-macros.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/config/mac-support.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/fttypes.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/ftsystem.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/ftimage.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/fterrors.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/ftmoderr.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include/freetype/fterrdef.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/UI.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Objects/Bodies.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Objects/Ball.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Objects/Quad.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Objects/Graph.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/list \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/stl_list.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/list.tcc \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Objects/Particle.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Objects/ECS.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Objects/Scene.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/Objects/SoftBody.h \
-  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/../Include/SaveToFile.h
+  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Objects/../../Include/Objects/Scene.h

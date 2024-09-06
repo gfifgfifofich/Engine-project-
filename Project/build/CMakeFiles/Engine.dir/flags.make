@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/src -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/imgui -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/glad/include -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/GLFW/include -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/stb_image/include -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/glm/.. -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/build/dependencies/freetype/include -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/freetype/include -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/openal/include -I/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/openal/include/AL
 
-CXX_FLAGS = -Wall -Wextra -O1 -std=gnu++20
+CXX_FLAGS = -Wno-everything -O3 -std=gnu++20
 
