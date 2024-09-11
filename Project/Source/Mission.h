@@ -190,9 +190,14 @@ class Mission
 				NodeHandles.push_back(nv);
 				for(int i=0;i<GameScene->Nodes.size();i++)
 				{
-					if(GameScene->Nodes[i]->id == 1 && GameScene->Nodes[i]->type == NodeType::NODE)
+					if(GameScene->Nodes[i]->type == NodeType::NODE)
 					{
-						Bots[0].push_back(SpawnAiShip(GameScene->Nodes[i]->position,GameScene->Nodes[i]->Name));
+						while (Bots.size()<=GameScene->Nodes[i]->id)
+						{
+							std::vector<CentralPart*> v;
+							Bots.push_back(v);
+						}
+						Bots[GameScene->Nodes[i]->id].push_back(SpawnAiShip(GameScene->Nodes[i]->position,GameScene->Nodes[i]->Name));
 
 					}
 					if(GameScene->Nodes[i]->Name == "Core")
@@ -807,7 +812,27 @@ class Mission
 						}
 					}
 				}
-
+				for(int i=0;i<Bots.size();i++)
+				{
+					// central
+					if(i==1 && Entities[0]->mid.y>200.0f)
+					{
+						for(int a =0; a<Bots[i].size();a++)
+							Bots[i][a]->AIState = 1;
+					}
+					// left
+					if(i==2 && Entities[0]->mid.x<-885.0f && Entities[0]->mid.x>-1365.0f && Entities[0]->mid.y>60.0f && Entities[0]->mid.y<570.0f)
+					{
+						for(int a =0; a<Bots[i].size();a++)
+							Bots[i][a]->AIState = 1;
+					}
+					// right
+					if(i==3 && Entities[0]->mid.x>825.0f && Entities[0]->mid.x<1305.0f && Entities[0]->mid.y>60.0f && Entities[0]->mid.y<570.0f)
+					{
+						for(int a =0; a<Bots[i].size();a++)
+							Bots[i][a]->AIState = 1;
+					}
+				}
 
 			}break;
 			default:

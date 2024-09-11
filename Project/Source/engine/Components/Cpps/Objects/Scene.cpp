@@ -916,6 +916,9 @@ void Scene::Update()
 	ii =0;
 	while(ii<Nodes.size())
 	{
+
+		if(filter && filter_object != Nodes[ii]->type)
+			continue;
 		if(Nodes[ii]->framesUntillDeletion <=0)
 		{
 			if(Nodes.size()>0)
@@ -952,6 +955,8 @@ void Scene::Draw(float dt)
 {
 	for(int i=0;i<Nodes.size();i++)
 	{
+		if(filter && filter_object != Nodes[i]->type)
+			continue;
 		if(DrawRegularScene)
 		{
 			Nodes[i]->DrawProcess(dt);	
@@ -982,10 +987,12 @@ void Scene::Process(float dt)
 	
 	for(int i=0;i<Nodes.size();i++)
 	{
-
+		if(filter && filter_object != Nodes[i]->type)
+			continue;
 
 		for(int a =0;a<Nodes[i]->UsedAssets.size();a++)
 		{
+			
 			if((*Nodes[i]->UsedAssets[a])!=NULL)
 				if((*Nodes[i]->UsedAssets[a])->Delete)
 					(*Nodes[i]->UsedAssets[a]) = NULL;

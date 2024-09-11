@@ -1472,6 +1472,7 @@ bool initialsizecalc = true;
 std::vector<DataStorage> UndoLine;
 bool ActionDoneThisFrame = false;
 
+
 void ProcessScene(Scene* scn,bool mt,bool mainScene)
 {
 	GameScene = scn;
@@ -2226,6 +2227,24 @@ void On_Update()
 			Corner.y += UI_Drag(&grid_step, "Gtid step", Corner , 1.0f).y * -1.0f - step;
 		}
 
+		Corner.y += UI_CheckBox(&GameScene->filter, "Filter", Corner).y * -1.0f - step;
+		if(GameScene->filter)
+		{
+			Corner.y += UI_SliderInt(&GameScene->filter_object,"object type",Corner,0,NodeConstructorNames.size()-1).y * -1.0f - step;
+			int newobjectidmapped = -1;
+			int id= 0;
+			for(auto x : NodeConstructorNames)
+			{
+				if(id == GameScene->filter_object)
+				{
+					newobjectidmapped = x.first;
+					break;
+				}
+				id++;
+			}
+			Corner.y +=  UI_DrawText(NodeConstructorNames[newobjectidmapped], Corner, 0.35f).y * -1.0f - step;
+		}
+
 		
 		std::string ulinesizestr = "Undo buffer size: ";
 		ulinesizestr += std::to_string(UndoLine.size());
@@ -2403,7 +2422,7 @@ void On_Update()
 			
 			for (int i = 0; i < Map.Nodes.size(); i++)
 			{
-				if(Map.Nodes[i]->Delete)
+				if(Map.Nodes[i]->Delete ||  (GameScene->filter_object != Map.Nodes[i]->type && GameScene->filter))
 					continue;
 				bool mousetouched = Map.Nodes[i]->SelectionCheck(MousePosition);
 				
@@ -2547,48 +2566,51 @@ void On_Update()
 		SelectedAsset =NULL;
 		SelectedAssetID=-1;
 	}
-	if(keys[GLFW_KEY_LEFT_CONTROL] && bJustPressedkey[GLFW_KEY_Z] && UndoLine.size()>1)
+	if(!Running)
 	{
-		UndoLine.pop_back();
-		Map.LoadFromds(UndoLine.back());
-		SelectedNode = NULL;
-		SelectedNodeID = -1;
-		SelectedAsset =NULL;
-		SelectedAssetID=-1;
-		ActionDoneThisFrame = false;
-	}
-	else
-	{
-		bool actiondone = false;
-		for(int i=0;i<1024;i++)
+		if(keys[GLFW_KEY_LEFT_CONTROL] && bJustPressedkey[GLFW_KEY_Z] && UndoLine.size()>1)
 		{
-			if(keys[i] && i !=GLFW_KEY_LEFT_CONTROL && i !=GLFW_KEY_Z)
-			{
-				actiondone = true;
-				break;
-			}
+			UndoLine.pop_back();
+			Map.LoadFromds(UndoLine.back());
+			SelectedNode = NULL;
+			SelectedNodeID = -1;
+			SelectedAsset =NULL;
+			SelectedAssetID=-1;
+			ActionDoneThisFrame = false;
 		}
-		if(!actiondone)
-			for(int i=0;i<64;i++)
+		else
+		{
+			bool actiondone = false;
+			for(int i=0;i<1024;i++)
 			{
-				if(buttons[i])
+				if(keys[i] && i !=GLFW_KEY_LEFT_CONTROL && i !=GLFW_KEY_Z)
 				{
 					actiondone = true;
 					break;
 				}
 			}
+			if(!actiondone)
+				for(int i=0;i<64;i++)
+				{
+					if(buttons[i])
+					{
+						actiondone = true;
+						break;
+					}
+				}
 
 
-		if(actiondone)
-		{
-			DataStorage tmpds = Map.SaveAsds();
-			if(UndoLine.size()==0)
-				UndoLine.push_back(tmpds);
-			else
+			if(actiondone)
 			{
-				if(!buttons[GLFW_MOUSE_BUTTON_1])
-				if(UndoLine.back().ToString() != tmpds.ToString())
+				DataStorage tmpds = Map.SaveAsds();
+				if(UndoLine.size()==0)
 					UndoLine.push_back(tmpds);
+				else
+				{
+					if(!buttons[GLFW_MOUSE_BUTTON_1])
+					if(UndoLine.back().ToString() != tmpds.ToString())
+						UndoLine.push_back(tmpds);
+				}
 			}
 		}
 	}

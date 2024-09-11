@@ -7,6 +7,8 @@ public:
 	bool DrawCollisions = true;
 	bool DrawRegularScene = true;
 	bool LoadAssets = true;
+	bool filter = false;
+	int filter_object = 0;
 	
 	float dt = 0.017f;
 

@@ -766,7 +766,7 @@ bool Object::SelectionCheck(glm::vec2 point)
 };
 void Object::DebugDraw() 
 {
-	DrawCube(position,Scale,0.0f,{Color.r,Color.g,Color.b,0.2f});
+	DrawCube(position,Scale,0.0f,{Color.r,Color.g,Color.b,0.6f});
 };
 
 
@@ -824,7 +824,7 @@ void LightSourceObject::Draw()
 };
 void LightSourceObject::DebugDraw()
 {
-	DrawCube(position,Scale,rotation,{Color.r,Color.g,Color.b,0.2f});
+	DrawCube(position,Scale,rotation,{Color.r,Color.g,Color.b,0.4f});
 };
 
 
@@ -888,7 +888,7 @@ std::vector<UI_DataPack> CO_Ball::GetUIData()
 };
 void CO_Ball::DebugDraw()
 {
-	DrawCircle(position,b.r,{Color.r,Color.g,Color.b,0.2f});
+	DrawCircle(position,b.r,{Color.r,Color.g,Color.b,0.6f});
 };
 bool CO_Ball::SelectionCheck(glm::vec2 point)
 {
@@ -938,7 +938,7 @@ bool CO_Cube::SelectionCheck(glm::vec2 point)
 };
 void CO_Cube::DebugDraw()
 {
-	DrawCube(c,{Color.r,Color.g,Color.b,0.2f});		
+	DrawCube(c,{Color.r,Color.g,Color.b,0.6f});		
 };
 
 
@@ -1232,28 +1232,28 @@ void ParticleObject::DebugDraw()
 	switch (po_typeData.x)
 	{	
 	case 0:
-		DrawCircle(position,r,glm::vec4(1.0f,1.0f,2.0f,0.2f));
+		DrawCircle(position,r,glm::vec4(1.0f,1.0f,2.0f,0.4f));
 		break;
 	case 1:
-		DrawCube(position,scale,0.0f,glm::vec4(1.0f,1.0f,2.0f,0.2f));
+		DrawCube(position,scale,0.0f,glm::vec4(1.0f,1.0f,2.0f,0.4f));
 		break;
 	case 2:
-		DrawCircle(position,1.0f,{1.0f,2.0f,1.0f,1.0f});
+		DrawCircle(position,1.0f,{1.0f,2.0f,1.0f,1.4f});
 		break;
 	case 3:
-		DrawCircle(position,r,glm::vec4(1.0f,2.0f,1.0f,0.2f));
+		DrawCircle(position,r,glm::vec4(1.0f,2.0f,1.0f,0.4f));
 		break;
 	case 4:
-		DrawCube(position,scale,0.0f,glm::vec4(1.0f,2.0f,1.0f,0.2f));
+		DrawCube(position,scale,0.0f,glm::vec4(1.0f,2.0f,1.0f,0.4f));
 		break;
 	case 5:
-		DrawCircle(position,r,glm::vec4(2.0f,2.0f,1.0f,0.2f));
+		DrawCircle(position,r,glm::vec4(2.0f,2.0f,1.0f,0.4f));
 		break;
 	case 6:
-		DrawCube(position,scale,0.0f,glm::vec4(2.0f,2.0f,1.0f,0.2f));
+		DrawCube(position,scale,0.0f,glm::vec4(2.0f,2.0f,1.0f,0.4f));
 		break;
 	case 7:
-		DrawCircle(position,r,glm::vec4(1.0f,1.0f,2.0f,0.2f));
+		DrawCircle(position,r,glm::vec4(1.0f,1.0f,2.0f,0.4f));
 		break;
 	default:
 		break;
