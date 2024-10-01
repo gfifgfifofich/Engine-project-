@@ -14,6 +14,8 @@ inline glm::vec3 listenerVel = { 0.0,0.0,0.0 };
 inline ALfloat listenerOri[] = { 0.0,0.0,1.0, 0.0,-1.0,0.0 };
 inline glm::vec3 soundscale = { 1.0f,1.0f ,1.0f };
 inline glm::vec3 soundSpeedscale = { 1.0f,1.0f ,1.0f };
+inline glm::vec2 ListenerPos;// for soundPools
+
 
 unsigned int LoadSound(const char* FileName);
 void DeleteSound(unsigned int* sound);
@@ -54,7 +56,6 @@ void ProcessAL();
 
 struct soundpool
 {
-
 	unsigned int sound =0;
 	unsigned int sourceamount = 0;
 	std::vector<unsigned int> ssources;

@@ -668,7 +668,6 @@ void Node::DrawPreview(glm::vec2 ui_position, glm::vec2 size)
 {
 	UI_DrawCircle(ui_position,size.x,glm::vec4(1.0f),false,0,-100);
 };
-
 void Node::OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp)
 {
 
@@ -768,6 +767,12 @@ void Object::DebugDraw()
 {
 	DrawCube(position,Scale,0.0f,{Color.r,Color.g,Color.b,0.6f});
 };
+void Object::OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp)
+{
+	glm::vec2 dif = mp - prevmp;
+	Scale -= prevdif;
+	Scale += dif;
+}
 
 
 
@@ -894,6 +899,14 @@ bool CO_Ball::SelectionCheck(glm::vec2 point)
 {
 	return BalltoPointCollisionCheck(b,point);
 };
+void CO_Ball::OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp)
+{
+	glm::vec2 dif = mp - prevmp;
+	Scale -= prevdif;
+	Scale += dif;
+	b.r -= length(prevdif);
+	b.r += length(dif);
+}
 
 
 
@@ -940,6 +953,16 @@ void CO_Cube::DebugDraw()
 {
 	DrawCube(c,{Color.r,Color.g,Color.b,0.6f});		
 };
+void CO_Cube::OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp)
+{
+	glm::vec2 dif = mp - prevmp;
+	Scale -= prevdif;
+	Scale += dif;
+	c.width -= prevdif.x;
+	c.height -= prevdif.y;
+	c.width += dif.x;
+	c.height += dif.y;
+}
 
 
 
@@ -1227,6 +1250,14 @@ bool ParticleObject::SelectionCheck(glm::vec2 point)
 		return false;
 	}
 };
+void ParticleObject::OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp)
+{
+	glm::vec2 dif = mp - prevmp;
+	r -= length(prevdif);
+	r += length(dif);
+	scale -= prevdif;
+	scale += dif;
+}
 void ParticleObject::DebugDraw() 
 {
 	switch (po_typeData.x)

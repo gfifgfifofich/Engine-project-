@@ -423,6 +423,7 @@ public:
 	virtual void Draw() override;
 	virtual bool SelectionCheck(glm::vec2 point) override;
 	virtual void DebugDraw() override;
+	virtual void OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp) override;
 
 };
 
@@ -473,6 +474,7 @@ public:
 	
 	virtual void DebugDraw() override;
 	virtual bool SelectionCheck(glm::vec2 point) override;
+	virtual void OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp) override;
 };
 
 class CO_Cube : public CollisionObject
@@ -489,6 +491,7 @@ public:
 	virtual std::vector<UI_DataPack> GetUIData() override;
 	virtual bool SelectionCheck(glm::vec2 point) override;
 	virtual void DebugDraw() override;
+	virtual void OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp) override;
 };
 
 class CO_Polygon : public CollisionObject
@@ -544,6 +547,7 @@ public:
 	virtual bool SelectionCheck(glm::vec2 point) override;
 	virtual void DrawProcess(float dt) override;
 	virtual void DebugDraw();
+	virtual void OnResize(glm::vec2 prevdif,glm::vec2 mp, glm::vec2 prevmp) override;
 };
 
 class AnimationGraph : public Asset

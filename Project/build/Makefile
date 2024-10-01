@@ -88,7 +88,7 @@ package_source/fast: package_source
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake cache editor..."
-	/usr/bin/cmake-gui -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -664,6 +664,32 @@ glew_s/fast:
 .PHONY : glew_s/fast
 
 #=============================================================================
+# Target rules for targets named glewinfo
+
+# Build rule for target.
+glewinfo: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glewinfo
+.PHONY : glewinfo
+
+# fast build rule for target.
+glewinfo/fast:
+	$(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/glewinfo.dir/build
+.PHONY : glewinfo/fast
+
+#=============================================================================
+# Target rules for targets named visualinfo
+
+# Build rule for target.
+visualinfo: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 visualinfo
+.PHONY : visualinfo
+
+# fast build rule for target.
+visualinfo/fast:
+	$(MAKE) $(MAKESILENT) -f dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/build.make dependencies/glew/build/cmake/CMakeFiles/visualinfo.dir/build
+.PHONY : visualinfo/fast
+
+#=============================================================================
 # Target rules for targets named freetype
 
 # Build rule for target.
@@ -962,6 +988,174 @@ alsoft-config/fast:
 	$(MAKE) $(MAKESILENT) -f dependencies/openal/utils/alsoft-config/CMakeFiles/alsoft-config.dir/build.make dependencies/openal/utils/alsoft-config/CMakeFiles/alsoft-config.dir/build
 .PHONY : alsoft-config/fast
 
+Source/Bullet.o: Source/Bullet.cpp.o
+.PHONY : Source/Bullet.o
+
+# target to build an object file
+Source/Bullet.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Bullet.cpp.o
+.PHONY : Source/Bullet.cpp.o
+
+Source/Bullet.i: Source/Bullet.cpp.i
+.PHONY : Source/Bullet.i
+
+# target to preprocess a source file
+Source/Bullet.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Bullet.cpp.i
+.PHONY : Source/Bullet.cpp.i
+
+Source/Bullet.s: Source/Bullet.cpp.s
+.PHONY : Source/Bullet.s
+
+# target to generate assembly for a file
+Source/Bullet.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Bullet.cpp.s
+.PHONY : Source/Bullet.cpp.s
+
+Source/Explodion.o: Source/Explodion.cpp.o
+.PHONY : Source/Explodion.o
+
+# target to build an object file
+Source/Explodion.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Explodion.cpp.o
+.PHONY : Source/Explodion.cpp.o
+
+Source/Explodion.i: Source/Explodion.cpp.i
+.PHONY : Source/Explodion.i
+
+# target to preprocess a source file
+Source/Explodion.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Explodion.cpp.i
+.PHONY : Source/Explodion.cpp.i
+
+Source/Explodion.s: Source/Explodion.cpp.s
+.PHONY : Source/Explodion.s
+
+# target to generate assembly for a file
+Source/Explodion.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Explodion.cpp.s
+.PHONY : Source/Explodion.cpp.s
+
+Source/Laser.o: Source/Laser.cpp.o
+.PHONY : Source/Laser.o
+
+# target to build an object file
+Source/Laser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Laser.cpp.o
+.PHONY : Source/Laser.cpp.o
+
+Source/Laser.i: Source/Laser.cpp.i
+.PHONY : Source/Laser.i
+
+# target to preprocess a source file
+Source/Laser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Laser.cpp.i
+.PHONY : Source/Laser.cpp.i
+
+Source/Laser.s: Source/Laser.cpp.s
+.PHONY : Source/Laser.s
+
+# target to generate assembly for a file
+Source/Laser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Laser.cpp.s
+.PHONY : Source/Laser.cpp.s
+
+Source/ParticleMaterials.o: Source/ParticleMaterials.cpp.o
+.PHONY : Source/ParticleMaterials.o
+
+# target to build an object file
+Source/ParticleMaterials.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/ParticleMaterials.cpp.o
+.PHONY : Source/ParticleMaterials.cpp.o
+
+Source/ParticleMaterials.i: Source/ParticleMaterials.cpp.i
+.PHONY : Source/ParticleMaterials.i
+
+# target to preprocess a source file
+Source/ParticleMaterials.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/ParticleMaterials.cpp.i
+.PHONY : Source/ParticleMaterials.cpp.i
+
+Source/ParticleMaterials.s: Source/ParticleMaterials.cpp.s
+.PHONY : Source/ParticleMaterials.s
+
+# target to generate assembly for a file
+Source/ParticleMaterials.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/ParticleMaterials.cpp.s
+.PHONY : Source/ParticleMaterials.cpp.s
+
+Source/Parts/Base.o: Source/Parts/Base.cpp.o
+.PHONY : Source/Parts/Base.o
+
+# target to build an object file
+Source/Parts/Base.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Parts/Base.cpp.o
+.PHONY : Source/Parts/Base.cpp.o
+
+Source/Parts/Base.i: Source/Parts/Base.cpp.i
+.PHONY : Source/Parts/Base.i
+
+# target to preprocess a source file
+Source/Parts/Base.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Parts/Base.cpp.i
+.PHONY : Source/Parts/Base.cpp.i
+
+Source/Parts/Base.s: Source/Parts/Base.cpp.s
+.PHONY : Source/Parts/Base.s
+
+# target to generate assembly for a file
+Source/Parts/Base.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Parts/Base.cpp.s
+.PHONY : Source/Parts/Base.cpp.s
+
+Source/Parts/CentralPart.o: Source/Parts/CentralPart.cpp.o
+.PHONY : Source/Parts/CentralPart.o
+
+# target to build an object file
+Source/Parts/CentralPart.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Parts/CentralPart.cpp.o
+.PHONY : Source/Parts/CentralPart.cpp.o
+
+Source/Parts/CentralPart.i: Source/Parts/CentralPart.cpp.i
+.PHONY : Source/Parts/CentralPart.i
+
+# target to preprocess a source file
+Source/Parts/CentralPart.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Parts/CentralPart.cpp.i
+.PHONY : Source/Parts/CentralPart.cpp.i
+
+Source/Parts/CentralPart.s: Source/Parts/CentralPart.cpp.s
+.PHONY : Source/Parts/CentralPart.s
+
+# target to generate assembly for a file
+Source/Parts/CentralPart.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Parts/CentralPart.cpp.s
+.PHONY : Source/Parts/CentralPart.cpp.s
+
+Source/Rocket.o: Source/Rocket.cpp.o
+.PHONY : Source/Rocket.o
+
+# target to build an object file
+Source/Rocket.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Rocket.cpp.o
+.PHONY : Source/Rocket.cpp.o
+
+Source/Rocket.i: Source/Rocket.cpp.i
+.PHONY : Source/Rocket.i
+
+# target to preprocess a source file
+Source/Rocket.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Rocket.cpp.i
+.PHONY : Source/Rocket.cpp.i
+
+Source/Rocket.s: Source/Rocket.cpp.s
+.PHONY : Source/Rocket.s
+
+# target to generate assembly for a file
+Source/Rocket.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Rocket.cpp.s
+.PHONY : Source/Rocket.cpp.s
+
 Source/Source.o: Source/Source.cpp.o
 .PHONY : Source/Source.o
 
@@ -985,6 +1179,30 @@ Source/Source.s: Source/Source.cpp.s
 Source/Source.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/Source.cpp.s
 .PHONY : Source/Source.cpp.s
+
+Source/SubECS.o: Source/SubECS.cpp.o
+.PHONY : Source/SubECS.o
+
+# target to build an object file
+Source/SubECS.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/SubECS.cpp.o
+.PHONY : Source/SubECS.cpp.o
+
+Source/SubECS.i: Source/SubECS.cpp.i
+.PHONY : Source/SubECS.i
+
+# target to preprocess a source file
+Source/SubECS.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/SubECS.cpp.i
+.PHONY : Source/SubECS.cpp.i
+
+Source/SubECS.s: Source/SubECS.cpp.s
+.PHONY : Source/SubECS.s
+
+# target to generate assembly for a file
+Source/SubECS.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Engine.dir/build.make CMakeFiles/Engine.dir/Source/SubECS.cpp.s
+.PHONY : Source/SubECS.cpp.s
 
 Source/engine/Components/Cpps/Collisions/BallToBall.o: Source/engine/Components/Cpps/Collisions/BallToBall.cpp.o
 .PHONY : Source/engine/Components/Cpps/Collisions/BallToBall.o
@@ -1918,6 +2136,7 @@ help:
 	@echo "... glad"
 	@echo "... glew"
 	@echo "... glew_s"
+	@echo "... glewinfo"
 	@echo "... glfw"
 	@echo "... glfwinfo"
 	@echo "... heightmap"
@@ -1946,11 +2165,36 @@ help:
 	@echo "... triangle-vulkan"
 	@echo "... uhjdecoder"
 	@echo "... uhjencoder"
+	@echo "... visualinfo"
 	@echo "... wave"
 	@echo "... windows"
+	@echo "... Source/Bullet.o"
+	@echo "... Source/Bullet.i"
+	@echo "... Source/Bullet.s"
+	@echo "... Source/Explodion.o"
+	@echo "... Source/Explodion.i"
+	@echo "... Source/Explodion.s"
+	@echo "... Source/Laser.o"
+	@echo "... Source/Laser.i"
+	@echo "... Source/Laser.s"
+	@echo "... Source/ParticleMaterials.o"
+	@echo "... Source/ParticleMaterials.i"
+	@echo "... Source/ParticleMaterials.s"
+	@echo "... Source/Parts/Base.o"
+	@echo "... Source/Parts/Base.i"
+	@echo "... Source/Parts/Base.s"
+	@echo "... Source/Parts/CentralPart.o"
+	@echo "... Source/Parts/CentralPart.i"
+	@echo "... Source/Parts/CentralPart.s"
+	@echo "... Source/Rocket.o"
+	@echo "... Source/Rocket.i"
+	@echo "... Source/Rocket.s"
 	@echo "... Source/Source.o"
 	@echo "... Source/Source.i"
 	@echo "... Source/Source.s"
+	@echo "... Source/SubECS.o"
+	@echo "... Source/SubECS.i"
+	@echo "... Source/SubECS.s"
 	@echo "... Source/engine/Components/Cpps/Collisions/BallToBall.o"
 	@echo "... Source/engine/Components/Cpps/Collisions/BallToBall.i"
 	@echo "... Source/engine/Components/Cpps/Collisions/BallToBall.s"

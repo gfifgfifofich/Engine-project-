@@ -166,6 +166,9 @@ std::string EntityBackUpName = "PreMissionBackup";
 std::string GameSaveName = "Save0";
 std::vector<std::string> ConsoleTexts;
 
+float AccumulatedHeat = 0.0f;
+bool inside = false;
+
 struct shipInfo
 {
 	std::string filename = "";
@@ -205,16 +208,6 @@ void SavePlayerData()
 	GameSaveFile.Save("SaveFile.sav");
 }
 
-class BallBodyComponent : public ball
-{
-public:
-	float temperature = 0.0f;
-	float soundcd = 0.0f;
-	glm::vec4 color = {1.0f,1.0f,1.0f,1.0f};
-	glm::vec2 velbuff;
-};
-
-
 
 
 
@@ -224,79 +217,12 @@ int BackgroundWindowID = -1;
 int ForeWindowID = -1;
 int TerminalWindowID = -1;
 int MenuWindowID = -1;
-glm::vec2 foregroundMousePosition = {0.0f,0.0f};
+inline glm::vec2 foregroundMousePosition = {0.0f,0.0f};
 
-float TextSize = 1.0f;
-float UISize = 18.0f;
+inline float TextSize = 1.0f;
+inline float UISize = 18.0f;
 
-MaterialObject MO_Ball;
-MaterialObject MO_Cube;
-Material PrimitiveQuad;
-unsigned int 
-RocketEngineSound,
-SHHSound,
-GunSound,
-HeavyHit,
-LaserGunSound,
-MiniGunSound,
-Clang,
-Detach,
-Scratch,
-Hit,
-BulletHit, 
-PartDestrSOund,
-ExplodionSound
-
-;
-
-
-
-unsigned int
-HeatPipeTexture,
-HeatPipeNormalMap,
-
-RopeTexture,
-RopeNormalMap,
-
-StrutTexture,
-StrutNormalMap,
-
-GunBaseTexture,
-GunBaseNormalMap,
-
-GunTexture,
-GunNormalMap,
-
-LaserGunTexture,
-LaserGunNormalMap,
-
-MiniGunTexture,
-MiniGunNormalMap,
-
-RocketLauncherTexture,
-RocketLauncherNormalMap,
-
-RocketEngineTexture,
-RocketEngineNormalMap,
-
-RadiatorTexture,
-RadiatorNormalMap,
-
-BallBodyTexture,
-BallBodyNormalMap,
-
-CentralPartTexture,
-CentralPartNormalMap,
-
-RotorTexture,
-RotorNormalMap,
-
-PipeTexture,
-PipeNormalMap,
-
-Debrie0Texture,
-Debrie1Texture
-;
+#include "Textures.h"
 
 void LoadTextures()
 {
@@ -349,14 +275,6 @@ void LoadTextures()
 }
 
 glm::vec2 camerapos = {0.0f,0.0f};
-
-float ScreenShake = 0.0f;
-float ChromaticAbberation = 0.0f;
-float ScreenShakeFallOff = 1.0f;
-float ChromaticAbberationFallOff = 1.0f;
-
-float s_ChromaticAbberation = 1.0f;
-float s_ScreenShake = 1.0f;
 
 const int GridCellSize = PARTSIZE * 2.0f;
 
@@ -414,24 +332,8 @@ void SaveSettings()
 	SaveFile << s_ChromaticAbberation;
 	SaveFile << "\n";
 }
-struct GridCell
-{
-	int size = 0;
-	BallBodyComponent* balls[10];
-	void add(BallBodyComponent* b)
-	{
-		if (size < 10)
-		{
-			balls[size] = b;
-			size++;
-		}
-	}
-};
-GridCell Grid[300][300];
 
-int balllbuffersize;
-BallBodyComponent* ballbuffer[200];
-float Exposure = 0.0f;
+inline float Exposure = 0.0f;
 
 
 struct LightEffect
@@ -481,25 +383,19 @@ void ProcessLightEffects(float dt)
 
 }
 
-float ExplodionLightHeight = 0.001f;
-float EngineLightHeight = 0.001f;
-float BulletHitLightHeight = 0.001f;
-float CentralLightHeight = 0.001f;
+float ExplodionLightHeight = 0.010f;
+float EngineLightHeight = 0.010f;
+float BulletHitLightHeight = 0.010f;
 
-ParticleEmiter Sparks;
-unsigned int noize = NULL;
 Scene Background;
 
-void SpawnExplodion(glm::vec2 position, float r, float dmg, float lifetime, float recoil = 40.0f);
 #include "DamageSphere.h"
 #include "Explodion.h"
+#include "SubECS.h"
 
 
-float Speed = 1.0f;
+inline float Speed = 1.0f;
 
-
-BallBodyComponent* NewConBall1;
-BallBodyComponent* NewConBall2;
 int NewConType =0;
 int NewConPart1;
 int NewConPart2;
@@ -515,13 +411,13 @@ float newPartRotation = 0.0f;
 
 bool balltaken = false;
 
-bool absoluteControl = true;
-bool BuildingMode = false;
+inline bool absoluteControl = true;
+inline bool BuildingMode = false;
 
-bool bLogicMode = false;
-bool fLogicMode = false;
-bool vLogicMode = false;
-int DataconnectionData[6];
+inline bool bLogicMode = false;
+inline bool fLogicMode = false;
+inline bool vLogicMode = false;
+inline int DataconnectionData[6];
 
 
 bool editSaveName = false;
@@ -539,12 +435,29 @@ bool align = false;
 bool snapToGrid = false;
 
 
-std::vector<BallBodyComponent*>balls;
 
-BallBodyComponent* GrabbedBall = NULL;
+#include "Parts/Base.h"
 
-int SelectedPart = 0;
 
+struct GridCell
+{
+	int size = 0;
+	BallBodyComponent* balls[10];
+	void add(BallBodyComponent* b)
+	{
+		if (size < 10)
+		{
+			balls[size] = b;
+			size++;
+		}
+	}
+};
+GridCell Grid[300][300];
+
+int balllbuffersize;
+BallBodyComponent* ballbuffer[200];
+BallBodyComponent* NewConBall1;
+BallBodyComponent* NewConBall2;
 
 
 #include "ParticleMaterials.h"
@@ -586,7 +499,7 @@ void ProcessCamera(float dt)
 	if (ScreenShake > 1.0f) ScreenShake = 1.0f;
 	if (ChromaticAbberation > 0.3f) ChromaticAbberation = 0.3f;
 	ChromaticStrength = ChromaticAbberation * s_ChromaticAbberation;
-
+	ListenerPos = CameraPosition;
 	UpdateListenerPosition();
 }
 
@@ -622,12 +535,6 @@ void ChangeMap(std::string FilePath, bool scaleDown = true)
 	LightEffects.clear();
 	GameScene->LoadFrom(FilePath);
 
-	if (scaleDown)
-	{
-		CameraScale = { 20,20 };
-	}
-	else
-		CameraScale = { 1.0f,1.0f };
 
 	PartSpawnPoints.clear();
 	int currentobject = 0;
@@ -782,11 +689,22 @@ public:
 class MissionSelectScreen
 {
 public:
+
 	int window = -1;
 	std::string filenamestring = "";
 	std::string erroutputstring = "";
 	std::vector<Mission> missions;
 	int state = 0;
+
+	glm::vec2 missionPosition = {0.0f,0.0f};
+	bool Hub = true;
+	bool missionSelected = false;
+	bool missionStory = false;
+	int missionSize = 0;
+	int missionDificulty = 0;
+	int missionType = 0;
+
+
 	void GenerateNewMissions()
 	{
 		missions.clear();
@@ -872,11 +790,12 @@ public:
 				Corner.y += UI_button(&b, "The story mission with wery cool name", Corner,{250,20},0.35f,glm::vec4(0.0f),glm::vec4(0.5f),glm::vec4(0.0f)).y * -1.0f - 0;
 				if(b)
 				{
-					CurrnetMission.story_mission = true;
-					CurrnetMission.Start();	
-					inbase = false;
-					switchScene = false;
-					OpenMenu = false;
+					missionPosition = Rotate( glm::vec2(1.0f,0.0f),rand() % 1000000 * 0.001f) * 4000.0f * (1.0f + rand() %1000 * 0.002f);
+					missionSelected = true;
+					missionStory = true;
+					missionSize = 0;
+					missionDificulty = 0;
+					missionType = 0;
 				}
 
 				Corner.y +=UI_DrawText("Missions:",Corner,0.45f).y * -1.0f;
@@ -904,9 +823,13 @@ public:
 
 					if(b)
 					{
-						CurrnetMission = missions[i];
-						CurrnetMission.Start();
-
+						missionPosition = Rotate( glm::vec2(1.0f,0.0f),rand() % 100000 * 0.001f) * 7000.0f * (1.0f + rand() %1000 * 0.002f);
+						missionSelected = true;
+						missionStory = false;
+						missionSize = missions[i].size;
+						missionDificulty = missions[i].dificulty;
+						missionType = missions[i].type;
+						
 					}
 				}
 			}
@@ -924,12 +847,10 @@ public:
 		MousePosition.y = WindowMousePosition.y / CameraScale.y + CameraPosition.y;
 		LastJustPressedLMBScrMousePos = GetWindow(SceneWindowID)->w_LastJustPressedLMBScrMousePos;
 		ScreenMousePosition = WindowMousePosition;
-		foregroundMousePosition =MousePosition; 
+		foregroundMousePosition = MousePosition;
+
+		
 	}
-
-
-	
-
 };
 
 class SaveScreen
@@ -1521,9 +1442,71 @@ void ProcessPlayerControls()
 		UI_buttonOnlyON(&load, "Load", { -0.46f * WIDTH ,0.34f * HEIGHT }, UISize, TextSize, glm::vec4(0.9f), glm::vec4(0.5f), 1200);
 		if (load)
 			Entities[0]->LoadFrom(saveFileName);
+
+
 			
 	}
 	}
+	
+	if(!CurrnetMission.compleated || MissionSelectMenu.missionSelected)
+	{
+		if(MissionSelectMenu.missionSelected)
+			DrawCircle(Entities[0]->mid + Normalize(MissionSelectMenu.missionPosition - Entities[0]->mid)*10.0f,5.0f,{5.0f,1.0f,1.0f,1.0f},0,0,10000);
+		else
+			DrawCircle(Entities[0]->mid + Normalize(glm::vec2(0.0f,0.0f) - Entities[0]->mid)*10.0f,5.0f,{5.0f,1.0f,1.0f,1.0f},0,0,10000);
+	}
+	else
+	{
+		if(!MissionSelectMenu.Hub)
+			DrawCircle(Entities[0]->mid + Normalize(-MissionSelectMenu.missionPosition - Entities[0]->mid)*10.0f,5.0f,{1.0f,1.0f,5.0f,1.0f},0,0,10000);
+		else
+			DrawCircle(Entities[0]->mid + Normalize(glm::vec2(0.0f,0.0f) - Entities[0]->mid)*10.0f,5.0f,{1.0f,1.0f,5.0f,1.0f},0,0,10000);
+	}
+
+	if(MissionSelectMenu.missionSelected && Entities.size()>0 && sqrlength(Entities[0]->mid - MissionSelectMenu.missionPosition) < (4000*4000))
+	{
+		CurrnetMission.story_mission = MissionSelectMenu.missionStory;
+		CurrnetMission.size = MissionSelectMenu.missionSize;
+		CurrnetMission.dificulty = MissionSelectMenu.missionDificulty;
+		CurrnetMission.type = MissionSelectMenu.missionType;
+		MissionSelectMenu.missionSelected = false;
+		MissionSelectMenu.Hub = false;
+		glm::vec2 plPos = (Entities[0]->mid - MissionSelectMenu.missionPosition);
+		CurrnetMission.Start(plPos);
+		inbase = false;
+		switchScene = false;
+		OpenMenu = false;
+	}
+	if(!MissionSelectMenu.Hub && Entities.size()>0 && sqrlength(-MissionSelectMenu.missionPosition - Entities[0]->mid) < (2000*2000))
+	{
+		MissionSelectMenu.missionSelected = false;
+		MissionSelectMenu.Hub = true;
+		glm::vec2 plPos = (Entities[0]->mid + MissionSelectMenu.missionPosition);		
+		Materials += GetShipCost(Entities[0]);
+		Entities[0]->SaveTo(EntityBackUpName);
+		glm::vec2 vel = {0.0f,0.0f};
+		if(Entities.size()>0)
+		{
+			vel = Entities[0]->avgvel;
+			Entities[0]->SaveTo(EntityBackUpName);
+		}
+		inbase = true;
+		AmbientLight = 0.0f;
+		GetWindow(BackgroundWindowID)->w_DirectionalLight = 1.0f;
+		ChangeMap("Scenes/base.sav", false);
+		SpawnPlayer(plPos, EntityBackUpName);
+		for(int i=0;i< Entities[0]->Parts.size();i++)
+		{
+			for(int a=0;a< Entities[0]->Parts[i]->bodysize;a++)
+			{
+				Entities[0]->Parts[i]->body[a].velbuff = vel;
+				Entities[0]->Parts[i]->body[a].velocity = vel;
+			}
+		}
+	}
+
+	UI_DrawLine({ 0.34f * WIDTH ,0.46f * HEIGHT },{ 0.34f * WIDTH + 0.16f * WIDTH,0.46f * HEIGHT }, 10.0f,glm::vec4(0.1f,0.1f,0.1f,1.0f),0,0,10000);
+	UI_DrawLine({ 0.35f * WIDTH ,0.46f * HEIGHT },{ 0.35f * WIDTH + AccumulatedHeat/400.0f * 0.15f * WIDTH,0.46f * HEIGHT }, 8.0f,glm::vec4(AccumulatedHeat / 40.0f,AccumulatedHeat / 200.0f,AccumulatedHeat / 300.0f,1.0f),0,0,10000);
 
 	bool blm = bLogicMode;
 	bool flm = fLogicMode;
@@ -1540,15 +1523,6 @@ void ProcessPlayerControls()
 	UI_CheckBox(&fLogicMode, "Number Logic", { 0.40f * WIDTH ,-0.40f * HEIGHT }, UISize, TextSize, UI_ColorON, UI_ColorOFF, 1200);
 	UI_CheckBox(&vLogicMode, "Vector Logic", { 0.40f * WIDTH ,-0.34f * HEIGHT }, UISize, TextSize, UI_ColorON, UI_ColorOFF, 1200);
 	UI_CheckBox(&BuildingMode, "Building Mode", { 0.40f * WIDTH ,-0.28f * HEIGHT }, UISize, TextSize, UI_ColorON, UI_ColorOFF, 1200);
-
-	
-	bool b = false;
-	UI_CheckBox(&b, "StartPirateMission", { 0.40f * WIDTH ,-0.2f * HEIGHT }, UISize, TextSize, UI_ColorON, UI_ColorOFF, 1200);
-	if (b)
-	{
-		CurrnetMission.Start();
-	}
-
 
 	if (bLogicMode && blm != bLogicMode)
 	{
@@ -1687,6 +1661,7 @@ void ProcessMainMenu()
 			ChangeMap("Scenes/base.sav", false);
 
 			SpawnPlayer();
+			Background.LoadFrom("Scenes/Sun.sav");
 
 			CurrnetMission.story_mission = false;
 			inbase = true;
@@ -1813,7 +1788,12 @@ void ProcessMainMenu()
 void Ready()
 {
 	
+	std::cout<<"ready begins\n";
 	
+	ScreenShake = 0.0f;
+	ChromaticAbberation = 0.0f;
+	ScreenShakeFallOff = 1.0f;
+	ChromaticAbberationFallOff = 1.0f;
 	LoadTextures();
 
 	noize = NULL;
@@ -1844,6 +1824,7 @@ void Ready()
 
 	soundscale = { 40.0f,40.0f ,1.0f };
 
+	std::cout<<"loading sounds ready\n";
 	shopmenu.window = CreateWindow();
 	SaveScreenmenu.window = CreateWindow();
 	MissionSelectMenu.window = CreateWindow();
@@ -1888,6 +1869,7 @@ void Ready()
 	shipNames.push_back("Spinner");
 
 
+	std::cout<<"loaded sounds ready\n";
 	//SpawnPlayer();
 
 	substeps = 20;
@@ -1949,6 +1931,8 @@ void Ready()
 		BackgroundStars[i].z = rand() % 1000 * 0.0001f * StarsDepth;
 		BackgroundStars[i].w = rand() % 1000 * 0.001f * pi * 0.5f;
 	}
+	
+	std::cout<<"loading pData ready\n";
 	LoadPlayerData();
 	ChangeMap(MapFileName, false);
 	MainMenu = true;
@@ -1965,10 +1949,23 @@ void Ready()
 	addsound(LaserGunSound,true,10);
 	addsound(HeavyHit,false,10);
 	addsound(GunSound,false,10);
+	std::cout<<"added all sounds ready\n";
 	//150 sources used
 	MissionSelectMenu.GenerateNewMissions();
 	SetupInstances();
 	VSync = 1;
+
+
+	GrabbedBall = nullptr;
+	SelectedPart = 0;
+	
+	BuildingMode = false;
+	bLogicMode = false;
+	fLogicMode = false;
+	vLogicMode = false;
+	DataconnectionData[6] = {0};
+	Speed = 1.0f;
+	std::cout<<"ready\n";
 }
 void SubSteppedProcess(float dt, int SubStep)
 {
@@ -1987,7 +1984,6 @@ void SubSteppedProcess(float dt, int SubStep)
 
 void Process(float dt)
 {
-
 	if (clock() < 100)
 		Speed = 0.0f;
 	else if (clock() >= 100 && clock() < 1200)
@@ -2062,24 +2058,28 @@ void Process(float dt)
 	ImGui::Text("parts size (%.i)", Debris.Parts.size());
 
 	ImGui::Text("Camera position { %.2f ; %.2f }", CameraPosition.x, CameraPosition.y);
+	ImGui::Text("Mission position { %.2f ; %.2f }", MissionSelectMenu.missionPosition.x, MissionSelectMenu.missionPosition.y);
 	ImGui::Text("Exposure { %.2f }", Exposure );
+	ImGui::Text("AccumulatedHeat { %.2f }", AccumulatedHeat );
+	
+	if (ImGui::Button("inside"))
+	{
+		inside = !inside;
+	}
 	ImGui::SliderFloat("AmbientLight", &AmbientLight, 0.0f, 1.0f);
 	
 
 	ExplodionLightHeight *= 10.0f;
 	EngineLightHeight *= 10.0f;
 	BulletHitLightHeight *= 10.0f;
-	CentralLightHeight *= 10.0f;
 
 	ImGui::SliderFloat("Explodion Light Height", &ExplodionLightHeight, -0.1f, 0.2f);
 	ImGui::SliderFloat("Engine Light Height", &EngineLightHeight, -0.1f, 0.2f);
 	ImGui::SliderFloat("BulletHit Light Height", &BulletHitLightHeight, -0.1f, 0.2f);
-	ImGui::SliderFloat("Central Light Height", &CentralLightHeight, -0.1f, 0.2f);
 
 	ExplodionLightHeight *= 0.1f;
 	EngineLightHeight *= 0.1f;
 	BulletHitLightHeight *= 0.1f;
-	CentralLightHeight *= 0.1f;
 
 	if (ImGui::Button("VSync"))
 	{
@@ -2222,14 +2222,37 @@ void Process(float dt)
 	ProcessLightEffects(dt);
 	DrawExplodions(dt);
 	
-	//DrawCircle(MousePosition,10.0f);
-
 	if (!OpenMenu && !MainMenu)
 		ProcessPlayerControls();
+	
+	if(MissionSelectMenu.Hub && Entities.size()>0)
+	{
+		if(sqrlength(Entities[0]->mid)<600*600)
+			inside = true;
+		else
+			inside = false;
+	}
+
+	if(!inside && Entities.size()>0)
+	{
+		AccumulatedHeat += (Entities[0]->sumheat - 5.0f) * dt * 0.1f;
+		if(AccumulatedHeat<0.0f)
+			AccumulatedHeat = 0.0f;
+		
+		if(AccumulatedHeat>400.0f)
+		{
+			AccumulatedHeat-=400.0f;
+			SpawnAiShip(Entities[0]->mid + glm::vec2(0.0f,1000.0f),"Bigboy")->AIState = 1;
+		}
+	}
+	else
+	{
+		AccumulatedHeat -= 10.0f * dt;
+		if(AccumulatedHeat<0.0f)
+			AccumulatedHeat = 0.0f;
+	}
 	ProcessCamera(dt);
 	
-	//Map.ParticleEmiters.clear();
-
     GameScene->Draw(dt);
 	int ent=0;
 	
@@ -2260,7 +2283,10 @@ void Process(float dt)
 	if (OpenMenu || MainMenu)
 		ProcessMainMenu();
 
-	bw->w_CameraPosition = sw->w_CameraPosition*0.05f;
+	if(MissionSelectMenu.Hub)
+		bw->w_CameraPosition = (sw->w_CameraPosition )*0.05f;
+	else
+		bw->w_CameraPosition = (sw->w_CameraPosition + MissionSelectMenu.missionPosition)*0.05f;
 	
 	bw->Use();
 	Background.DrawCollisions = false;
@@ -2304,7 +2330,7 @@ void Process(float dt)
 void PreReady()
 {
     // Remake with DataStorage
-
+	std::cout<<"Pre ready\n";
 	std::ifstream f("Settings.sav");
 	if (f.is_open())
 		while (!f.eof())
@@ -2338,10 +2364,12 @@ void PreReady()
 
 	f.close();
 
+	std::cout<<"settings ready\n";
 	PartsData.Load("PartsProperties.ds");
 	InitParts();
 	PartsData.Save("PartsProperties.ds");
 	
+	std::cout<<"part props ready\n";
 
 
 
@@ -2389,6 +2417,10 @@ void Rescale(int newWindth,int newHeight)
 
 	mw->ViewportSize = GetWindow(SceneWindowID)->ViewportSize;
 	mw->RecalculateSize();
+
+	float maxsize = fmaxf(sw->ViewportSize.x, sw->ViewportSize.y);
+	TextSize = maxsize * 0.0005f * 0.35f;
+	UISize = 25 * maxsize * 0.0005f;
 
 }
 

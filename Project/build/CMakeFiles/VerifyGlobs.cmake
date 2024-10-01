@@ -23,6 +23,8 @@ endif()
 # source at CMakeLists.txt:53 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/**/*.cpp")
 set(OLD_GLOB
+  "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Parts/Base.cpp"
+  "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Parts/CentralPart.cpp"
   "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Collisions/BallToBall.cpp"
   "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Collisions/BallToLine.cpp"
   "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Collisions/BallToPolygon.cpp"
@@ -62,7 +64,15 @@ endif()
 # source at CMakeLists.txt:53 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/*.cpp")
 set(OLD_GLOB
+  "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Bullet.cpp"
+  "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Explodion.cpp"
+  "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Laser.cpp"
+  "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/ParticleMaterials.cpp"
+  "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Parts/Base.cpp"
+  "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Parts/CentralPart.cpp"
+  "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Rocket.cpp"
   "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Source.cpp"
+  "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/SubECS.cpp"
   "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Collisions/BallToBall.cpp"
   "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Collisions/BallToLine.cpp"
   "/run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/engine/Components/Cpps/Collisions/BallToPolygon.cpp"

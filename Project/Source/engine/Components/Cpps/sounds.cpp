@@ -71,7 +71,7 @@ void AL_init()
 
 	ALfloat lpos[] = { listenerPos.x, listenerPos.y, listenerPos.y };
 	ALfloat lvel[] = { listenerVel.x, listenerVel.y, listenerVel.y };
-
+	ListenerPos = {listenerPos.x, listenerPos.y};
 	alListenerfv(AL_POSITION, lpos);
 	alListenerfv(AL_VELOCITY, lvel);
 	alListenerfv(AL_ORIENTATION, listenerOri);
@@ -365,6 +365,12 @@ void soundpool::Update()
 		{
 
 			
+			if(!alIsSource(ssources[i]))
+			{
+				GenSource(&ssources[i]);
+				SetSourceSound(&ssources[i],&sound);
+				SetSourceLooping(&ssources[i],continuous);
+			}
 			avgpositions[i] /= (float)sourceUsageAmount[i];
 			avgvelocities[i] /= (float)sourceUsageAmount[i];
 			avgpitches[i] /= (float)sourceUsageAmount[i];
@@ -386,50 +392,50 @@ void soundpool::Update()
 		}
 		else if(avggains[i] < 0.002f && SourcePlaying(&ssources[i]) && continuous)
 		{
-			StopSource(&ssources[i]);
+			SetSourceGain(&ssources[i],0.0f);
 		}
 		
 		avgvelocities[i] = glm::vec2(0.0f);
 		avggains[i] = 0.0f;
 		avgpitches[i] = 0.0f;
+		avgpositions[i] = ListenerPos;
 		sourceUsageAmount[i] = 0;
-		avgpositions[i] = CameraPosition;
 		
-		if(!alIsSource(ssources[i]))
-		{
-			GenSource(&ssources[i]);
-			SetSourceSound(&ssources[i],&sound);
-			SetSourceLooping(&ssources[i],continuous);
-		}
 	}
 }
 void soundpool::AddSound(glm::vec2 position,float gain,float pitch,glm::vec2 velocity,bool startover)
 {
-	if(gain<0.01f)
+	if(gain<0.001f)
 		return;
-	//if(sqrlength(CameraPosition - position) > (WIDTH)*(WIDTH))
-	//	return;
+	if(sqrlength(ListenerPos - position) > (1000)*(1000))
+		return;
 	float ll = -1;
 	int id = -1;
-	for(int i=0;i<sourceamount;i++)
+	bool first = true;
+	for(int i=0;i<ssources.size();i++)
 	{
 		float score = 0.0f;
-		score += sqrlength(avgpositions[i] - position);
-		score += sourceUsageAmount[i] * 10000.0f;
-		
-		if(score < ll|| ll<0.0f)
+		glm::vec2 spos = avgpositions[i];
+		if(sourceUsageAmount[i]>1)
+			spos = spos / (float)sourceUsageAmount[i];
+		score += sqrlength(spos - position);
+		score -= sourceUsageAmount[i] * 100.0f;
+		//if(sourceUsageAmount[i]==0)
+		//{
+		//	id = i;
+		//	return;
+		//}
+		if(score < ll|| first)
 		{
 			ll = score;
 			id = i;
-			if(ll<0.0f);
-				break;
+			first = false;
 		}
 	}
 	if(id <0)
-		{
-			std::cout<<"\nSound not found ";
-			return;
-		}
+	{
+		return;
+	}
 	sourceUsageAmount[id]++;
 	if(sourceUsageAmount[id]==1)
 		avgpositions[id] = position;

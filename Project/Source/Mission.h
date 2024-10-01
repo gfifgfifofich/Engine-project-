@@ -19,6 +19,7 @@ class Mission
 	std::map<std::string,bool> flags;
 	bool story_mission = false;
 	bool exiting = false;
+	bool compleated = true;
 	std::vector<glm::vec4> TakenAreas;
 	std::vector<std::vector<CentralPart*>> Bots;
 	std::vector<std::vector<Node*>> NodeHandles;
@@ -26,8 +27,9 @@ class Mission
 	//Shit for missions
 	glm::vec2 planetpos = {0.0f,0.0f};
 
+
 	
-	void Start()
+	void Start(glm::vec2 playerpos = {100.0f,-300.0f})
 	{
 		timers.clear();
 		inbase = false;
@@ -36,11 +38,23 @@ class Mission
 		AIShips.clear();
 		flags.clear();
 		Bots.clear();
+		glm::vec2 vel = {0.0f,0.0f};
 		if(Entities.size()>0)
+		{
+			vel = Entities[0]->avgvel;
 			Entities[0]->SaveTo(EntityBackUpName);
+		}
 		//ClearMap
 		ChangeMap("",false);
-		SpawnPlayer(EntityBackUpName);
+		SpawnPlayer(playerpos,EntityBackUpName);
+		for(int i=0;i< Entities[0]->Parts.size();i++)
+		{
+			for(int a=0;a< Entities[0]->Parts[i]->bodysize;a++)
+			{
+				Entities[0]->Parts[i]->body[a].velbuff = vel;
+				Entities[0]->Parts[i]->body[a].velocity = vel;
+			}
+		}
 		Materials -= GetShipCost(Entities[0]);
 		if(!story_mission)
 		{	for(int i=0;i<size * 5;i++)
@@ -125,7 +139,15 @@ class Mission
 				AmbientLight=  0.0f;
 				Background.LoadFrom("Scenes/Sun.sav");
 				ChangeMap("Scenes/tutorial.sav",false);
-				SpawnPlayer();
+				SpawnPlayer(playerpos);
+				for(int i=0;i< Entities[0]->Parts.size();i++)
+				{
+					for(int a=0;a< Entities[0]->Parts[i]->bodysize;a++)
+					{
+						Entities[0]->Parts[i]->body[a].velbuff = vel;
+						Entities[0]->Parts[i]->body[a].velocity = vel;
+					}
+				}
 				timers.push_back(2.0f);
 				timers.push_back(0.0f);
 				timers.push_back(0.0f);
@@ -148,9 +170,16 @@ class Mission
 			case 1:
 			{
 				AmbientLight=  0.0f;
-				Background.LoadFrom("Scenes/SunDestroyed.sav");
 				ChangeMap("Scenes/Gun.sav",false);
-				SpawnPlayer(glm::vec2(100.0f,-300.0f));
+				SpawnPlayer(playerpos);
+				for(int i=0;i< Entities[0]->Parts.size();i++)
+				{
+					for(int a=0;a< Entities[0]->Parts[i]->bodysize;a++)
+					{
+						Entities[0]->Parts[i]->body[a].velbuff = vel;
+						Entities[0]->Parts[i]->body[a].velocity = vel;
+					}
+				}
 				timers.push_back(5.0f);
 				timers.push_back(5.0f);
 				timers.push_back(5.0f);
@@ -172,9 +201,16 @@ class Mission
 			case 2:
 			{
 				AmbientLight=  0.0f;
-				Background.LoadFrom("Scenes/SunDestroyed.sav");
 				ChangeMap("Scenes/pstation.sav",false);
-				SpawnPlayer(glm::vec2(100.0f,-300.0f));
+				SpawnPlayer(playerpos);
+				for(int i=0;i< Entities[0]->Parts.size();i++)
+				{
+					for(int a=0;a< Entities[0]->Parts[i]->bodysize;a++)
+					{
+						Entities[0]->Parts[i]->body[a].velbuff = vel;
+						Entities[0]->Parts[i]->body[a].velocity = vel;
+					}
+				}
 				timers.push_back(5.0f);
 				timers.push_back(5.0f);
 				timers.push_back(5.0f);
@@ -209,14 +245,150 @@ class Mission
 						NodeHandles[0].push_back(GameScene->Nodes[i]);
 					}
 				}
-				//Bots[0].push_back(SpawnAiShip({-150.0f,400.0f},"drone"));
-				//Bots[0].push_back(SpawnAiShip({-150.0f,380.0f},"drone"));
-				//Bots[0].push_back(SpawnAiShip({-170.0f,400.0f},"drone"));
-				//
-				//for(auto e : Bots[0])
-				//{
-				//	e->AIState = 0;
-				//}
+
+			}break;
+			case 3:
+			{
+				AmbientLight=  0.0f;
+				ChangeMap("Scenes/mining.sav",false);
+				SpawnPlayer(playerpos);
+				for(int i=0;i< Entities[0]->Parts.size();i++)
+				{
+					for(int a=0;a< Entities[0]->Parts[i]->bodysize;a++)
+					{
+						Entities[0]->Parts[i]->body[a].velbuff = vel;
+						Entities[0]->Parts[i]->body[a].velocity = vel;
+					}
+				}
+				timers.push_back(5.0f);
+				timers.push_back(5.0f);
+				timers.push_back(5.0f);
+				flags["Ending"] = false;
+				flags["Spawned"] = false;
+
+				flags["room1"] = false;
+				flags["room2"] = false;
+
+				flags["Laser1"] = true;
+				flags["Laser2"] = true;
+				flags["Laser3"] = true;
+				
+				
+				AqueredCameraScale = {2.0f,2.0f};
+				std::vector<CentralPart*> arrr;
+				Bots.push_back(arrr);
+				
+				std::vector<Node*> fuses;
+				NodeHandles.push_back(fuses);//0
+				std::vector<Node*> Turbine;
+				NodeHandles.push_back(Turbine);//1
+				std::vector<Node*> Lasers;
+				NodeHandles.push_back(Lasers);//2
+				std::vector<Node*> LaserVisuals;
+				NodeHandles.push_back(LaserVisuals);//3
+				std::vector<Node*> LaserParticles;
+				NodeHandles.push_back(LaserParticles);//4
+				std::vector<Node*> LaserParticleReps;
+				NodeHandles.push_back(LaserParticleReps);//5
+				std::vector<Node*> LaserLightSpheres;
+				NodeHandles.push_back(LaserLightSpheres);//6
+				std::vector<Node*> LightSpheres;
+				NodeHandles.push_back(LightSpheres);//7
+				for(int i=0;i<GameScene->Nodes.size();i++)
+				{
+					if(GameScene->Nodes[i]->type == NodeType::NODE)
+					{
+						while (Bots.size()<=GameScene->Nodes[i]->id)
+						{
+							std::vector<CentralPart*> v;
+							Bots.push_back(v);
+						}
+						Bots[GameScene->Nodes[i]->id].push_back(SpawnAiShip(GameScene->Nodes[i]->position,GameScene->Nodes[i]->Name));
+
+					}
+					if(GameScene->Nodes[i]->Name == "L1Fuse"||
+					   GameScene->Nodes[i]->Name == "L2Fuse"||
+					   GameScene->Nodes[i]->Name == "L3Fuse")
+					{
+						NodeHandles[0].push_back(GameScene->Nodes[i]);
+					}
+					if(GameScene->Nodes[i]->Name == "Turbine")
+					{
+						NodeHandles[1].push_back(GameScene->Nodes[i]);
+					}
+					if(GameScene->Nodes[i]->Name == "laser1"||
+					   GameScene->Nodes[i]->Name == "laser2"||
+					   GameScene->Nodes[i]->Name == "laser3")
+					{
+						NodeHandles[2].push_back(GameScene->Nodes[i]);
+					}
+					if(GameScene->Nodes[i]->Name == "laservisual1"||
+					   GameScene->Nodes[i]->Name == "laservisual2"||
+					   GameScene->Nodes[i]->Name == "laservisual3")
+					{
+						NodeHandles[3].push_back(GameScene->Nodes[i]);
+					}
+					if(GameScene->Nodes[i]->Name == "laserSparkEmiter1"||
+					   GameScene->Nodes[i]->Name == "laserSparkEmiter2"||
+					   GameScene->Nodes[i]->Name == "laserSparkEmiter3")
+					{
+						NodeHandles[4].push_back(GameScene->Nodes[i]);
+					}
+					if(GameScene->Nodes[i]->Name == "laserSparkRepul1"||
+					   GameScene->Nodes[i]->Name == "laserSparkRepul2"||
+					   GameScene->Nodes[i]->Name == "laserSparkRepul3")
+					{
+						NodeHandles[5].push_back(GameScene->Nodes[i]);
+					}
+					if(GameScene->Nodes[i]->Name == "laserls1"||
+					   GameScene->Nodes[i]->Name == "laserls2"||
+					   GameScene->Nodes[i]->Name == "laserls3")
+					{
+						NodeHandles[6].push_back(GameScene->Nodes[i]);
+					}
+					if(GameScene->Nodes[i]->type == NodeType::LIGHTSOURCEOBJECT &&
+						GameScene->Nodes[i]->id>1)
+					{
+						NodeHandles[7].push_back(GameScene->Nodes[i]);
+					}
+				}
+
+			}break;
+			case 4:
+			{
+				AmbientLight=  0.0f;
+				ChangeMap("Scenes/lab.sav",false);
+				SpawnPlayer(playerpos);
+				for(int i=0;i< Entities[0]->Parts.size();i++)
+				{
+					for(int a=0;a< Entities[0]->Parts[i]->bodysize;a++)
+					{
+						Entities[0]->Parts[i]->body[a].velbuff = vel;
+						Entities[0]->Parts[i]->body[a].velocity = vel;
+					}
+				}
+				timers.push_back(5.0f);
+				flags["Ending"] = false;
+				
+				
+				AqueredCameraScale = {2.0f,2.0f};
+				std::vector<CentralPart*> arrr;
+				Bots.push_back(arrr);
+				
+				for(int i=0;i<GameScene->Nodes.size();i++)
+				{
+					if(GameScene->Nodes[i]->type == NodeType::NODE)
+					{
+						while (Bots.size()<=GameScene->Nodes[i]->id)
+						{
+							std::vector<CentralPart*> v;
+							Bots.push_back(v);
+						}
+						Bots[GameScene->Nodes[i]->id].push_back(SpawnAiShip(GameScene->Nodes[i]->position,GameScene->Nodes[i]->Name));
+
+					}
+					
+				}
 
 			}break;
 			default:
@@ -242,6 +414,34 @@ class Mission
 		if(exiting)
 			exitMission(true);
 		
+		for(int i=0;i<Bots.size();i++)
+		{
+			for(int a=0;a<Bots[i].size();a++)
+			{
+				if(Bots[i][a]->Delete)
+				{
+					Bots[i][a] = Bots[i][Bots[i].size()]-1;
+					Bots[i].pop_back();
+				}
+			}
+		}
+		for(int i =0;i<TriggerCubes.size();i++)
+		{
+			if(TriggerCubes[i]->Delete)
+			{
+				TriggerCubes[i] = TriggerCubes[TriggerCubes.size()]-1;
+				TriggerCubes.pop_back();
+			}
+			if(TriggerCubes[i]->triggered && Bots.size()>TriggerCubes[i]->id)	
+			{
+				for(int a=0;a<Bots[TriggerCubes[i]->id].size();a++)
+				{
+					Bots[TriggerCubes[i]->id][a]->AIState = 1;
+				}
+			}
+		}
+		
+
 		for(int i=0;i<timers.size();i++)
 		{
 			timers[i]-=dt;
@@ -815,7 +1015,7 @@ class Mission
 				for(int i=0;i<Bots.size();i++)
 				{
 					// central
-					if(i==1 && Entities[0]->mid.y>200.0f)
+					if(i==1 && Entities[0]->mid.y>-200.0f)
 					{
 						for(int a =0; a<Bots[i].size();a++)
 							Bots[i][a]->AIState = 1;
@@ -833,6 +1033,136 @@ class Mission
 							Bots[i][a]->AIState = 1;
 					}
 				}
+
+				if(!flags["Exploded"] && (Core == NULL || Core->Delete))
+				{
+					timers[0] = 5.0f;
+					flags["Exploded"] = true;
+				}
+				if(flags["Exploded"] && timers[0] <=0.0f)
+				{
+					storyint+=1;
+					exitMission(true);
+				}
+			}break;
+			case 3:
+			{
+				for(int i=0;i<Bots.size();i++)
+				{
+					if(i==2 && Entities[0]->mid.y<-390.0f)
+					{
+						for(int a =0; a<Bots[i].size();a++)
+							Bots[i][a]->AIState = 1;
+					}
+					if(i==1 && Entities[0]->mid.x<1005.0f && Entities[0]->mid.x>525.0f && Entities[0]->mid.y>-1650.0f && Entities[0]->mid.y<-870.0f)
+					{
+						flags["room1"] = true;
+						for(int a =0; a<Bots[i].size();a++)
+							Bots[i][a]->AIState = 1;
+					}
+					if(i==3 && Entities[0]->mid.x>-1065.0f && Entities[0]->mid.x<-315.0f && Entities[0]->mid.y>-1740.0f && Entities[0]->mid.y<-1320.0f)
+					{
+						for(int a =0; a<Bots[i].size();a++)
+							Bots[i][a]->AIState = 1;
+					}
+					if(i==4 && Entities[0]->mid.x>780.0f && Entities[0]->mid.x<1260.0f && Entities[0]->mid.y>-2790.0f && Entities[0]->mid.y<-1860.0f)
+					{
+						flags["room2"] = true;
+						for(int a =0; a<Bots[i].size();a++)
+							Bots[i][a]->AIState = 1;
+					}
+				}
+
+				if(NodeHandles.size()<8)
+					return;
+				std::vector<Node*> fuses = NodeHandles[0];
+				std::vector<Node*> Turbine = NodeHandles[1];
+				std::vector<Node*> Lasers = NodeHandles[2];
+				std::vector<Node*> LaserVisuals = NodeHandles[3];
+				std::vector<Node*> LaserParticles = NodeHandles[4];
+				std::vector<Node*> LaserParticleReps = NodeHandles[5];
+				std::vector<Node*> LaserLightSpheres = NodeHandles[6];
+				std::vector<Node*> LightSpheres = NodeHandles[7];
+				DestructableStaticBall* turb = NULL;
+				if(Turbine.size()>0)
+					turb = (DestructableStaticBall*)Turbine[0];
+				float energy = 0.0f;
+				if(turb !=NULL)
+					energy = 1.0f + ((turb->temperature - turb->trgTemperature)/(turb->maxTemperature - turb->trgTemperature));
+				for(int i=0;i<LightSpheres.size();i++)
+				{
+					((LightSourceObject*)LightSpheres[i])->Color.a=energy;
+					if(LightSpheres[i]->id == 3) ((LightSourceObject*)LightSpheres[i])->Color.a = energy * flags["room1"];
+					if(LightSpheres[i]->id == 4) ((LightSourceObject*)LightSpheres[i])->Color.a = energy * flags["room2"];
+				}
+				flags["Laser1"] = false;
+				flags["Laser2"] = false;
+				flags["Laser3"] = false;
+				for(int i=0;i<fuses.size();i++)
+				{
+					if(fuses[i]->Name == "L1Fuse")
+						flags["Laser1"] = true;
+					if(fuses[i]->Name == "L2Fuse")
+						flags["Laser2"] = true;
+					if(fuses[i]->Name == "L3Fuse")
+						flags["Laser3"] = true;
+				}
+				for(int i=0;i<Lasers.size();i++)
+				{
+					DestructableStaticBall* lsr = (DestructableStaticBall*)Lasers[i];
+					if(lsr->temperature>lsr->maxTemperature * 0.8f)
+					{
+						if(fuses[i]->Name == "laser1")
+							flags["Laser1"] = true;
+						if(fuses[i]->Name == "laser2")
+							flags["Laser2"] = true;
+						if(fuses[i]->Name == "laser3")
+							flags["Laser3"] = true;
+					}
+				}
+
+				if(Turbine.size()<=0)
+				{
+					flags["Laser1"] = false;
+					flags["Laser2"] = false;
+					flags["Laser3"] = false;
+				}
+				
+				for(int i=0;i<LaserVisuals.size();i++) 
+				{
+					if (LaserVisuals[i]->Name == "laservisual1") ((Object*)LaserVisuals[i])->Color.a = 1.0f * flags["Laser1"];
+					if (LaserVisuals[i]->Name == "laservisual2") ((Object*)LaserVisuals[i])->Color.a = 1.0f * flags["Laser2"];
+					if (LaserVisuals[i]->Name == "laservisual3") ((Object*)LaserVisuals[i])->Color.a = 1.0f * flags["Laser3"];
+				}
+				
+				for(int i=0;i<LaserParticles.size();i++) 
+				{
+					if (LaserParticles[i]->Name == "laserSparkEmiter1") ((ParticleObject*)LaserParticles[i])->amount = 5 * flags["Laser1"];
+					if (LaserParticles[i]->Name == "laserSparkEmiter2") ((ParticleObject*)LaserParticles[i])->amount = 5 * flags["Laser2"];
+					if (LaserParticles[i]->Name == "laserSparkEmiter3") ((ParticleObject*)LaserParticles[i])->amount = 5 * flags["Laser3"];
+				}
+				
+				for(int i=0;i<LaserLightSpheres.size();i++) 
+				{
+					if (LaserLightSpheres[i]->Name == "laserls1") ((LightSourceObject*)LaserLightSpheres[i])->Color.a = energy * flags["Laser1"];
+					if (LaserLightSpheres[i]->Name == "laserls2") ((LightSourceObject*)LaserLightSpheres[i])->Color.a = energy * flags["Laser2"];
+					if (LaserLightSpheres[i]->Name == "laserls3") ((LightSourceObject*)LaserLightSpheres[i])->Color.a = energy * flags["Laser3"];
+				}
+				
+				
+				if(Entities.size()==1)
+				{
+					compleated = true;
+				}
+
+
+
+				
+
+			}break;
+			case 4:
+			{
+				
 
 			}break;
 			default:

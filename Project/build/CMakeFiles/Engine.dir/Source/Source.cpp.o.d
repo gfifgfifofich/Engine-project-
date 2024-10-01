@@ -817,12 +817,16 @@ CMakeFiles/Engine.dir/Source/Source.cpp.o: \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/openal/include/AL/alc.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/openal/include/AL/al.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/dependencies/openal/include/AL/efx.h \
+  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Textures.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/DamageSphere.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Explodion.h \
+  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/SubECS.h \
+  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Parts/Base.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/ParticleMaterials.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Rocket.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Bullet.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Laser.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Parts.h \
+  /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Parts/CentralPart.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Entity.h \
   /run/media/gfif/32D0BC88D0BC53B7/Engine-project-/Project/Source/Mission.h

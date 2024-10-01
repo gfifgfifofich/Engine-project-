@@ -1609,12 +1609,15 @@ void ProcessScene(Scene* scn,bool mt,bool mainScene)
 void On_Create()
 {
 	
+	std::cout<<"On_Create\n";
 	_FillVectorsOfNodesAndAssets();
 
 	AL_init();
 	sTesti[0] = 0;
 	Map.LoadAssets = true;
+	std::cout<<"On_Create loading map\n";
 	Map.LoadFrom(MapFileName);
+	std::cout<<"On_Create loaded map\n";
 
 	//SetShader2f(&sh.program, "position",MousePosition)
 
@@ -2477,31 +2480,8 @@ void On_Update()
 			//Resize
 			if(buttons[GLFW_MOUSE_BUTTON_1] && keys[GLFW_KEY_LEFT_ALT])
 			{
-				if(SelectedNode->type >= NodeType::OBJECT && SelectedNode->type <= NodeType::LIGHTSOURCEOBJECT)
-				{
-					Object* tmpobj= (Object*)SelectedNode;
-					tmpobj->Scale -= PrevDifference;
-				}
-				else if(SelectedNode->type == NodeType::PARTICLEOBJECT )
-				{
-					ParticleObject* tmpobj= (ParticleObject*)SelectedNode;
-					tmpobj->scale -= PrevDifference;
-					tmpobj->r -= length(PrevDifference);
-				}
-				//SelectedNode -= PrevDifference;
 				SelectedNode->OnResize(PrevDifference,MousePosition, PrevMousePosition);
 				PrevDifference = (MousePosition - PrevMousePosition);
-				if(SelectedNode->type >= NodeType::OBJECT && SelectedNode->type <= NodeType::LIGHTSOURCEOBJECT)
-				{
-					Object* tmpobj= (Object*)SelectedNode;
-					tmpobj->Scale += PrevDifference;
-				}
-				else if(SelectedNode->type == NodeType::PARTICLEOBJECT )
-				{
-					ParticleObject* tmpobj= (ParticleObject*)SelectedNode;
-					tmpobj->scale += PrevDifference;
-					tmpobj->r += length(PrevDifference);
-				}
 			}
 
 			//Duplicate

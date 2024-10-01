@@ -357,12 +357,12 @@ Planet2_0000000010
 {
 	Additive 0
 	Class 1
-	Color 0.100000 0.200000 1.000000 4.940000
+	Color 0.310000 0.020000 11.939999 4.440000
 	Depth 0.000000
 	ID 0
 	Material M_Light
 	Name Planet2
-	Position -325.307770 -143.997574
+	Position -279.100006 -115.500000
 	Rotation 0.000000
 	Scale 435.680237 413.777924
 	Type 1

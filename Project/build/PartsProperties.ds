@@ -41,11 +41,11 @@ MiniGun
 	BulletHeat 0.8 
 	BulletSize 50 
 	BulletSpeed 500 
-	Damage 1 
+	Damage 3 
 	FireRate 0.034 
 	Health 25 
 	HeatPerShot 1 
-	Recoil 1.5 
+	Recoil 2.5 
 }
 Radiator
 {
