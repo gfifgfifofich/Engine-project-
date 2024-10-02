@@ -411,6 +411,7 @@ Object_0000000016
 StaticDamageSphere_0000000017
 {
 	Class 9997
+	Friction 1.000000
 	ID 0
 	Name StaticDamageSphere
 	Position 975.000000 0.000000
