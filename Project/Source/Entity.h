@@ -189,9 +189,9 @@ void ProcessEntities(float dt,int s)
 	ProcessExplodions(dt);
 	// refactor required//?
 
-	for (int x = 0; x < 300; x++)
-		for (int y = 0; y < 300; y++)
-			Grid[x][y].size = 0;
+	//for (int x = 0; x < 300; x++)
+	//	for (int y = 0; y < 300; y++)
+	//		Grid[x][y].size = 0;
 	
 
 
@@ -214,13 +214,17 @@ void ProcessEntities(float dt,int s)
 
 
 	for (int i = 0; i < Debris.Parts.size(); i++)
+	{
+		balls.reserve(Debris.Parts[i]->BodyIdsWithCollision.size());
 		for (auto pid : Debris.Parts[i]->BodyIdsWithCollision)
 			balls.push_back(&Debris.Parts[i]->body[pid]);
-
+	}
 	for (int e = 0; e < Entities.size(); e++)
+	{
+		balls.reserve(Entities[e]->Balls.size());
 		for (int i = 0; i < Entities[e]->Balls.size(); i++)
 			balls.push_back(Entities[e]->Balls[i]);
-
+	}
 
 	for (int i = 0; i < balls.size(); i++)
 	{
@@ -229,12 +233,12 @@ void ProcessEntities(float dt,int s)
 		glm::vec2 pVel = balls[i]->velbuff;
 		balls[i]->velocity -= balls[i]->velocity * sqrlength(balls[i]->velocity) * subdt * 0.000002f;
 		glm::vec2 offset = Entities[0]->mid + glm::vec2(-150, -150);
-		int x = roundf(balls[i]->position.x - offset.x);
-		int y = roundf(balls[i]->position.y - offset.y);
-		//std::cout << x << "			" << y << "\n";
-		if (y >= 0 && y < 300 &&
-			x >= 0 && x < 300)
-			Grid[x][y].add(balls[i]);
+		//int x = roundf(balls[i]->position.x - offset.x);
+		//int y = roundf(balls[i]->position.y - offset.y);
+		////std::cout << x << "			" << y << "\n";
+		//if (y >= 0 && y < 300 &&
+		//	x >= 0 && x < 300)
+		//	Grid[x][y].add(balls[i]);
 
 		balls[i]->rotation = 0.0f;
 		balls[i]->rotationVelocity = 0.0f;

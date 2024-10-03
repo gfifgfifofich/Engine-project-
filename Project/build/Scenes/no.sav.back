@@ -1,4 +1,4 @@
-AIAim_0000000172
+AIAim_0000000175
 {
 	Class 10011
 	ID 0
@@ -312,6 +312,384 @@ BackGround_0000000017
 	Z_Index -101
 	invertX 0
 	invertY 0
+}
+BallBody_0000000167
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000178
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000179
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000180
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000181
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000183
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000184
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000186
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000187
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000188
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000189
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000192
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000193
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000194
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000195
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000196
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000197
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000200
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000202
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000203
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000209
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000210
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000211
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000212
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000220
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000221
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000222
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000224
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000225
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000226
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000227
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000228
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000229
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000231
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000233
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000234
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000235
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000236
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000237
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000238
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000239
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+BallBody_0000000240
+{
+	Class 10000
+	ID 0
+	Name BallBody
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
 }
 BallHM_0000000000
 {
@@ -2194,7 +2572,7 @@ CO_Cube_0000000099
 	invertX 0
 	invertY 0
 }
-CentralPart_0000000159
+CentralPart_0000000214
 {
 	Class 10010
 	ID 0
@@ -2258,6 +2636,90 @@ Cube_0000000008
 	Texture CubeT
 	Type 0
 }
+DestructableStaticCube_0000000100
+{
+	Additive 0
+	Bounciness 0.000000
+	Class 9998
+	ColdColor 0.040000 2.000000 10.000000 0.000000
+	Collision_layer 0
+	Color 1.000000 1.000000 1.000000 1.000000
+	Depth 0.000000
+	DestrParticleAmount 10
+	DestrParticleSpeed 10.000000
+	DestructionParticleAsset None
+	DieOnOverheat 0
+	ExplodeOnDeath 0
+	ExplodeOnOverheat 0
+	Health 10.000000
+	HeatColor 60.000000 10.000000 2.000000 0.000000
+	Height 10.001768
+	ID 0
+	Invincibility 0
+	Material Cube
+	Name DestructableStaticCube
+	Position -1800.000000 3540.000000
+	Rotation 0.000000
+	Roughness 0.000000
+	Scale 144.364258 12.561768
+	SpawnInShapeOrPoint 1
+	Type 1
+	Width 150.004257
+	Z_Index 0
+	color 1.000000 1.000000 1.000000 1.000000
+	explodionDamage 2.500000
+	explodionLifeTime 1.000000
+	explodionR 10.000000
+	explodionRecoil 40.000000
+	invertX 0
+	invertY 0
+	maxTemperature 10.000000
+	passiveCooling 1.000000
+	temperature 0.000000
+	trgtemperature 0.000000
+}
+DestructableStaticCube_0000000101
+{
+	Additive 0
+	Bounciness 0.000000
+	Class 9998
+	ColdColor 0.040000 2.000000 10.000000 0.000000
+	Collision_layer 0
+	Color 1.000000 1.000000 1.000000 1.000000
+	Depth 0.000000
+	DestrParticleAmount 10
+	DestrParticleSpeed 10.000000
+	DestructionParticleAsset None
+	DieOnOverheat 0
+	ExplodeOnDeath 0
+	ExplodeOnOverheat 0
+	Health 10.000000
+	HeatColor 60.000000 10.000000 2.000000 0.000000
+	Height 10.001768
+	ID 0
+	Invincibility 0
+	Material Cube
+	Name DestructableStaticCube
+	Position -1800.000000 4110.000000
+	Rotation 0.000000
+	Roughness 0.000000
+	Scale 144.364258 12.561768
+	SpawnInShapeOrPoint 1
+	Type 1
+	Width 150.004257
+	Z_Index 0
+	color 1.000000 1.000000 1.000000 1.000000
+	explodionDamage 2.500000
+	explodionLifeTime 1.000000
+	explodionR 10.000000
+	explodionRecoil 40.000000
+	invertX 0
+	invertY 0
+	maxTemperature 10.000000
+	passiveCooling 1.000000
+	temperature 0.000000
+	trgtemperature 0.000000
+}
 Fog_0000000009
 {
 	Class 2
@@ -2268,7 +2730,7 @@ Fog_0000000009
 	Texture Noize
 	Type 0
 }
-Glider_0000000161
+Glider_0000000162
 {
 	Class 10012
 	ID 0
@@ -2277,7 +2739,7 @@ Glider_0000000161
 	Type 1
 	Z_Index 0
 }
-Glider_0000000163
+Glider_0000000164
 {
 	Class 10012
 	ID 0
@@ -2633,9 +3095,9 @@ LightSource_0000000122
 	Depth 0.100000
 	ID 0
 	Name LightSource
-	Position 540.000000 2955.000000
+	Position 765.000000 4500.000000
 	Rotation 0.000000
-	Scale 1210.305176 782.407349
+	Scale 725.653809 386.170044
 	Texture No_texture
 	Type 1
 	Volume 0.000000
@@ -2680,6 +3142,24 @@ LightSource_0000000124
 	invertY 0
 	sizeZ 193.000000
 }
+LightSource_0000000125
+{
+	Class 6
+	Color 1.200001 1.200000 1.200000 1.000001
+	Depth 0.100000
+	ID 0
+	Name LightSource
+	Position 540.000000 2955.000000
+	Rotation 0.000000
+	Scale 1210.305176 782.407349
+	Texture No_texture
+	Type 1
+	Volume 0.000000
+	Z_Index 0
+	invertX 0
+	invertY 0
+	sizeZ 193.000000
+}
 Mgrad_0000000010
 {
 	Class 2
@@ -2690,7 +3170,7 @@ Mgrad_0000000010
 	Texture gradient
 	Type 0
 }
-MiniGun_0000000160
+MiniGun_0000000161
 {
 	Class 10007
 	ID 0
@@ -2699,7 +3179,16 @@ MiniGun_0000000160
 	Type 1
 	Z_Index 0
 }
-Monitor_0000000125
+MiniGun_0000000176
+{
+	Class 10007
+	ID 0
+	Name MiniGun
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+Monitor_0000000126
 {
 	Additive 0
 	Class 9996
@@ -2740,7 +3229,7 @@ Monitor_0000000125
 	textScale 0.120000
 	textStep -8.000000
 }
-Monitor_0000000126
+Monitor_0000000127
 {
 	Additive 0
 	Class 9996
@@ -2781,7 +3270,7 @@ Monitor_0000000126
 	textScale 0.120000
 	textStep -8.000000
 }
-Monitor_0000000127
+Monitor_0000000128
 {
 	Additive 0
 	Class 9996
@@ -2822,7 +3311,7 @@ Monitor_0000000127
 	textScale 0.240000
 	textStep -8.000000
 }
-Monitor_0000000128
+Monitor_0000000129
 {
 	Additive 0
 	Class 9996
@@ -2863,7 +3352,7 @@ Monitor_0000000128
 	textScale 0.120000
 	textStep -8.000000
 }
-Monitor_0000000129
+Monitor_0000000130
 {
 	Additive 0
 	Class 9996
@@ -2919,7 +3408,7 @@ Noize_0000000011
 	texture_Type 1
 	texture_filter 0
 }
-PO2_0000000130
+PO2_0000000131
 {
 	AttractionStrength 374.016998
 	Attractive 1
@@ -2933,7 +3422,7 @@ PO2_0000000130
 	Type 1
 	velocity 0.000000 0.000000
 }
-PO2_0000000131
+PO2_0000000132
 {
 	AttractionStrength 374.016998
 	Attractive 1
@@ -2944,20 +3433,6 @@ PO2_0000000131
 	ParticleObjectType 0
 	Position -105.005363 -345.004669
 	Radius 266.230469
-	Type 1
-	velocity 0.000000 0.000000
-}
-PO3_0000000132
-{
-	AttractionStrength -655.983032
-	Attractive 1
-	Class 7
-	ID 0
-	Name PO3
-	ParticleAsset sparks
-	ParticleObjectType 0
-	Position 225.004608 -345.004669
-	Radius 22.230453
 	Type 1
 	velocity 0.000000 0.000000
 }
@@ -2970,12 +3445,26 @@ PO3_0000000133
 	Name PO3
 	ParticleAsset sparks
 	ParticleObjectType 0
+	Position 225.004608 -345.004669
+	Radius 22.230453
+	Type 1
+	velocity 0.000000 0.000000
+}
+PO3_0000000134
+{
+	AttractionStrength -655.983032
+	Attractive 1
+	Class 7
+	ID 0
+	Name PO3
+	ParticleAsset sparks
+	ParticleObjectType 0
 	Position -105.005363 -345.004669
 	Radius 22.230453
 	Type 1
 	velocity 0.000000 0.000000
 }
-PO_0000000134
+PO_0000000135
 {
 	Class 7
 	ID 0
@@ -3020,7 +3509,7 @@ ParticleAsset_0000000012
 	lifetimeRandomness 0.000000
 	lighted 0
 }
-PipePO_0000000135
+PipePO_0000000136
 {
 	Class 7
 	ID 0
@@ -3034,7 +3523,7 @@ PipePO_0000000135
 	tick 0.017000
 	velocity 20.400000 51.399994
 }
-PipePO_0000000136
+PipePO_0000000137
 {
 	Class 7
 	ID 0
@@ -3048,7 +3537,7 @@ PipePO_0000000136
 	tick 0.017000
 	velocity 44.599998 0.000000
 }
-Radiator_0000000164
+Radiator_0000000160
 {
 	Class 10004
 	ID 0
@@ -3057,7 +3546,7 @@ Radiator_0000000164
 	Type 1
 	Z_Index 0
 }
-Radiator_0000000169
+Radiator_0000000165
 {
 	Class 10004
 	ID 0
@@ -3066,7 +3555,7 @@ Radiator_0000000169
 	Type 1
 	Z_Index 0
 }
-Radiator_0000000170
+Radiator_0000000172
 {
 	Class 10004
 	ID 0
@@ -3075,34 +3564,52 @@ Radiator_0000000170
 	Type 1
 	Z_Index 0
 }
-RocketEngine_0000000100
+Radiator_0000000173
 {
-	Class 10001
+	Class 10004
 	ID 0
-	Name RocketEngine
+	Name Radiator
 	Position 0.000000 0.000000
 	Type 1
 	Z_Index 0
 }
-RocketEngine_0000000101
+Radiator_0000000201
 {
-	Class 10001
+	Class 10004
 	ID 0
-	Name RocketEngine
+	Name Radiator
 	Position 0.000000 0.000000
 	Type 1
 	Z_Index 0
 }
-RocketEngine_0000000162
+Radiator_0000000213
 {
-	Class 10001
+	Class 10004
 	ID 0
-	Name RocketEngine
+	Name Radiator
 	Position 0.000000 0.000000
 	Type 1
 	Z_Index 0
 }
-RocketEngine_0000000165
+Radiator_0000000215
+{
+	Class 10004
+	ID 0
+	Name Radiator
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+Radiator_0000000241
+{
+	Class 10004
+	ID 0
+	Name Radiator
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000163
 {
 	Class 10001
 	ID 0
@@ -3120,7 +3627,7 @@ RocketEngine_0000000166
 	Type 1
 	Z_Index 0
 }
-RocketEngine_0000000167
+RocketEngine_0000000168
 {
 	Class 10001
 	ID 0
@@ -3129,7 +3636,16 @@ RocketEngine_0000000167
 	Type 1
 	Z_Index 0
 }
-RocketEngine_0000000168
+RocketEngine_0000000169
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000170
 {
 	Class 10001
 	ID 0
@@ -3147,7 +3663,7 @@ RocketEngine_0000000171
 	Type 1
 	Z_Index 0
 }
-RocketEngine_0000000173
+RocketEngine_0000000174
 {
 	Class 10001
 	ID 0
@@ -3156,11 +3672,263 @@ RocketEngine_0000000173
 	Type 1
 	Z_Index 0
 }
-RocketEngine_0000000174
+RocketEngine_0000000177
 {
 	Class 10001
 	ID 0
 	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000182
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000185
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000190
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000191
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000198
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000199
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000204
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000216
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000217
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000218
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000219
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000223
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000230
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000232
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000242
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000243
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000244
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000246
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000247
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketEngine_0000000249
+{
+	Class 10001
+	ID 0
+	Name RocketEngine
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketLauncher_0000000205
+{
+	Class 10006
+	ID 0
+	Name RocketLauncher
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketLauncher_0000000206
+{
+	Class 10006
+	ID 0
+	Name RocketLauncher
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketLauncher_0000000207
+{
+	Class 10006
+	ID 0
+	Name RocketLauncher
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketLauncher_0000000208
+{
+	Class 10006
+	ID 0
+	Name RocketLauncher
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketLauncher_0000000245
+{
+	Class 10006
+	ID 0
+	Name RocketLauncher
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketLauncher_0000000248
+{
+	Class 10006
+	ID 0
+	Name RocketLauncher
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketLauncher_0000000250
+{
+	Class 10006
+	ID 0
+	Name RocketLauncher
+	Position 0.000000 0.000000
+	Type 1
+	Z_Index 0
+}
+RocketLauncher_0000000251
+{
+	Class 10006
+	ID 0
+	Name RocketLauncher
 	Position 0.000000 0.000000
 	Type 1
 	Z_Index 0
@@ -3190,7 +3958,7 @@ SG_0000000014
 	texture_Type 5
 	texture_filter 0
 }
-Sparks_0000000137
+Sparks_0000000138
 {
 	Class 7
 	ID 0
@@ -3204,7 +3972,7 @@ Sparks_0000000137
 	tick 1.757000
 	velocity -38.599998 -6.099997
 }
-Sparks_0000000138
+Sparks_0000000139
 {
 	Class 7
 	ID 0
@@ -3218,7 +3986,7 @@ Sparks_0000000138
 	tick 0.617000
 	velocity -9.429996 -32.999996
 }
-Sparks_0000000139
+Sparks_0000000140
 {
 	Class 7
 	ID 0
@@ -3232,7 +4000,7 @@ Sparks_0000000139
 	tick 2.017000
 	velocity 47.099998 -32.999996
 }
-Sparks_0000000140
+Sparks_0000000141
 {
 	Class 7
 	ID 0
@@ -3246,7 +4014,7 @@ Sparks_0000000140
 	tick 2.177000
 	velocity 17.900002 -12.200000
 }
-Sparks_0000000141
+Sparks_0000000142
 {
 	Class 7
 	ID 0
@@ -3260,7 +4028,7 @@ Sparks_0000000141
 	tick 1.617000
 	velocity 28.800001 19.200001
 }
-Sparks_0000000142
+Sparks_0000000143
 {
 	Class 7
 	ID 0
@@ -3274,7 +4042,7 @@ Sparks_0000000142
 	tick 2.357000
 	velocity 47.099998 8.400002
 }
-Sparks_0000000143
+Sparks_0000000144
 {
 	Class 7
 	ID 0
@@ -3288,7 +4056,7 @@ Sparks_0000000143
 	tick 1.017000
 	velocity 10.099998 -32.999996
 }
-Sparks_0000000144
+Sparks_0000000145
 {
 	Class 7
 	ID 0
@@ -3302,7 +4070,7 @@ Sparks_0000000144
 	tick 2.217000
 	velocity 47.099998 49.400002
 }
-StaticDamageSphere_0000000145
+StaticDamageSphere_0000000146
 {
 	Class 9997
 	Friction 0.960000
@@ -3317,7 +4085,7 @@ StaticDamageSphere_0000000145
 	heat 0.140000
 	radius 141.000000
 }
-StaticDamageSphere_0000000146
+StaticDamageSphere_0000000147
 {
 	Class 9997
 	Friction 1.000000
@@ -3332,28 +4100,13 @@ StaticDamageSphere_0000000146
 	heat 0.000000
 	radius 324.055725
 }
-StaticDamageSphere_0000000147
-{
-	Class 9997
-	Friction 1.000000
-	ID 0
-	Name StaticDamageSphere
-	Position 225.000000 -345.000000
-	Type 1
-	Z_Index 0
-	attractionForce -5.000000
-	attractive 1
-	damage 0.020000
-	heat 0.100000
-	radius 32.353119
-}
 StaticDamageSphere_0000000148
 {
 	Class 9997
 	Friction 1.000000
 	ID 0
 	Name StaticDamageSphere
-	Position -105.000000 -345.000000
+	Position 225.000000 -345.000000
 	Type 1
 	Z_Index 0
 	attractionForce -5.000000
@@ -3368,6 +4121,21 @@ StaticDamageSphere_0000000149
 	Friction 1.000000
 	ID 0
 	Name StaticDamageSphere
+	Position -105.000000 -345.000000
+	Type 1
+	Z_Index 0
+	attractionForce -5.000000
+	attractive 1
+	damage 0.020000
+	heat 0.100000
+	radius 32.353119
+}
+StaticDamageSphere_0000000150
+{
+	Class 9997
+	Friction 1.000000
+	ID 0
+	Name StaticDamageSphere
 	Position 225.000000 -345.000000
 	Type 1
 	Z_Index 0
@@ -3377,7 +4145,7 @@ StaticDamageSphere_0000000149
 	heat 0.000000
 	radius 324.055725
 }
-StaticDamageSphere_0000000150
+StaticDamageSphere_0000000151
 {
 	Class 9997
 	Friction 1.000000
@@ -3392,7 +4160,7 @@ StaticDamageSphere_0000000150
 	heat 0.000000
 	radius 870.055725
 }
-StaticDamageSphere_0000000151
+StaticDamageSphere_0000000152
 {
 	Class 9997
 	Friction 1.000000
@@ -3407,7 +4175,7 @@ StaticDamageSphere_0000000151
 	heat 0.100000
 	radius 100.353149
 }
-TurbMon_0000000152
+TurbMon_0000000153
 {
 	Additive 0
 	Class 9996
@@ -3494,7 +4262,7 @@ sparks_0000000016
 	lifetimeRandomness 1.000000
 	lighted 0
 }
-turbine_0000000153
+turbine_0000000154
 {
 	Additive 0
 	Bounciness 0.000000
@@ -3535,7 +4303,7 @@ turbine_0000000153
 	temperature -8.000000
 	trgtemperature -8.000000
 }
-turbine_0000000154
+turbine_0000000155
 {
 	Additive 0
 	Bounciness 0.000000
@@ -3576,7 +4344,7 @@ turbine_0000000154
 	temperature -8.000000
 	trgtemperature -8.000000
 }
-turbine_0000000155
+turbine_0000000156
 {
 	Additive 0
 	Bounciness 0.000000
@@ -3617,7 +4385,7 @@ turbine_0000000155
 	temperature -8.000000
 	trgtemperature -8.000000
 }
-turbine_0000000156
+turbine_0000000157
 {
 	Additive 0
 	Bounciness 0.000000
@@ -3658,7 +4426,7 @@ turbine_0000000156
 	temperature -8.000000
 	trgtemperature -8.000000
 }
-turbine_0000000157
+turbine_0000000158
 {
 	Additive 0
 	Bounciness 0.000000
@@ -3699,7 +4467,7 @@ turbine_0000000157
 	temperature 70.000000
 	trgtemperature 70.000000
 }
-turbine_0000000158
+turbine_0000000159
 {
 	Additive 0
 	Bounciness 0.000000
