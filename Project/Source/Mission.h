@@ -367,14 +367,20 @@ class Mission
 						Entities[0]->Parts[i]->body[a].velocity = vel;
 					}
 				}
-				timers.push_back(5.0f);
-				flags["Ending"] = false;
+				timers.push_back(0.0f);
+				flags["LaserShot"] = false;
 				
 				
 				AqueredCameraScale = {2.0f,2.0f};
 				std::vector<CentralPart*> arrr;
 				Bots.push_back(arrr);
 				
+				std::vector<Node*> Turbine;
+				NodeHandles.push_back(Turbine);//0
+				std::vector<Node*> LaserParts;
+				NodeHandles.push_back(LaserParts);//1
+				std::vector<Node*> Misc;
+				NodeHandles.push_back(Misc);//2
 				for(int i=0;i<GameScene->Nodes.size();i++)
 				{
 					if(GameScene->Nodes[i]->type == NodeType::NODE)
@@ -387,7 +393,22 @@ class Mission
 						Bots[GameScene->Nodes[i]->id].push_back(SpawnAiShip(GameScene->Nodes[i]->position,GameScene->Nodes[i]->Name));
 
 					}
-					
+					if(GameScene->Nodes[i]->Name == "turbine")
+					{
+						NodeHandles[0].push_back(GameScene->Nodes[i]);
+					}
+					if(GameScene->Nodes[i]->Name == "Laser1"||
+					   GameScene->Nodes[i]->Name == "LaserPE"||
+					   GameScene->Nodes[i]->Name == "LaserLS"||
+					   GameScene->Nodes[i]->Name == "LaserDS")
+					{
+						NodeHandles[1].push_back(GameScene->Nodes[i]);
+					}
+					if(	GameScene->Nodes[i]->Name == "turbineMonitor"||
+						GameScene->Nodes[i]->Name == "LabMonitor")
+					{
+						NodeHandles[2].push_back(GameScene->Nodes[i]);
+					}
 				}
 
 			}break;
@@ -414,17 +435,18 @@ class Mission
 		if(exiting)
 			exitMission(true);
 		
-		for(int i=0;i<Bots.size();i++)
-		{
-			for(int a=0;a<Bots[i].size();a++)
-			{
-				if(Bots[i][a]->Delete)
-				{
-					Bots[i][a] = Bots[i][Bots[i].size()]-1;
-					Bots[i].pop_back();
-				}
-			}
-		}
+		//for(int i=0;i<Bots.size();i++)
+		//{
+		//	for(int a=0;a<Bots[i].size();a++)
+		//	{
+		//		if(Bots[i][a]->Delete)
+		//		{
+		//			Bots[i][a] = Bots[i][Bots[i].size()]-1;
+		//			Bots[i].pop_back();
+		//		}
+		//	}
+		//}
+		inside = false;
 		for(int i =0;i<TriggerCubes.size();i++)
 		{
 			if(TriggerCubes[i]->Delete)
@@ -435,12 +457,23 @@ class Mission
 			if(TriggerCubes[i]->triggered && Bots.size()>TriggerCubes[i]->id)	
 			{
 				for(int a=0;a<Bots[TriggerCubes[i]->id].size();a++)
-				{
+				{	
+					if(!Bots[TriggerCubes[i]->id][a]->Delete)
 					Bots[TriggerCubes[i]->id][a]->AIState = 1;
 				}
 			}
+			if(TriggerCubes[i]->determineInside && TriggerCubes[i]->triggered)
+				inside = true;			
 		}
+		if(inside)
+			AmbientLight -= dt;
+		else
+			AmbientLight += dt;
 		
+		if(AmbientLight<0.0f)
+			AmbientLight = 0.0f;
+		if(AmbientLight>0.4f)
+			AmbientLight = 0.4f;
 
 		for(int i=0;i<timers.size();i++)
 		{
@@ -455,7 +488,7 @@ class Mission
 			int a =0;
 			while(a < NodeHandles[i].size())
 			{
-				if(NodeHandles[i][a] == NULL || NodeHandles[i][a]->Delete)
+				if(NodeHandles[i][a] == nullptr || NodeHandles[i][a]->Delete)
 				{
 					NodeHandles[i][a] = NodeHandles[i][NodeHandles[i].size()-1];
 					NodeHandles[i].pop_back();
@@ -522,7 +555,7 @@ class Mission
 							n->Delete = true;
 					}
 				}
-				ParticleObject* PlanetExplodionPO = NULL; 
+				ParticleObject* PlanetExplodionPO = nullptr; 
 				for(auto n : Background.Nodes)
 				{
 					if(n->Name == "ExplodionP1" || n->Name == "ExplodionP2" || n->Name == "ExplodionP3")
@@ -998,10 +1031,10 @@ class Mission
 			}break;
 			case 2:
 			{
-				DestructableStaticBall* Core = NULL;
+				DestructableStaticBall* Core = nullptr;
 				if(NodeHandles.size()>=2 && NodeHandles[1].size()>0)
 					Core = (DestructableStaticBall*)NodeHandles[1][0];		
-				if(Core!=NULL)
+				if(Core!=nullptr)
 				{
 					Core->passiveCooling = 10.0f;
 					if(NodeHandles.size()>0 && NodeHandles[0].size()>0)
@@ -1034,7 +1067,7 @@ class Mission
 					}
 				}
 
-				if(!flags["Exploded"] && (Core == NULL || Core->Delete))
+				if(!flags["Exploded"] && (Core == nullptr || Core->Delete))
 				{
 					timers[0] = 5.0f;
 					flags["Exploded"] = true;
@@ -1083,11 +1116,11 @@ class Mission
 				std::vector<Node*> LaserParticleReps = NodeHandles[5];
 				std::vector<Node*> LaserLightSpheres = NodeHandles[6];
 				std::vector<Node*> LightSpheres = NodeHandles[7];
-				DestructableStaticBall* turb = NULL;
+				DestructableStaticBall* turb = nullptr;
 				if(Turbine.size()>0)
 					turb = (DestructableStaticBall*)Turbine[0];
 				float energy = 0.0f;
-				if(turb !=NULL)
+				if(turb !=nullptr)
 					energy = 1.0f + ((turb->temperature - turb->trgTemperature)/(turb->maxTemperature - turb->trgTemperature));
 				for(int i=0;i<LightSpheres.size();i++)
 				{
@@ -1162,8 +1195,151 @@ class Mission
 			}break;
 			case 4:
 			{
-				
+				std::vector<Node*> Turbines = NodeHandles[0];
+				std::vector<Node*> LaserParts = NodeHandles[1];
+				std::vector<Node*> Misc = NodeHandles[2];
+				Node* monitor = nullptr;
+				std::array<int,6> tstatuses = {-1,-1,-1,-1,-1,-1};
+				bool TurbinesOk = true;
+				for(auto n : Misc)
+				{
+					if(n->Name == "turbineMonitor")
+						monitor = n;
+				}	
+				for(auto n : Misc)
+				{
+					if(n->Name == "turbineMonitor")
+						monitor = n;
+					if(n->Name == "LabMonitor" && flags["LaserShot"])
+					{
+						((Monitor*)n)->text1 = "";
+						((Monitor*)n)->text2 = "";
+						((Monitor*)n)->text3 = "";
+						((Monitor*)n)->text4 = "";
+						((Monitor*)n)->text5 = "";
+						((Monitor*)n)->text6 = "";
+						((Monitor*)n)->text7 = "";
+						((Monitor*)n)->text8 = "";
+						((Monitor*)n)->text9 = "";
+						((Monitor*)n)->text10 = "No input";
+						((Monitor*)n)->textScale = 0.8f;
+						((Monitor*)n)->textOffset.y = 5.0f;
+					}
+				}
+				int turbiter = 0;
+				for(int i = 0; i < Turbines.size();i++)
+				{
+					
+					DestructableStaticBall* turb = (DestructableStaticBall*)Turbines[i];
+					if(turb->temperature>30.0f)
+					{
+						turb->trgTemperature = 50.0f;
+						tstatuses[turbiter] = 1;
+					}
+					else
+						tstatuses[turbiter] = 0;
+					
+					turbiter++;
+					if(turbiter > 5)
+						turbiter = 0;
+				}
 
+				if(monitor!=nullptr)
+				{
+					Monitor* m = (Monitor*)monitor;
+					if(tstatuses[0] == -1) 	{m->text2 = "";}
+					if(tstatuses[0] == 0)	{m->text2 = "t1 - frozen";	m->color2 = {4.5f,0.1f,0.1f,1.0f};}
+					if(tstatuses[0] == 1)	{m->text2 = "t1 - OK"; 		m->color2 = {0.1f,4.5f,0.1f,1.0f};}
+
+					if(tstatuses[1] == -1) 	{m->text3 = "";}
+					if(tstatuses[1] == 0)	{m->text3 = "t2 - frozen";	m->color3 = {4.5f,0.1f,0.1f,1.0f};}
+					if(tstatuses[1] == 1)	{m->text3 = "t2 - OK";	 	m->color3 = {0.1f,4.5f,0.1f,1.0f};}
+
+					if(tstatuses[2] == -1)	{m->text4 = "";}
+					if(tstatuses[2] == 0) 	{m->text4 = "t3 - frozen";	m->color4 = {4.5f,0.1f,0.1f,1.0f};}
+					if(tstatuses[2] == 1) 	{m->text4 = "t3 - OK"; 		m->color4 = {0.1f,4.5f,0.1f,1.0f};}
+
+					if(tstatuses[3] == -1)	{m->text5 = "";}
+					if(tstatuses[3] == 0) 	{m->text5 = "t4 - frozen";	m->color5 = {4.5f,0.1f,0.1f,1.0f};}
+					if(tstatuses[3] == 1) 	{m->text5 = "t4 - OK"; 		m->color5 = {0.1f,4.5f,0.1f,1.0f};}
+
+					if(tstatuses[4] == -1)	{m->text6 = "";}
+					if(tstatuses[4] == 0) 	{m->text6 = "t5 - frozen";	m->color6 = {4.5f,0.1f,0.1f,1.0f};}
+					if(tstatuses[4] == 1) 	{m->text6 = "t5 - OK"; 		m->color6 = {0.1f,4.5f,0.1f,1.0f};}
+
+					if(tstatuses[5] == -1)	{m->text7 = "";}
+					if(tstatuses[5] == 0) 	{m->text7 = "t6 - frozen";	m->color7 = {4.5f,0.1f,0.1f,1.0f};}
+					if(tstatuses[5] == 1) 	{m->text7 = "t6 - OK"; 		m->color7 = {0.1f,4.5f,0.1f,1.0f};}
+
+					if(tstatuses[0] == 0 || tstatuses[1] == 0 || tstatuses[2] == 0 || tstatuses[3] == 0 || tstatuses[4] == 0 || tstatuses[5] == 0)
+						TurbinesOk = false;
+					
+					if(TurbinesOk)
+					{
+						m->text8 = "All turbines operating"; 				m->color8 =  {0.1f,4.5f,0.1f,1.0f};
+						m->text9 = "Experimantal equipment operational"; 	m->color9 =  {0.1f,4.5f,0.1f,1.0f};
+						m->text10 = "Power supply stable"; 					m->color10 = {0.1f,4.5f,0.1f,1.0f};
+						m->bleepLastLine = false;
+						if(!flags["LaserShot"])
+						{
+							flags["LaserShot"] = true;
+							timers[0] = 5.0f;	
+						}
+					}
+					else
+					{
+						m->text8 = "1 or more turbines mulfunction detected"; 		m->color8 =  {4.5f,0.1f,0.1f,1.0f};
+						m->text9 = "Experimantal and production equipment offline"; m->color9 =  {4.5f,0.1f,0.1f,1.0f};
+						m->text10 = "Emergency power supply"; 						m->color10 = {4.5f,0.1f,0.1f,1.0f};
+						m->bleepLastLine = true;
+					
+					}
+				}
+				if(timers[0]>0.0f && flags["LaserShot"])
+				{
+					ScreenShake = timers[0] * 0.2f;
+					ChromaticAbberation = timers[0] * 0.7f;
+					for(auto n : LaserParts)
+					{
+						if(n->Name == "LaserPE")
+							((ParticleObject*)n)->amount = 1;
+						if(n->Name == "LaserDS")
+						{
+							((StaticDamageSphere*)n)->damage = 5.0f;
+							((StaticDamageSphere*)n)->heat = 1.0f;
+						}
+						if(n->Name == "LaserLS")
+						{
+							((LightSourceObject*)n)->Color.a = timers[0]*1.0f;
+						}
+						if(n->Name == "Laser1")
+						{
+							((Object*)n)->Color.a = timers[0]*0.2f;
+						}
+
+					}
+				}
+				else
+				{
+					for(auto n : LaserParts)
+					{
+						if(n->Name == "LaserDS")
+						{
+							((StaticDamageSphere*)n)->damage = 0.0f;
+							((StaticDamageSphere*)n)->heat = 0.0f;
+						}
+						if(n->Name == "LaserLS")
+						{
+							((LightSourceObject*)n)->Color.a = 0.0f;
+						}
+						if(n->Name == "Laser1")
+						{
+							((Object*)n)->Color.a = timers[0]*0.2f;
+						}
+
+					}
+				
+				}
 			}break;
 			default:
 				break;
